@@ -1,18 +1,19 @@
 import mongoose from "mongoose";
 
-// Objective model
-const objectiveSchema = new mongoose.Schema(
+// Income model
+const incomeSchema = new mongoose.Schema(
     {
-        name: {
+        category: {
             type: String,
             required: true,
         },
-        objectiveMoney: {
+        positiveAmount: {
             type: Number,
             required: true,
+            default: 0,
         },
-        savedMoney: {
-            type: Number,
+        description: {
+            type: String,
             required: true,
         },
     },
@@ -21,6 +22,5 @@ const objectiveSchema = new mongoose.Schema(
     },
 );
 
-const Objective = mongoose.model('Objective', objectiveSchema);
-
-export default Objective;
+const Income = mongoose.model("Income", incomeSchema);
+export default Income;
