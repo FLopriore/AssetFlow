@@ -1,6 +1,8 @@
 import Income from "../models/income.model.js";
 
 // Gets all the incomes
+// TODO: set a limit of entries
+// TODO: get values in a time frame
 const getAllIncomes = async (req, res) => {
     try {
         const allIncomes = await Income.find({});
