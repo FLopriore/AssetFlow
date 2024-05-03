@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 // Investment asset model
 const assetSchema = new mongoose.Schema(
@@ -18,4 +18,4 @@ const assetSchema = new mongoose.Schema(
 );
 
 const Asset = mongoose.model('Asset', assetSchema);
-export default Asset;
+module.exports = Asset;

@@ -1,6 +1,6 @@
-import express from "express";
-import cors from "cors";
-import mongoose from "mongoose";
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
 //import records from "./routes/record.js";
 //Routes import
 const AssetRoute = require("./routes/asset.route.js");
@@ -11,7 +11,7 @@ const BudgetRoute=require("./routes/budget.route.js");
 const UserRoute = require("./routes/user.route.js");
 
 //Session Imports
-const User = require("../models/user.model,js");
+const User = require("./models/user.model.js");
 const expressSession = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;

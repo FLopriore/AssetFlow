@@ -1,4 +1,4 @@
-import Income from "../models/income.model.js";
+const Income = require("../models/income.model.js");
 
 // Gets all the incomes
 // TODO: set a limit of entries
@@ -57,4 +57,4 @@ const deleteIncome = async (req, res) => {
     }
 };
 
-export {getIncomeById, addIncome, deleteIncome, getAllIncomes};
+module.exports = {getIncomeById, addIncome, deleteIncome, getAllIncomes};

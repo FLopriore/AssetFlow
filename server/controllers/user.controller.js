@@ -1,4 +1,4 @@
-const User = require("../models/user.model,js");
+const User = require("../models/user.model.js");
 const passport = require("passport")
 
 //TODO: Specify and else
@@ -19,4 +19,4 @@ const AuthUser = passport.authenticate("local",
 );
 
 
-export {CreateUser,AuthUser};
+module.exports = {CreateUser,AuthUser};

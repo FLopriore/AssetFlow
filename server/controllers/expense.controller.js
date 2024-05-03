@@ -1,4 +1,4 @@
-import Expense from "../models/expense.model.js";
+const Expense = require("../models/expense.model.js");
 
 // Gets all the expenses
 const getAllExpenses = async (req, res) => {
@@ -55,4 +55,4 @@ const deleteExpense = async (req, res) => {
     }
 };
 
-export {getExpenseById, addExpense, deleteExpense, getAllExpenses};
+module.exports = {getExpenseById, addExpense, deleteExpense, getAllExpenses};

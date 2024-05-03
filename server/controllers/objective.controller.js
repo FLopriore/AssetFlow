@@ -1,4 +1,4 @@
-import Objective from "../models/objective.model.js";
+const Objective = require("../models/objective.model.js");
 
 // Gets all the objectives
 const getAllObjectives = async (req, res) => {
@@ -55,4 +55,4 @@ const deleteObjective = async (req, res) => {
     }
 };
 
-export {getObjectiveById, addObjective, deleteObjective, getAllObjectives};
+module.exports = {getObjectiveById, addObjective, deleteObjective, getAllObjectives};

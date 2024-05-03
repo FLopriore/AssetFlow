@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 // Objective model
 const objectiveSchema = new mongoose.Schema(
@@ -23,4 +23,4 @@ const objectiveSchema = new mongoose.Schema(
 
 const Objective = mongoose.model('Objective', objectiveSchema);
 
-export default Objective;
+module.exports = Objective;

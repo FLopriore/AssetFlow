@@ -1,4 +1,4 @@
-import Asset from "../models/asset.model.js";
+const Asset = require("../models/asset.model.js");
 
 // Gets all the invested assets
 const getAllAssets = async (req, res) => {
@@ -56,4 +56,4 @@ const sellAsset = async (req, res) => {
     }
 };
 
-export {getAssetById, addAsset, sellAsset, getAllAssets};
+module.exports = {getAssetById, addAsset, sellAsset, getAllAssets};
