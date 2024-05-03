@@ -4,11 +4,13 @@ import App from './App.jsx'
 import './index.css'
 import {
   createBrowserRouter,
-  createRoutesFromElements,
-  Route,
   RouterProvider,
 } from "react-router-dom";
 import SignIn from './components/SignIn.jsx';
+import Expense from './components/Expense.jsx';
+import Savings from './components/Savings.jsx';
+import Asset from './components/Asset.jsx';
+import Income from './components/Income.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,26 @@ const router = createBrowserRouter([
     path: "/login",
     element: <SignIn />
   },
+
+  {
+    path: "/expense",
+    element: <Expense />
+  },
+
+  {
+    path: "/savings",
+    element: <Savings />
+  },
+
+  {
+    path: "/asset",
+    element: <Asset />
+  },
+
+  {
+    path: "/income",
+    element: <Income />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
