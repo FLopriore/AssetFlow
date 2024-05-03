@@ -3,13 +3,16 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Sidebar from './components/Sidebar'
+import { Box } from '@mui/material'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    <Sidebar></Sidebar>
+     <Box className='outerbox'>
+      <Sidebar />
+      <Box className='innerbox'>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -30,6 +33,8 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      </Box>
+      </Box>
     </>
   )
 }

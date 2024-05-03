@@ -11,6 +11,7 @@ import Expense from './components/Expense.jsx';
 import Savings from './components/Savings.jsx';
 import Asset from './components/Asset.jsx';
 import Income from './components/Income.jsx';
+import Sidebar from './components/Sidebar'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/income",
     element: <Income />
+  },
+
+  {
+    element: <Sidebar />
   }
 ]);
 

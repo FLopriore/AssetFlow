@@ -42,7 +42,7 @@ export default function Sidebar() {
   }, [location, routes]);
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 250, marginTop: 2}} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         {
           routes.map((route) => (
@@ -50,9 +50,9 @@ export default function Sidebar() {
               <ListItem key={route.value}>
                 <ListItemButton>
                   <ListItemIcon>
-                    <route.icon />
+                    <route.icon sx={{color: 'black'}}/>
                   </ListItemIcon>
-                  <ListItemText primary={route.label} className='bartext'/>
+                  <ListItemText primary={route.label} sx={{color: 'black'}}/>
                 </ListItemButton>
               </ListItem>
             </Link>
@@ -64,7 +64,14 @@ export default function Sidebar() {
 
   return (
     <div>
-      <Drawer variant="permanent" open={open} onClose={toggleDrawer(false)}>
+      <Drawer variant="permanent" open={open} onClose={toggleDrawer(false)} sx={{
+        width: 250,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+            width: 250,
+            boxSizing: 'border-box',
+        },
+      }}>
         {DrawerList}
       </Drawer>
     </div>
