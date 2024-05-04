@@ -28,7 +28,7 @@ app.use(expressSession(
     {
         secret: "secret_passcode",
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: true,
     }));  //secret passcode, è usata per segnare il session cookie.
 app.use(passport.initialize());
 app.use(passport.session());

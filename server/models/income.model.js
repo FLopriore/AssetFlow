@@ -10,7 +10,7 @@ const incomeSchema = new mongoose.Schema(
         positiveAmount: {
             type: Number,
             required: true,
-            default: 0,
+            min: [0, 'The amount must be positive!'],
         },
         description: {
             type: String,

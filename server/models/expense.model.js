@@ -10,7 +10,7 @@ const expenseSchema = new mongoose.Schema(
         negativeAmount: {
             type: Number,
             required: true,
-            default: 0,
+            max: [0, 'The amount must be negative!'],
         },
         description: {
             type: String,
