@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-//import records from "./routes/record.js";
+
 //Routes import
 const AssetRoute = require("./routes/asset.route.js");
 const ExpenseRoute = require("./routes/expense.route.js");
@@ -32,7 +32,6 @@ app.use(expressSession(
     }));  //secret passcode, è usata per segnare il session cookie.
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use("/record", records);
 
 //passport
 passport.use(new LocalStrategy(User.authenticate())); //User.authenticate() è un metodo di mongoose-passport-local
