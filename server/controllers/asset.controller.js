@@ -5,7 +5,7 @@ const getAllAssets = async (req, res) => {
     try {
         const allAssets = await Asset.find({});
 
-        if (!allAssets) {
+        if (!allAssets.length) {
             return res.status(404).json({message: 'Assets not found!'});
         }
         res.status(200).json(allAssets);

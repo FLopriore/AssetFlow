@@ -5,7 +5,7 @@ const getAllExpenses = async (req, res) => {
     try {
         const allExpenses = await Expense.find({});
 
-        if (!allExpenses) {
+        if (!allExpenses.length) {
             return res.status(404).json({message: 'Expenses not found!'});
         }
         res.status(200).json(allExpenses);

@@ -7,7 +7,7 @@ const getAllIncomes = async (req, res) => {
     try {
         const allIncomes = await Income.find({});
 
-        if (!allIncomes) {
+        if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
         }
         res.status(200).json(allIncomes);
