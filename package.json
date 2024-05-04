@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
+    "@mui/x-charts": "^7.3.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",

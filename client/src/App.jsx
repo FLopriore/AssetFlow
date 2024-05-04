@@ -1,25 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import MenuAppBar from './components/AppBar'
 import './App.css'
 import Sidebar from './components/Sidebar'
 import { Box } from '@mui/material'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-     <Box className='outerbox'>
-      <Sidebar />
-      <Box className='innerbox' sx={{display: 'flex'}}>
-        <Box sx={{alignSelf: 'center', flexGrow: 1}}>
-          <p>Qui le entrate</p>
-        </Box>
-        <Box sx={{alignSelf: 'center', flexGrow: 1}}>
-          <p>Qui le uscite</p>
-        </Box>
-      </Box>
+     <Box className='window'>
+      <Sidebar className='sidebar'/>
+      <Box className='main-content' id='homebox'> 
+        <MenuAppBar id='appbar-h'/>
+          <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: 1, height: '100%'}}>
+            <Box sx={{flexGrow: 1}}>
+                <p>Prova 1</p>
+            </Box>
+            <Box sx={{flexGrow: 1}}>
+              <p>Prova 2</p>
+            </Box>
+            </Box>
+          </Box>
       </Box>
     </>
   )

@@ -11,23 +11,19 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
+
 
 a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
-a:hover {
-  color: #535bf2;
-}
+
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -66,3 +62,56 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.bartext {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+
+.main-content {
+  display: flex;
+}
+
+.innerbox {
+  flex-grow: 1;
+  width: calc(100% - 250px)
+}
+
+.window {
+  height: 100vh;
+  min-height: 100vh;
+  width: 100vw;
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: 250px 1fr;
+  grid-template-areas: "sidebar main-content";
+}
+
+.sidebar {
+  grid-area: sidebar;
+  padding: 1em;
+  border-radius: 8px;
+}
+
+.main-content {
+  grid-area: main-content;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#homebox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+p {
+  text-align: center;
+}
+
+.appbar-h {
+  flex-grow: 1;
+  width: 100%;
+}
+
