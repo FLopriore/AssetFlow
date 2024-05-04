@@ -1,26 +1,59 @@
 const User = require("../models/user.model.js");
-const passport = require("passport")
+const passport = require("passport");
+const jsonwebtoken = require("jsonwebtoken");
 
-// TODO: check existing user
-const createUser = async (req, res) => {
+const SECRET_KEY = process.env.SECRET_KEY || "";
+
+const createUser = (req, res) => {
     const newUser = new User({email: req.body.email}); //Crea l'user e gli chiede come param l'email
-    User.register(newUser, req.body.password, (error, user) => {
-        if (error) {
-            res.status(500).json({message: `Your account could not be created. Error: ${error}`});
+    User.register(newUser, req.body.password, (err, user) => {
+        if (err) {
+            res.status(500).json({success: false, error: err});
         } else {
-            res.status(200).json({message: 'Account created successfully'});
+            res.status(200).json({success: true, message: 'Account created successfully'});
         }
     });
 };
 
-const authUser = passport.authenticate("local",
-    {
-        failureRedirect: "/user/login", //Route Lato Client
-        failureFlash: "Login non riuscito",
-        successRedirect: "/", //Route lato Client
-        successFlash: "Login riuscito"
-    }
-);
+const authUser = (req, res) => {
+    passport.authenticate(
+        "local",
+        {
+            failureRedirect: "/login-failure",
+            failureFlash: "Login non riuscito",
+            successRedirect: "/",
+            successFlash: "Login riuscito"
+        },
+        (error, user) => {
+            if (error) {
+                return res.status(500).json({message: error});
+            } else {
+                if (!user) {
+                    res.status(403).json({success: false, message: "Email o password errate."});
+                } else {
+                    const token = jsonwebtoken.sign(
+                        {
+                            data: {
+                                userId: user._id,
+                                email: user.email
+                            },
+                            exp: new Date().setDate(new Date().getDate() + 1) // expires in 24h
+                        },
+                        SECRET_KEY
+                    );
+                    res.cookie("token", token, {  // send cookie with token
+                        withCredentials: true,
+                        httpOnly: false,
+                    });
+
+                    res.status(201).json({
+                        success: true,
+                        message: "Login successful"
+                    });
+                }
+            }
+        })(req, res);
+}
 
 
 module.exports = {createUser, authUser};

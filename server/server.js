@@ -1,3 +1,4 @@
+require('dotenv').config({path: './server/config.env'})
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -14,19 +15,19 @@ const UserRoute = require("./routes/user.route.js");
 const User = require("./models/user.model.js");
 const expressSession = require("express-session");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
 
 const PORT = process.env.PORT || 3000;
-const uri = process.env.ATLAS_URI || "";
+const ATLAS_URI = process.env.ATLAS_URI || "";
+const SECRET_KEY = process.env.SECRET_KEY || "";
 const app = express();
 
 //middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: false})); //Affinchè possa prendere dai form i campi
+app.use(express.urlencoded({extended: true})); //Affinchè possa prendere dai form i campi
 app.use(expressSession(
     {
-        secret: "secret_passcode",
+        secret: SECRET_KEY,
         resave: false,
         saveUninitialized: true,
     }));  //secret passcode, è usata per segnare il session cookie.
@@ -34,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //passport
-passport.use(new LocalStrategy(User.authenticate())); //User.authenticate() è un metodo di mongoose-passport-local
+passport.use(User.createStrategy());  //User.createStrategy() è una funzione di passport-local-mongoose che setta automaticamente una strategia
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -46,7 +47,7 @@ app.use("/api/objective", ObjectiveRoute);
 app.use("/api/budget", BudgetRoute);
 app.use("/api/user", UserRoute);
 
-mongoose.connect(uri)
+mongoose.connect(ATLAS_URI)
     .then(() => {
         console.log("Connected to database");
 
