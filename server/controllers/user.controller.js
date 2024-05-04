@@ -1,15 +1,15 @@
 const User = require("../models/user.model.js");
 const passport = require("passport")
 
-//TODO: Specify and else
-const createUser = async (req, res, next) => {
+// TODO: check existing user
+const createUser = async (req, res) => {
     const newUser = new User({email: req.body.email}); //Crea l'user e gli chiede come param l'email
     User.register(newUser, req.body.password, (error, user) => {
-        if (user) {
-            next();
-            // add redirect to login page
+        if (error) {
+            res.status(500).json({message: `Your account could not be created. Error: ${error}`});
+        } else {
+            res.status(200).json({message: 'Account created successfully'});
         }
-        // else ADD ERROR MESSAGE
     });
 };
 
