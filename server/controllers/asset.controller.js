@@ -21,7 +21,7 @@ const getAssetById = async (req, res) => {
         const asset = await Asset.findById(id);
 
         if (!asset) {
-            return res.status(404).json({message: 'Asset'});
+            return res.status(404).json({message: 'Asset not found!'});
         }
         res.status(200).json(asset);
     } catch (e) {

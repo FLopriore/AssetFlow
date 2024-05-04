@@ -21,7 +21,7 @@ const getExpenseById = async (req, res) => {
         const expense = await Expense.findById(id);
 
         if (!expense) {
-            return res.status(404).json({message: 'Expense'});
+            return res.status(404).json({message: 'Expense not found!'});
         }
         res.status(200).json(expense);
     } catch (e) {

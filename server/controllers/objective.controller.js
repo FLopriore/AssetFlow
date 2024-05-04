@@ -21,7 +21,7 @@ const getObjectiveById = async (req, res) => {
         const objective = await Objective.findById(id);
 
         if (!objective) {
-            return res.status(404).json({message: 'Objective'});
+            return res.status(404).json({message: 'Objective not found!'});
         }
         res.status(200).json(objective);
     } catch (e) {

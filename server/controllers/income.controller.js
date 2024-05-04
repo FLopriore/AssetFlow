@@ -23,7 +23,7 @@ const getIncomeById = async (req, res) => {
         const income = await Income.findById(id);
 
         if (!income) {
-            return res.status(404).json({message: 'Income'});
+            return res.status(404).json({message: 'Income not found!'});
         }
         res.status(200).json(income);
     } catch (e) {
