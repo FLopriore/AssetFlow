@@ -12,27 +12,13 @@ function App() {
     <>
      <Box className='outerbox'>
       <Sidebar />
-      <Box className='innerbox'>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Box className='innerbox' sx={{display: 'flex'}}>
+        <Box sx={{alignSelf: 'center', flexGrow: 1}}>
+          <p>Qui le entrate</p>
+        </Box>
+        <Box sx={{alignSelf: 'center', flexGrow: 1}}>
+          <p>Qui le uscite</p>
+        </Box>
       </Box>
       </Box>
     </>
