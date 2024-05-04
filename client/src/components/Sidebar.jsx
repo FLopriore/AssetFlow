@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -13,6 +12,7 @@ import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
 import { ListItemIcon } from '@mui/material';
+import Box from '@mui/material/Box';
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
