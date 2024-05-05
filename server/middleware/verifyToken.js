@@ -7,26 +7,21 @@ function verifyToken(req, res, next) {
     let token = req.headers.token;
     if (!token) return res.status(401).json({error: true, message: "Provide Token"});
     else {
-        const decoded = jsonwebtoken.verify(token, SECRET_KEY,
+        jsonwebtoken.verify(token, SECRET_KEY,
             (errors, payload) => {
                 if (payload) {
                     //Verificato il token dovrebbe restituirmi l'ID dell'utente
-                    User.findById(payload.data).then(user => {
+                    User.findById(payload.data.userId).then(user => {
                             if (user) {
+                                req.userId = payload.data.userId;
                                 next();
                             } else {
-                                res.status(403).json({
-                                    error: true,
-                                    message: "No User account found."
-                                });
+                                res.status(403).json({error: true, message: "No User account found."});
                             }
                         }
                     );
                 } else {
-                    return res.status(401).json({
-                        error: true,
-                        message: "Invalid Token"
-                    });
+                    return res.status(401).json({error: true, message: "Invalid Token"});
                 }
             }
         );
