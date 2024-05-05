@@ -115,3 +115,7 @@ p {
   width: 100%;
 }
 
+.appbar {
+  display: flex;
+  align-items: right;
+}

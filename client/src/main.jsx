@@ -11,7 +11,23 @@ import Expense from './components/Expense.jsx';
 import Savings from './components/Savings.jsx';
 import Asset from './components/Asset.jsx';
 import Income from './components/Income.jsx';
-import Sidebar from './components/Sidebar'
+import Sidebar from './components/Sidebar';
+import SignUp from './components/SignUp.jsx';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#31ccaf',
+    },
+    secondary: {
+      main: '#FF5747',
+    },
+  },
+});
+
 
 const router = createBrowserRouter([
   {
@@ -46,11 +62,18 @@ const router = createBrowserRouter([
 
   {
     element: <Sidebar />
+  },
+
+  {
+    path: "/signup",
+    element: <SignUp />
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>,
 )
