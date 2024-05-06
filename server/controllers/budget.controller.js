@@ -4,8 +4,8 @@ const sumEntries = require('../utils/budget.utils.js');
 
 // Returns a list with all incomes and expenses
 const getBudgetEntries = (req, res) => {
-    const incomesPromise = Income.find({}).exec();  // exec() is necessary to get promises from queries
-    const expensePromise = Expense.find({}).exec();
+    const incomesPromise = Income.find({userId: req.userId}).exec();  // exec() is necessary to get promises from queries
+    const expensePromise = Expense.find({userId: req.userId}).exec();
 
     Promise.all([incomesPromise, expensePromise])
         .then((responses) => {
@@ -20,8 +20,8 @@ const getBudgetEntries = (req, res) => {
 
 // Returns total budget (total incomes - total expenses)
 const getTotalBudget = (req, res) => {
-    const incomesPromise = Income.find({}).exec();  // exec() is necessary to get promises from queries
-    const expensePromise = Expense.find({}).exec();
+    const incomesPromise = Income.find({userId: req.userId}).exec();  // exec() is necessary to get promises from queries
+    const expensePromise = Expense.find({userId: req.userId}).exec();
 
     Promise.all([incomesPromise, expensePromise])
         .then((budgetEntriesList) => {

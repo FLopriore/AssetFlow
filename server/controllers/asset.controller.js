@@ -1,9 +1,10 @@
 const Asset = require("../models/asset.model.js");
+const mongoose = require("mongoose");
 
 // Gets all the invested assets
 const getAllAssets = async (req, res) => {
     try {
-        const allAssets = await Asset.find({});
+        const allAssets = await Asset.find({userId: req.userId});
 
         if (!allAssets.length) {
             return res.status(404).json({message: 'Assets not found!'});
@@ -18,7 +19,10 @@ const getAllAssets = async (req, res) => {
 const getAssetById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
-        const asset = await Asset.findById(id);
+        const asset = await Asset.findOne({
+            _id: new mongoose.Types.ObjectId(id),
+            userId: req.userId,
+        });
 
         if (!asset) {
             return res.status(404).json({message: 'Asset not found!'});
@@ -32,7 +36,11 @@ const getAssetById = async (req, res) => {
 // Adds a new asset and returns it.
 const addAsset = async (req, res) => {
     try {
-        const assetContent = req.body;
+        const assetContent = {
+            tracker: req.body.tracker,
+            investedCapital: req.body.investedCapital,
+            userId: req.userId,
+        };
         const newAssetAdded = await Asset.create(assetContent);
         res.status(200).json(newAssetAdded);
     } catch (e) {
@@ -45,7 +53,10 @@ const addAsset = async (req, res) => {
 const sellAsset = async (req, res) => {
     try {
         const {id} = req.params;
-        const soldAsset = await Asset.findByIdAndDelete(id);
+        const soldAsset = await Asset.findOneAndDelete({
+            _id: new mongoose.Types.ObjectId(id),
+            userId: req.userId,
+        });
 
         if (!soldAsset) {
             return res.status(404).json({message: 'Asset not found!'});

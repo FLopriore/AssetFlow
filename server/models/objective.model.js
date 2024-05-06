@@ -15,6 +15,11 @@ const objectiveSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        userId: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'User',
+            required: true,
+        },
     },
     {
         timestamps: true

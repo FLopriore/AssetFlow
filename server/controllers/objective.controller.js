@@ -1,9 +1,10 @@
 const Objective = require("../models/objective.model.js");
+const mongoose = require("mongoose");
 
 // Gets all the objectives
 const getAllObjectives = async (req, res) => {
     try {
-        const allObjectives = await Objective.find({});
+        const allObjectives = await Objective.find({userId: req.userId});
 
         if (!allObjectives.length) {
             return res.status(404).json({message: 'Objectives not found!'});
@@ -18,7 +19,10 @@ const getAllObjectives = async (req, res) => {
 const getObjectiveById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
-        const objective = await Objective.findById(id);
+        const objective = await Objective.findOne({
+            _id: new mongoose.Types.ObjectId(id),
+            userId: req.userId,
+        });
 
         if (!objective) {
             return res.status(404).json({message: 'Objective not found!'});
@@ -32,7 +36,12 @@ const getObjectiveById = async (req, res) => {
 // Adds a new objective and returns it.
 const addObjective = async (req, res) => {
     try {
-        const objectiveContent = req.body;
+        const objectiveContent = {
+            name: req.body.name,
+            objectiveMoney: req.body.objectiveMoney,
+            savedMoney: req.body.savedMoney,
+            userId: req.userId,
+        };
         const newObjectiveAdded = await Objective.create(objectiveContent);
         res.status(200).json(newObjectiveAdded);
     } catch (e) {
@@ -44,7 +53,10 @@ const addObjective = async (req, res) => {
 const deleteObjective = async (req, res) => {
     try {
         const {id} = req.params;
-        const deletedObjective = await Objective.findByIdAndDelete(id);
+        const deletedObjective = await Objective.findOneAndDelete({
+            _id: new mongoose.Types.ObjectId(id),
+            userId: req.userId,
+        });
 
         if (!deletedObjective) {
             return res.status(404).json({message: 'Objective not found!'});

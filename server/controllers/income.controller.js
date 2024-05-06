@@ -1,11 +1,12 @@
 const Income = require("../models/income.model.js");
+const mongoose = require("mongoose");
 
 // Gets all the incomes
 // TODO: set a limit of entries
 // TODO: get values in a time frame
 const getAllIncomes = async (req, res) => {
     try {
-        const allIncomes = await Income.find({});
+        const allIncomes = await Income.find({userId: req.userId});
 
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
@@ -20,7 +21,10 @@ const getAllIncomes = async (req, res) => {
 const getIncomeById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
-        const income = await Income.findById(id);
+        const income = await Income.findOne({
+            _id: new mongoose.Types.ObjectId(id),
+            userId: req.userId,
+        });
 
         if (!income) {
             return res.status(404).json({message: 'Income not found!'});
@@ -34,7 +38,12 @@ const getIncomeById = async (req, res) => {
 // Adds a new income and returns it.
 const addIncome = async (req, res) => {
     try {
-        const incomeContent = req.body;
+        const incomeContent = {
+            category: req.body.category,
+            positiveAmount: req.body.positiveAmount,
+            description: req.body.description,
+            userId: req.userId,
+        };
         const newIncomeAdded = await Income.create(incomeContent);
         res.status(200).json(newIncomeAdded);
     } catch (e) {
@@ -46,7 +55,10 @@ const addIncome = async (req, res) => {
 const deleteIncome = async (req, res) => {
     try {
         const {id} = req.params;
-        const deletedIncome = await Income.findByIdAndDelete(id);
+        const deletedIncome = await Income.findOneAndDelete({
+            _id: new mongoose.Types.ObjectId(id),
+            userId: req.userId,
+        });
 
         if (!deletedIncome) {
             return res.status(404).json({message: 'Income not found!'});
