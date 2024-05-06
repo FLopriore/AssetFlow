@@ -22,7 +22,7 @@ const getAssetById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
         let asset = await Asset.findOne({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 
@@ -66,7 +66,7 @@ const sellAsset = async (req, res) => {
     try {
         const {id} = req.params;
         const soldAsset = await Asset.findOneAndDelete({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 

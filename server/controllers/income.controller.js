@@ -24,7 +24,7 @@ const getIncomeById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
         let income = await Income.findOne({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 
@@ -70,7 +70,7 @@ const deleteIncome = async (req, res) => {
     try {
         const {id} = req.params;
         const deletedIncome = await Income.findOneAndDelete({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 

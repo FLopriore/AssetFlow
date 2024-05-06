@@ -22,7 +22,7 @@ const getObjectiveById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
         let objective = await Objective.findOne({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 
@@ -68,7 +68,7 @@ const deleteObjective = async (req, res) => {
     try {
         const {id} = req.params;
         const deletedObjective = await Objective.findOneAndDelete({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 

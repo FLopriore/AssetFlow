@@ -22,7 +22,7 @@ const getExpenseById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
         let expense = await Expense.findOne({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 
@@ -68,7 +68,7 @@ const deleteExpense = async (req, res) => {
     try {
         const {id} = req.params;
         const deletedExpense = await Expense.findOneAndDelete({
-            _id: new mongoose.Types.ObjectId(id),
+            _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,
         });
 
