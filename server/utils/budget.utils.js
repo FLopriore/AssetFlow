@@ -9,4 +9,4 @@ function sumEntries(budgetEntriesList) {
     return totalIncomes + totalExpenses;
 }
 
-module.exports = sumEntries;
+module.exports = {sumEntries};

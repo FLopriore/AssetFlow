@@ -1,16 +1,18 @@
 const Income = require("../models/income.model.js");
 const mongoose = require("mongoose");
+const {filterResponse} = require("../utils/response.utils");
 
 // Gets all the incomes
 // TODO: set a limit of entries
 // TODO: get values in a time frame
 const getAllIncomes = async (req, res) => {
     try {
-        const allIncomes = await Income.find({userId: req.userId});
+        let allIncomes = await Income.find({userId: req.userId});
 
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
         }
+        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description']);
         res.status(200).json(allIncomes);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -21,7 +23,7 @@ const getAllIncomes = async (req, res) => {
 const getIncomeById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
-        const income = await Income.findOne({
+        let income = await Income.findOne({
             _id: new mongoose.Types.ObjectId(id),
             userId: req.userId,
         });
@@ -29,6 +31,12 @@ const getIncomeById = async (req, res) => {
         if (!income) {
             return res.status(404).json({message: 'Income not found!'});
         }
+        income = {
+            _id: income._id,
+            category: income.category,
+            positiveAmount: income.positiveAmount,
+            description: income.description
+        };
         res.status(200).json(income);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -44,7 +52,13 @@ const addIncome = async (req, res) => {
             description: req.body.description,
             userId: req.userId,
         };
-        const newIncomeAdded = await Income.create(incomeContent);
+        let newIncomeAdded = await Income.create(incomeContent);
+        newIncomeAdded = {
+            _id: newIncomeAdded._id,
+            category: newIncomeAdded.category,
+            positiveAmount: newIncomeAdded.positiveAmount,
+            description: newIncomeAdded.description
+        };
         res.status(200).json(newIncomeAdded);
     } catch (e) {
         res.status(500).json({message: e.message});

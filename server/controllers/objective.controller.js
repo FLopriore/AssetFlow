@@ -1,14 +1,16 @@
 const Objective = require("../models/objective.model.js");
 const mongoose = require("mongoose");
+const {filterResponse} = require("../utils/response.utils");
 
 // Gets all the objectives
 const getAllObjectives = async (req, res) => {
     try {
-        const allObjectives = await Objective.find({userId: req.userId});
+        let allObjectives = await Objective.find({userId: req.userId});
 
         if (!allObjectives.length) {
             return res.status(404).json({message: 'Objectives not found!'});
         }
+        allObjectives = filterResponse(allExpenses, ['_id', 'name', 'objectiveMoney', 'savedMoney']);
         res.status(200).json(allObjectives);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -19,7 +21,7 @@ const getAllObjectives = async (req, res) => {
 const getObjectiveById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
-        const objective = await Objective.findOne({
+        let objective = await Objective.findOne({
             _id: new mongoose.Types.ObjectId(id),
             userId: req.userId,
         });
@@ -27,6 +29,12 @@ const getObjectiveById = async (req, res) => {
         if (!objective) {
             return res.status(404).json({message: 'Objective not found!'});
         }
+        objective = {
+            _id: objective._id,
+            name: objective.name,
+            objectiveMoney: objective.objectiveMoney,
+            savedMoney: objective.savedMoney,
+        };
         res.status(200).json(objective);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -42,7 +50,13 @@ const addObjective = async (req, res) => {
             savedMoney: req.body.savedMoney,
             userId: req.userId,
         };
-        const newObjectiveAdded = await Objective.create(objectiveContent);
+        let newObjectiveAdded = await Objective.create(objectiveContent);
+        newObjectiveAdded = {
+            _id: newObjectiveAdded._id,
+            name: newObjectiveAdded.name,
+            objectiveMoney: newObjectiveAdded.objectiveMoney,
+            savedMoney: newObjectiveAdded.savedMoney,
+        };
         res.status(200).json(newObjectiveAdded);
     } catch (e) {
         res.status(500).json({message: e.message});

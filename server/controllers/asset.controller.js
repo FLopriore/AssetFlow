@@ -1,14 +1,16 @@
 const Asset = require("../models/asset.model.js");
 const mongoose = require("mongoose");
+const {filterResponse} = require('../utils/response.utils');
 
 // Gets all the invested assets
 const getAllAssets = async (req, res) => {
     try {
-        const allAssets = await Asset.find({userId: req.userId});
+        let allAssets = await Asset.find({userId: req.userId});
 
         if (!allAssets.length) {
             return res.status(404).json({message: 'Assets not found!'});
         }
+        allAssets = filterResponse(allAssets, ['_id', 'tracker', 'investedCapital']);
         res.status(200).json(allAssets);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -19,7 +21,7 @@ const getAllAssets = async (req, res) => {
 const getAssetById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
-        const asset = await Asset.findOne({
+        let asset = await Asset.findOne({
             _id: new mongoose.Types.ObjectId(id),
             userId: req.userId,
         });
@@ -27,6 +29,11 @@ const getAssetById = async (req, res) => {
         if (!asset) {
             return res.status(404).json({message: 'Asset not found!'});
         }
+        asset = {
+            _id: asset._id,
+            tracker: asset.tracker,
+            investedCapital: asset.investedCapital,
+        };
         res.status(200).json(asset);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -41,7 +48,12 @@ const addAsset = async (req, res) => {
             investedCapital: req.body.investedCapital,
             userId: req.userId,
         };
-        const newAssetAdded = await Asset.create(assetContent);
+        let newAssetAdded = await Asset.create(assetContent);
+        newAssetAdded = {
+            _id: newAssetAdded._id,
+            tracker: newAssetAdded.tracker,
+            investedCapital: newAssetAdded.investedCapital
+        };
         res.status(200).json(newAssetAdded);
     } catch (e) {
         res.status(500).json({message: e.message});

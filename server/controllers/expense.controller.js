@@ -1,14 +1,16 @@
 const Expense = require("../models/expense.model.js");
 const mongoose = require('mongoose');
+const {filterResponse} = require("../utils/response.utils");
 
 // Gets all the expenses
 const getAllExpenses = async (req, res) => {
     try {
-        const allExpenses = await Expense.find({userId: req.userId});
+        let allExpenses = await Expense.find({userId: req.userId});
 
         if (!allExpenses.length) {
             return res.status(404).json({message: 'Expenses not found!'});
         }
+        allExpenses = filterResponse(allExpenses, ['_id', 'category', 'negativeAmount', 'description']);
         res.status(200).json(allExpenses);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -19,7 +21,7 @@ const getAllExpenses = async (req, res) => {
 const getExpenseById = async (req, res) => {
     try {
         const {id} = req.params;  // destructure id from params
-        const expense = await Expense.findOne({
+        let expense = await Expense.findOne({
             _id: new mongoose.Types.ObjectId(id),
             userId: req.userId,
         });
@@ -27,6 +29,12 @@ const getExpenseById = async (req, res) => {
         if (!expense) {
             return res.status(404).json({message: 'Expense not found!'});
         }
+        expense = {
+            _id: expense._id,
+            category: expense.category,
+            negativeAmount: expense.negativeAmount,
+            description: expense.description,
+        };
         res.status(200).json(expense);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -42,7 +50,13 @@ const addExpense = async (req, res) => {
             description: req.body.description,
             userId: req.userId,
         };
-        const newExpenseAdded = await Expense.create(expenseContent);
+        let newExpenseAdded = await Expense.create(expenseContent);
+        newExpenseAdded = {
+            _id: newExpenseAdded._id,
+            category: newExpenseAdded.category,
+            negativeAmount: newExpenseAdded.negativeAmount,
+            description: newExpenseAdded.description,
+        };
         res.status(200).json(newExpenseAdded);
     } catch (e) {
         res.status(500).json({message: e.message});
