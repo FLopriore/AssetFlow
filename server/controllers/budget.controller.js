@@ -1,6 +1,6 @@
 const Income = require("../models/income.model.js");
 const Expense = require("../models/expense.model.js");
-const {sumEntries} = require('../utils/budget.utils.js');
+const {sumEntries, getTotal} = require('../utils/budget.utils.js');
 const {filterResponse} = require("../utils/response.utils");
 
 // Returns a list with all incomes and expenses
@@ -49,4 +49,35 @@ const getTotalBudget = (req, res) => {
         .catch((e) => res.status(500).json({message: e.message}));
 };
 
-module.exports = {getBudgetEntries, getTotalBudget};
+// Returns total income
+const getTotalIncome = async (req, res) => {
+    try {
+        const incomesList = await Income.find({userId: req.userId});
+        const totalIncome = getTotal(incomesList, 'positiveAmount');
+
+        const responseJson = {
+            totalIncome: totalIncome
+        };
+        res.status(200).json(responseJson);
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+};
+
+// Returns total expenses
+const getTotalExpenses = async (req, res) => {
+    try {
+        const expensesList = await Expense.find({userId: req.userId});
+        console.log(expensesList)
+        const totalExpenses = getTotal(expensesList, 'negativeAmount');
+
+        const responseJson = {
+            totalExpenses: totalExpenses
+        };
+        res.status(200).json(responseJson);
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+};
+
+module.exports = {getBudgetEntries, getTotalBudget, getTotalIncome, getTotalExpenses};
