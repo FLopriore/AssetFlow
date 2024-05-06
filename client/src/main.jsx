@@ -15,12 +15,13 @@ import Sidebar from './components/Sidebar';
 import SignUp from './components/SignUp.jsx';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
 
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
-      main: '#31ccaf',
+      main: '#009b7e',
     },
     secondary: {
       main: '#FF5747',
@@ -73,6 +74,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>,

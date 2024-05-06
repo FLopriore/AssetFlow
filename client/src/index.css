@@ -26,11 +26,6 @@ body {
   margin: 0;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -96,7 +91,7 @@ button:focus-visible {
 
 .main-content {
   grid-area: main-content;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -106,8 +101,9 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
-p {
+h1 {
   text-align: center;
+  font-size: 40px;
 }
 
 .appbar-h {
@@ -115,7 +111,8 @@ p {
   width: 100%;
 }
 
-.appbar {
-  display: flex;
-  align-items: right;
+h2 {
+  font-size: 30px;
+  margin: 0;
 }
+
