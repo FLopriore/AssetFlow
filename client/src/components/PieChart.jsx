@@ -4,7 +4,7 @@ import { PieChart } from '@mui/x-charts/PieChart';
 export function IncomePie() {
   return (
     <PieChart
-      colors={['#61C86A', '#213547', '#009b7e', '##747bff', '#FF5747']}
+      colors={['#61C86A', '#81ff7a', '#009b7e', '#9adcbf', '#039655']}
       series={[
         {
           data: [
@@ -33,7 +33,7 @@ export function IncomePie() {
 export function ExpensePie() {
     return (
       <PieChart
-        colors={['#61C86A', '#213547', '#009b7e', '##747bff', '#FF5747']}
+        colors={['#ff9c83', '#ff0000', '#b71000', '#ff5e00', '#FF5747']}
         series={[
           {
             data: [
