@@ -10,6 +10,7 @@ const IncomeRoute = require("./routes/income.route.js");
 const ObjectiveRoute = require("./routes/objective.route.js");
 const BudgetRoute = require("./routes/budget.route.js");
 const UserRoute = require("./routes/user.route.js");
+const VerifyRoute = require("./routes/verify.route.js");
 
 //Session Imports
 const User = require("./models/user.model.js");
@@ -46,6 +47,7 @@ app.use("/api/income", IncomeRoute);
 app.use("/api/objective", ObjectiveRoute);
 app.use("/api/budget", BudgetRoute);
 app.use("/api/user", UserRoute);
+app.use("/api/verify",VerifyRoute);
 
 mongoose.connect(ATLAS_URI)
     .then(() => {
