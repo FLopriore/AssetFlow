@@ -16,7 +16,7 @@ function verifyToken(req, res, next) {
                                 req.userId = payload.data.userId;
                                 next();
                             } else {
-                                res.status(403).json({error: true, message: "No User account found."});
+                                res.status(403).json({error: true, message: "No account associated with this user was found."});
                             }
                         }
                     );

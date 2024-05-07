@@ -21,7 +21,7 @@ function sumEntries(budgetEntriesList) {
 //     {name: "Mario", budgetEntry: 30},
 //     {name: "Mario", budgetEntry: 10},
 // ];
-// field in this case can be 'budgetEntry'. The function will return 15 + 30 + 10 = 55).
+//  In this case, field can be 'budgetEntry'. The function will return 15 + 30 + 10 = 55.
 function getTotal(array, field) {
     if (array.length === 0) {
         return 0;
