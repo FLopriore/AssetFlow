@@ -15,6 +15,6 @@ router.get("/:id", getObjectiveById);
 
 router.post("/", addObjective);
 
-router.delete("/:id", verifyToken, deleteObjective);
+router.delete("/:id", deleteObjective);
 
 module.exports = router
