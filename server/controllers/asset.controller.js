@@ -10,7 +10,7 @@ const getAllAssets = async (req, res) => {
         if (!allAssets.length) {
             return res.status(404).json({message: 'Assets not found!'});
         }
-        allAssets = filterResponse(allAssets, ['_id', 'tracker', 'investedCapital']);
+        allAssets = filterResponse(allAssets, ['_id', 'tracker', 'investedCapital','createdAt']);
         res.status(200).json(allAssets);
     } catch (e) {
         res.status(500).json({message: e.message});

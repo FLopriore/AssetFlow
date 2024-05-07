@@ -12,7 +12,7 @@ const getAllIncomes = async (req, res) => {
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
         }
-        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description']);
+        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description','createdAt']);
         res.status(200).json(allIncomes);
     } catch (e) {
         res.status(500).json({message: e.message});

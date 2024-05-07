@@ -17,10 +17,10 @@ const getBudgetEntries = (req, res) => {
 
             // Remove useless fields from response arrays
             if (responses[0].length !== 0) {
-                responses[0] = filterResponse(responses[0], ['_id', 'category', 'positiveAmount', 'description'])
+                responses[0] = filterResponse(responses[0], ['_id', 'category', 'positiveAmount', 'description','createdAt'])
             }
             if (responses[1].length !== 0) {
-                responses[1] = filterResponse(responses[1], ['_id', 'category', 'negativeAmount', 'description'])
+                responses[1] = filterResponse(responses[1], ['_id', 'category', 'negativeAmount', 'description','createdAt'])
             }
 
             res.status(200).json(responses);
