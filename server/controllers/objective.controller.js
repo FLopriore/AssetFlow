@@ -10,7 +10,7 @@ const getAllObjectives = async (req, res) => {
         if (!allObjectives.length) {
             return res.status(404).json({message: 'Objectives not found!'});
         }
-        allObjectives = filterResponse(allExpenses, ['_id', 'name', 'objectiveMoney', 'savedMoney']);
+        allObjectives = filterResponse(allExpenses, ['_id', 'name', 'objectiveMoney', 'savedMoney','createdAt']);
         res.status(200).json(allObjectives);
     } catch (e) {
         res.status(500).json({message: e.message});
