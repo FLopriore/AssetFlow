@@ -63,6 +63,7 @@ export function ExpensePie({expensesList}) {
     );
 }
 
+// TODO: fix errors when server is down (?)
 function calculateTotalCategory(budgetEntriesList, category) {
     let total = 0;
     budgetEntriesList.forEach((el) => {
@@ -72,6 +73,5 @@ function calculateTotalCategory(budgetEntriesList, category) {
             if (el.category === category) total += el.negativeAmount * (-1);
         }
     });
-    console.log(total);
     return total;
 }
