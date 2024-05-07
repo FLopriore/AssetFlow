@@ -3,11 +3,13 @@ const router = express.Router();
 const verifyToken = require("../middleware/verifyToken.js");
 const {getIncomeById, addIncome, deleteIncome, getAllIncomes} = require("../controllers/income.controller.js")
 
-router.get("/", verifyToken, getAllIncomes);
-router.get("/:id", verifyToken, getIncomeById);
+router.use(verifyToken);
 
-router.post("/", verifyToken, addIncome);
+router.get("/", getAllIncomes);
+router.get("/:id", getIncomeById);
 
-router.delete("/:id", verifyToken, deleteIncome);
+router.post("/", addIncome);
+
+router.delete("/:id", deleteIncome);
 
 module.exports = router;

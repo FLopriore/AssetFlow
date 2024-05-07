@@ -3,11 +3,13 @@ const router = express.Router();
 const verifyToken = require("../middleware/verifyToken.js");
 const {getExpenseById, addExpense, deleteExpense, getAllExpenses} = require("../controllers/expense.controller.js")
 
-router.get("/", verifyToken, getAllExpenses);
-router.get("/:id", verifyToken, getExpenseById);
+router.use(verifyToken);
 
-router.post("/", verifyToken, addExpense);
+router.get("/", getAllExpenses);
+router.get("/:id", getExpenseById);
 
-router.delete("/:id", verifyToken, deleteExpense);
+router.post("/", addExpense);
+
+router.delete("/:id", deleteExpense);
 
 module.exports = router;

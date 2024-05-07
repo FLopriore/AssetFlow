@@ -3,9 +3,11 @@ const router = express.Router();
 const verifyToken = require("../middleware/verifyToken.js");
 const {getBudgetEntries, getTotalBudget, getTotalExpenses, getTotalIncome} = require("../controllers/budget.controller.js");
 
-router.get("/", verifyToken, getBudgetEntries);
-router.get("/total", verifyToken, getTotalBudget);
-router.get("/income", verifyToken, getTotalIncome);
-router.get("/expense", verifyToken, getTotalExpenses);
+router.use(verifyToken);
+
+router.get("/", getBudgetEntries);
+router.get("/total", getTotalBudget);
+router.get("/income", getTotalIncome);
+router.get("/expense", getTotalExpenses);
 
 module.exports = router

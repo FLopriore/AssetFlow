@@ -8,10 +8,12 @@ const {
     getAllObjectives
 } = require("../controllers/objective.controller.js")
 
-router.get("/", verifyToken, getAllObjectives);
-router.get("/:id", verifyToken, getObjectiveById);
+router.use(verifyToken);
 
-router.post("/", verifyToken, addObjective);
+router.get("/", getAllObjectives);
+router.get("/:id", getObjectiveById);
+
+router.post("/", addObjective);
 
 router.delete("/:id", verifyToken, deleteObjective);
 
