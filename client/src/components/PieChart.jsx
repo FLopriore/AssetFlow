@@ -65,14 +65,7 @@ export function ExpensePie({expensesList}) {
 }
 
 export function HomeGreenPie({incomesList}) {
-
-    const data = [
-        {id: 0, value: incomesList[0].positiveAmount},
-        {id: 1, value: incomesList[1].positiveAmount},
-        {id: 2, value: incomesList[2].positiveAmount},
-        {id: 3, value: incomesList[3].positiveAmount},
-        {id: 4, value: incomesList[4].positiveAmount},
-    ];
+    const data = getHomePieData(incomesList, true);
 
     return (
         <PieChart
@@ -98,14 +91,7 @@ export function HomeGreenPie({incomesList}) {
 }
 
 export function HomeRedPie({expensesList}) {
-    const data = [
-        {id: 0, value: expensesListList[0].negativeAmount},
-        {id: 1, value: expensesListList[1].negativeAmount},
-        {id: 2, value: expensesListList[2].negativeAmount},
-        {id: 3, value: expensesListList[3].negativeAmount},
-        {id: 4, value: expensesListList[4].negativeAmount},
-    ];
-
+    const data = getHomePieData(expensesList, false);
     return (
         <PieChart
             colors={['#ff9c83', '#ff0000', '#b71000', '#ff5e00', '#FF5747']}
@@ -141,5 +127,20 @@ function calculateTotalCategory(budgetEntriesList, category) {
         }
     });
     return total;
+}
+
+
+function getHomePieData(budgetEntriesList, isPositive) {
+    const data = [];
+    if (budgetEntriesList.length) {
+        budgetEntriesList.forEach((el, index) => {
+            if (index <= 5) {
+                const dataElement = {id: index, label: el.description};
+                dataElement.value = (isPositive) ? el.positiveAmount : el.negativeAmount;
+                data.push(dataElement);
+            }
+        })
+    }
+    return data;
 }
 

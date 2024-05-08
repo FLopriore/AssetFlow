@@ -2,7 +2,7 @@ import MenuAppBar from './components/AppBar'
 import './App.css'
 import Sidebar from './components/Sidebar'
 import {Box, Grid} from '@mui/material'
-import {ExpensePie, IncomePie, HomeGreenPie, HomeRedPie} from './components/PieChart'
+import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import getApi from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
 
