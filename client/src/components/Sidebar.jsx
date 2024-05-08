@@ -22,8 +22,7 @@ export default function Sidebar() {
     };
 
     const location = useLocation();
-    const [value, setValue] = React.useState(0);
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [selectedRoute, setSelectedRoute] = React.useState(location.pathname);
 
     const routes = [
         {path: "/", value: 0, label: "Home", icon: HomeRoundedIcon},
@@ -36,10 +35,9 @@ export default function Sidebar() {
     useEffect(() => {
         const route = routes.find((route) => route.path === location.pathname);
         if (route) {
-            setValue(route.value);
-            setSelectedIndex(route.value);
+            setSelectedRoute(route.path);
         } else {
-            setValue(0);
+            setSelectedRoute('/');
         }
     }, [location, routes]);
 
@@ -51,7 +49,7 @@ export default function Sidebar() {
                         <Link key={route.value} to={route.path}>
                             <ListItem key={route.value}>
                                 <ListItemButton
-                                    selected={selectedIndex === route.value}
+                                    selected={selectedRoute === route.path}
                                     sx={{
                                         "&.Mui-selected": {
                                             backgroundColor: "#009b7e",
@@ -65,10 +63,10 @@ export default function Sidebar() {
                                         },
                                     }}>
                                     <ListItemIcon>
-                                        <route.icon sx={{color: (selectedIndex === route.value) ? 'white' : 'black'}}/>
+                                        <route.icon sx={{color: (selectedRoute === route.path) ? 'white' : 'black'}}/>
                                     </ListItemIcon>
                                     <ListItemText primary={route.label}
-                                                  sx={{color: (selectedIndex === route.value) ? 'white' : 'black'}}/>
+                                                  sx={{color: (selectedRoute === route.path) ? 'white' : 'black'}}/>
                                 </ListItemButton>
                             </ListItem>
                         </Link>
