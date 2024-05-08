@@ -136,7 +136,7 @@ function getHomePieData(budgetEntriesList, isPositive) {
         budgetEntriesList.forEach((el, index) => {
             if (index <= 5) {
                 const dataElement = {id: index, label: el.description};
-                dataElement.value = (isPositive) ? el.positiveAmount : el.negativeAmount;
+                dataElement.value = (isPositive) ? el.positiveAmount : el.negativeAmount*(-1);
                 data.push(dataElement);
             }
         })
