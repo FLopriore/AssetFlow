@@ -41,14 +41,10 @@ const authUser = (req, res) => {
                         },
                         SECRET_KEY
                     );
-                    res.cookie("token", token, {  // send cookie with token
-                        withCredentials: true,
-                        httpOnly: false,
-                    });
-
                     res.status(201).json({
                         success: true,
-                        message: "Login successful"
+                        message: "Login successful",
+                        token: token
                     });
                 }
             }

@@ -33,6 +33,7 @@ export default function SignIn() {
       if (!data.success) {
         alert("Email o password incorretti")
       } else {
+        window.localStorage.setItem("token",data.token) //Salvo il token in local storage
         navigate('/')
       }
     }).catch(e => {

@@ -32,7 +32,7 @@ export default function SignUp() {
         if(!data.success) {
             alert("Esiste già un utente associato a questo indirizzo email")
         } else {
-            navigate('/')
+            navigate('/login')
         }
     }).catch(e => {
         console.log(e)
