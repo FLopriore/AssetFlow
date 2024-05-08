@@ -2,7 +2,7 @@ import MenuAppBar from './components/AppBar'
 import './App.css'
 import Sidebar from './components/Sidebar'
 import {Box, Grid} from '@mui/material'
-import {HomeGreenPie, HomeRedPie} from './components/PieChart'
+import {HomeGreenPie, HomeRedPie, ExpensePie} from './components/PieChart'
 import getApi from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
 
@@ -83,7 +83,7 @@ function App() {
                                     <h2>{expenseTotal}</h2>
                                 </Grid>
                                 <Grid item>
-                                    <HomeRedPie expensesList={expenseList}/>
+                                    <ExpensePie expensesList={expenseList}/>
                                 </Grid>
                                 <Grid item display='flex' alignItems='stretch'>
                                     <Box sx={{

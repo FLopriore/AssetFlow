@@ -48,10 +48,9 @@ export default function Expense() {
                         
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>
-                        <p>assets</p>
-                        </Box>
-                        
+                        <Card>
+                            
+                        </Card>
                     </Grid>
                 </Grid>
             </Box>
