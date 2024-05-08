@@ -83,7 +83,7 @@ function App() {
                                     <h2>{expenseTotal}</h2>
                                 </Grid>
                                 <Grid item>
-                                    <ExpensePie expensesList={expenseList}/>
+                                    <HomeRedPie expensesList={expenseList}/>
                                 </Grid>
                                 <Grid item display='flex' alignItems='stretch'>
                                     <Box sx={{
