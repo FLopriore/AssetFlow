@@ -5,20 +5,8 @@ import {Box, Grid, List, ListItem, ListItemText, Typography} from '@mui/material
 import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import getApi from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
+import getLatestEntriesData from "./utils/budgetEntries.utils.js";
 
-function getHomeData(budgetEntriesList, isPositive) {
-    const data = [];
-    if (budgetEntriesList.length) {
-        budgetEntriesList.forEach((el, index) => {
-            if (index <= 5) {
-                const dataElement = {id: index, label: el.description};
-                dataElement.value = (isPositive) ? el.positiveAmount : el.negativeAmount*(-1);
-                data.push(dataElement);
-            }
-        })
-    }
-    return data;
-}
 
 function App() {
     const [incomeTotal, setIncome] = useState(0);
@@ -48,8 +36,8 @@ function App() {
         });
     }, []);
 
-    const incomeData = getHomeData(incomeList, true);
-    const expenseData = getHomeData(expenseList, false);
+    const incomeData = getLatestEntriesData(incomeList, true);
+    const expenseData = getLatestEntriesData(expenseList, false);
 
     return (
         <>
