@@ -2,6 +2,7 @@ import * as React from 'react';
 import {PieChart} from '@mui/x-charts/PieChart';
 
 export function IncomePie({incomesList}) {
+
     const data = [
         {id: 0, value: calculateTotalCategory(incomesList, 'stipendio'), label: 'Stipendio'},
         {id: 1, value: calculateTotalCategory(incomesList, 'sell_asset'), label: 'Vendita asset'},
@@ -17,10 +18,10 @@ export function IncomePie({incomesList}) {
                     data: data,
                     innerRadius: 87,
                     outerRadius: 100,
-                    paddingAngle: 1.5,
+                    paddingAngle: 5,
                     cornerRadius: 5,
-                    startAngle: -150,
-                    endAngle: 210,
+                    startAngle: -90,
+                    endAngle: 180,
                     cx: 150,
                     cy: 150,
                 },
@@ -48,9 +49,35 @@ export function ExpensePie({expensesList}) {
                     data: data,
                     innerRadius: 87,
                     outerRadius: 100,
-                    paddingAngle: 1.5,
+                    paddingAngle: 5,
                     cornerRadius: 5,
-                    startAngle: -180,
+                    startAngle: 70,
+                    endAngle: 365,
+                    cx: 150,
+                    cy: 150,
+                },
+            ]}
+            width={300}
+            height={300}
+            slotProps={{legend: {hidden: true}}}  // nasconde la legenda
+        />
+    );
+}
+
+export function HomeGreenPie({incomesList}) {
+    const data = getHomePieData(incomesList, true);
+
+    return (
+        <PieChart
+            colors={['#61C86A', '#81ff7a', '#009b7e', '#9adcbf', '#039655']}
+            series={[
+                {
+                    data: data,
+                    innerRadius: 87,
+                    outerRadius: 100,
+                    paddingAngle: 5,
+                    cornerRadius: 5,
+                    startAngle: -90,
                     endAngle: 180,
                     cx: 150,
                     cy: 150,
@@ -62,6 +89,32 @@ export function ExpensePie({expensesList}) {
         />
     );
 }
+
+export function HomeRedPie({expensesList}) {
+    const data = getHomePieData(expensesList, false);
+    return (
+        <PieChart
+            colors={['#ff9c83', '#ff0000', '#b71000', '#ff5e00', '#FF5747']}
+            series={[
+                {
+                    data: data,
+                    innerRadius: 87,
+                    outerRadius: 100,
+                    paddingAngle: 5,
+                    cornerRadius: 5,
+                    startAngle: 70,
+                    endAngle: 365,
+                    cx: 150,
+                    cy: 150,
+                },
+            ]}
+            width={300}
+            height={300}
+            slotProps={{legend: {hidden: true}}}  // nasconde la legenda
+        />
+    );
+}
+
 
 // TODO: fix errors when server is down (?)
 function calculateTotalCategory(budgetEntriesList, category) {
@@ -75,3 +128,19 @@ function calculateTotalCategory(budgetEntriesList, category) {
     });
     return total;
 }
+
+
+function getHomePieData(budgetEntriesList, isPositive) {
+    const data = [];
+    if (budgetEntriesList.length) {
+        budgetEntriesList.forEach((el, index) => {
+            if (index <= 5) {
+                const dataElement = {id: index, label: el.description};
+                dataElement.value = (isPositive) ? el.positiveAmount : el.negativeAmount*(-1);
+                data.push(dataElement);
+            }
+        })
+    }
+    return data;
+}
+

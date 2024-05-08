@@ -63,16 +63,6 @@ button:focus-visible {
   margin-top: 0.5rem;
 }
 
-
-.main-content {
-  display: flex;
-}
-
-.innerbox {
-  flex-grow: 1;
-  width: calc(100% - 250px)
-}
-
 .window {
   height: 100vh;
   min-height: 100vh;
@@ -83,7 +73,7 @@ button:focus-visible {
   grid-template-areas: "sidebar main-content";
 }
 
-.sidebar {
+ .sidebar {
   grid-area: sidebar;
   padding: 1em;
   border-radius: 8px;
@@ -106,7 +96,7 @@ h1 {
   font-size: 40px;
 }
 
-.appbar-h {
+#appbar-h {
   flex-grow: 1;
   width: 100%;
 }
