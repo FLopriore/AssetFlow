@@ -68,11 +68,6 @@ button:focus-visible {
   display: flex;
 }
 
-.innerbox {
-  flex-grow: 1;
-  width: calc(100% - 250px)
-}
-
 .window {
   height: 100vh;
   min-height: 100vh;
@@ -83,13 +78,13 @@ button:focus-visible {
   grid-template-areas: "sidebar main-content";
 }
 
-.sidebar {
+ #sidebar {
   grid-area: sidebar;
   padding: 1em;
   border-radius: 8px;
 }
 
-.main-content {
+#main-content {
   grid-area: main-content;
   overflow-y: hidden;
   overflow-x: hidden;
