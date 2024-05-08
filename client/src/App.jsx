@@ -1,11 +1,11 @@
 import MenuAppBar from './components/AppBar'
 import './App.css'
 import Sidebar from './components/Sidebar'
-import {Box, Grid, List, ListItem, ListItemText, Typography} from '@mui/material'
+import {Box, Grid} from '@mui/material'
 import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import getApi from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
-import getLatestEntriesData from "./utils/budgetEntries.utils.js";
+import BudgetTable from "./components/Table.jsx";
 
 
 function App() {
@@ -36,9 +36,6 @@ function App() {
         });
     }, []);
 
-    const incomeData = getLatestEntriesData(incomeList, true);
-    const expenseData = getLatestEntriesData(expenseList, false);
-
     return (
         <>
             <Box className='window'>
@@ -50,6 +47,7 @@ function App() {
                             flexGrow: 1, border: '3px solid',
                             borderColor: '#61c86a', margin: '1rem',
                             borderRadius: '20px',
+                            overflowY: 'auto'
                         }}>
                             <Grid container direction='column' alignItems='center'>
                                 <Grid item>
@@ -61,21 +59,14 @@ function App() {
                                 <Grid item>
                                     <HomeGreenPie incomesList={incomeList}/>
                                 </Grid>
-                                <Grid item display='flex' alignItems='stretch'>
+                                <Grid item>
                                     <Box sx={{
-                                        borderRadius: '20px',
-                                        bgcolor: '#dbdbdb',
                                         padding: '1rem',
                                         textAlign: 'center',
-                                        maxHeight: '11rem',
-                                        overflow: 'auto'
+                                        minWidth: '400px'
                                     }}>
                                         <h3>Ultime entrate:</h3>
-                                        {incomeData.map((income) => (
-                                            <div key={income.id}>
-                                                <p>+{income.value}: {income.label}</p>
-                                            </div>
-                                      ))}
+                                        <BudgetTable budgetEntriesList={incomeList} isPositive={true}/>
                                     </Box>
                                 </Grid>
                             </Grid>
@@ -85,7 +76,8 @@ function App() {
                             border: '3px solid',
                             borderColor: '#CE310E',
                             margin: '1rem',
-                            borderRadius: '20px'
+                            borderRadius: '20px',
+                            overflowY: 'auto'
                         }}>
                             <Grid container direction='column' alignItems='center'>
                                 <Grid item>
@@ -97,21 +89,14 @@ function App() {
                                 <Grid item>
                                     <HomeRedPie expensesList={expenseList}/>
                                 </Grid>
-                                <Grid item display='flex' alignItems='stretch'>
+                                <Grid item>
                                     <Box sx={{
-                                        borderRadius: '20px',
-                                        bgcolor: '#dbdbdb',
                                         padding: '1rem',
                                         textAlign: 'center',
-                                        maxHeight: '11rem',
-                                        overflow: 'auto'
+                                        minWidth: '400px'
                                     }}>
                                         <h3>Ultime spese:</h3>
-                                        {expenseData.map((income) => (
-                                            <div key={income.id}>
-                                                <p>-{income.value}: {income.label}</p>
-                                            </div>
-                                      ))}
+                                        <BudgetTable budgetEntriesList={expenseList} isPositive={false}/>
                                     </Box>
                                 </Grid>
                             </Grid>
