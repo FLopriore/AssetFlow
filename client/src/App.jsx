@@ -1,10 +1,24 @@
 import MenuAppBar from './components/AppBar'
 import './App.css'
 import Sidebar from './components/Sidebar'
-import {Box, Grid} from '@mui/material'
-import {HomeGreenPie, HomeRedPie, ExpensePie} from './components/PieChart'
+import {Box, Grid, List, ListItem, ListItemText, Typography} from '@mui/material'
+import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import getApi from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
+
+function getHomeData(budgetEntriesList, isPositive) {
+    const data = [];
+    if (budgetEntriesList.length) {
+        budgetEntriesList.forEach((el, index) => {
+            if (index <= 5) {
+                const dataElement = {id: index, label: el.description};
+                dataElement.value = (isPositive) ? el.positiveAmount : el.negativeAmount*(-1);
+                data.push(dataElement);
+            }
+        })
+    }
+    return data;
+}
 
 function App() {
     const [incomeTotal, setIncome] = useState(0);
@@ -34,6 +48,9 @@ function App() {
         });
     }, []);
 
+    const incomeData = getHomeData(incomeList, true);
+    const expenseData = getHomeData(expenseList, false);
+
     return (
         <>
             <Box className='window'>
@@ -61,9 +78,16 @@ function App() {
                                         borderRadius: '20px',
                                         bgcolor: '#dbdbdb',
                                         padding: '1rem',
-                                        textAlign: 'center'
+                                        textAlign: 'center',
+                                        maxHeight: '11rem',
+                                        overflow: 'auto'
                                     }}>
                                         <h3>Ultime entrate:</h3>
+                                        {incomeData.map((income) => (
+                                            <div key={income.id}>
+                                                <p>+{income.value}: {income.label}</p>
+                                            </div>
+                                      ))}
                                     </Box>
                                 </Grid>
                             </Grid>
@@ -90,9 +114,16 @@ function App() {
                                         borderRadius: '20px',
                                         bgcolor: '#dbdbdb',
                                         padding: '1rem',
-                                        textAlign: 'center'
+                                        textAlign: 'center',
+                                        maxHeight: '11rem',
+                                        overflow: 'auto'
                                     }}>
                                         <h3>Ultime spese:</h3>
+                                        {expenseData.map((income) => (
+                                            <div key={income.id}>
+                                                <p>-{income.value}: {income.label}</p>
+                                            </div>
+                                      ))}
                                     </Box>
                                 </Grid>
                             </Grid>
