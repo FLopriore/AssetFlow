@@ -1,6 +1,5 @@
 const BASE_URL = 'http://localhost:3000/';
 
-// TODO: get token from cookie or localStorage
 async function getApi(endpoint) {
     try {
         let response = await fetch(`${BASE_URL}api/${endpoint}`, {
