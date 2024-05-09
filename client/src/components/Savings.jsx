@@ -2,7 +2,7 @@ import * as React from 'react';
 import Sidebar from './Sidebar';
 import { Box } from '@mui/material';
 
-export default function Expense() {
+export default function Savings() {
     return (
         <Box className='outerbox'>
             <Sidebar />

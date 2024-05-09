@@ -12,7 +12,7 @@ import {useNavigate} from 'react-router-dom';
 
 const baseURL = 'http://localhost:3000'
 
-export default function SignIn() {
+export default function SignIn({verify}) {
 
     const navigate = useNavigate();
 
@@ -29,11 +29,12 @@ export default function SignIn() {
                 password: data.get('password')
             }),
         }).then((response) => response.json()).then((data) => {
+            verify(data.success);
             if (!data.success) {
                 alert("Email o password incorretti")
             } else {
                 window.localStorage.setItem("token", data.token) //Salvo il token in local storage
-                navigate('/')
+                navigate('/', {replace: true})
             }
         }).catch(e => {
             console.log(e)

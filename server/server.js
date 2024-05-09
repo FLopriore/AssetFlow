@@ -47,7 +47,7 @@ app.use("/api/income", IncomeRoute);
 app.use("/api/objective", ObjectiveRoute);
 app.use("/api/budget", BudgetRoute);
 app.use("/api/user", UserRoute);
-app.use("/api/verify",VerifyRoute);
+app.use("/api/verify", VerifyRoute);
 
 mongoose.connect(ATLAS_URI)
     .then(() => {

@@ -7,11 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import {useNavigate} from "react-router-dom";
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -19,6 +20,8 @@ export default function MenuAppBar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+    window.localStorage.clear();
+    navigate('../login', {replace: true});
   };
 
   return (
