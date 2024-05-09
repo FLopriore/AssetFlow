@@ -64,6 +64,10 @@ export default function AuthRoute() {
         {
             path: "/login",
             element: <SignIn verify={setIsValidToken}/>
+        },
+        {
+            path: "/signup",
+            element: <SignUp/>
         }
     ])
 
