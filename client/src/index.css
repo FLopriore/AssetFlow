@@ -3,9 +3,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light ;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -107,5 +106,9 @@ h2 {
 }
 
 #asset-title {
+  text-align: center;
+}
+
+#income-summary {
   text-align: center;
 }

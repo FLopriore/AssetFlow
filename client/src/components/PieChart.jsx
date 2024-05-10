@@ -17,18 +17,18 @@ export function IncomePie({incomesList}) {
             series={[
                 {
                     data: data,
-                    innerRadius: 87,
-                    outerRadius: 100,
-                    paddingAngle: 5,
+                    innerRadius: 24,
+                    outerRadius: 150,
+                    paddingAngle: 4,
                     cornerRadius: 5,
                     startAngle: -90,
-                    endAngle: 180,
+                    endAngle: 270,
                     cx: 150,
                     cy: 150,
                 },
             ]}
-            width={300}
-            height={300}
+            width={350}
+            height={350}
             slotProps={{legend: {hidden: true}}}  // nasconde la legenda
         />
     );
@@ -48,12 +48,12 @@ export function ExpensePie({expensesList}) {
             series={[
                 {
                     data: data,
-                    innerRadius: 87,
+                    innerRadius: 24,
                     outerRadius: 100,
-                    paddingAngle: 5,
+                    paddingAngle: 4,
                     cornerRadius: 5,
-                    startAngle: 70,
-                    endAngle: 365,
+                    startAngle: -90,
+                    endAngle: 270,
                     cx: 150,
                     cy: 150,
                 },

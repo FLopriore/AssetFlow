@@ -1,9 +1,7 @@
 import * as React from 'react';
 import Sidebar from './Sidebar';
-import { Box, Fab, Grid, List, ListItem } from '@mui/material';
+import { Box, Fab, Grid, List, ListItem, ListItemButton } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -123,24 +121,23 @@ export default function Asset() {
                         }}>
                             <h3>I tuoi asset</h3>
                             <List>
-                            {generate(
-                <ListItem
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FolderIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Single-line item"
-                  />
-                </ListItem>,
-              )}
+                            {  /* assetList.map((asset) => {
+                                <ListItem
+                                    secondaryAction={
+                                        <IconButton edge="end" aria-label="delete">
+                                        <DeleteIcon />
+                                        </IconButton>
+                                    
+                                    
+                                    <ListItemButton>
+                                    <ListItemText
+                                        primary='prova'
+                                    />
+                                    </ListItemButton>
+                                </ListItem>
+                            
+                                */
+                            }
                             </List>
 
                             <Fab color='primary' sx={{
