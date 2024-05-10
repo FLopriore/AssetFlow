@@ -10,6 +10,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
 import { useState, useEffect } from "react";
+import getApi from '../utils/api.utils';
+
+import protobuf from 'protobufjs'
+import {Buffer} from "buffer/"
 
 
 function generate(element) {
@@ -20,9 +24,73 @@ function generate(element) {
     );
   }
 
+function getTicker(AssetList){
+  const data = []
+  AssetList.forEach((el, index) => {
+    const dataElement = {id: index, label: el.tracker};
+    data.push(dataElement)
+  });
+  return data;
+}
+
 export default function Asset() {
 
     const [assetList, setAssetList] = useState([])
+    const [priceList,setPriceList] = useState([])
+
+    useEffect(()=>{
+      getApi('asset/').then((data) => {
+        setAssetList(getTicker(data));
+    });
+       //Pulisco l'array con gli asset prendendo quello che mi interessa
+      console.log(assetList);
+
+      protobuf.load("../../public/Data.proto",(error,root)=>{
+        if (error){console.log(error)}
+        const Ticker = root.lookupType("ticker");
+        let ws = new WebSocket('wss://streamer.finance.yahoo.com');
+        ws.onopen = function open() {
+          ws.send(
+          JSON.stringify({
+            subscribe: assetList.map(asset => asset.label),
+          })
+          );
+          };
+          
+        ws.onmessage = function incoming(message) {
+          const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON(); //
+          setPriceList(ticker)
+          };
+        ws.onclose = function close() {console.log("Socket closed");};
+        });
+      
+      console.log(priceList)
+    },[assetList,priceList]);
+    
+
+    //FUNZIONE PROVVISORIA PER L'AGGIUNTA DELL'ASSET
+    /*
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      fetch(`${baseURL}/api/user/asset`, {
+          method: 'post',
+          headers: {
+              'Content-Type': 'application/json',
+              'token': localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+              tracker: data.get('tracker'),
+              investedCapital: data.get('capital')
+          })
+      }).then((response) => response.json()).then((data) => {
+          if(!data.success) {
+              alert("Impossibile aggiungere asset")
+          }
+      }).catch(e => {
+          console.log(e)
+      })
+    };*/
 
     return (
         <Box className='window'>
@@ -36,9 +104,9 @@ export default function Asset() {
                             mt: '1rem',
                             mb: '4rem'
                         }}>
-                            <h2>Nome Asset</h2>
                         </Box>
                     </Grid>
+                    <div>{assetList.map(asset => <p>{asset.label}</p>)}</div>
                     <Grid item xs={6}>
                        <BasicLineChart /> 
                     </Grid>
