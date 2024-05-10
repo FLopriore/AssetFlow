@@ -22,6 +22,7 @@ function calculateTotalCategory(budgetEntriesList, category) {
 
 function getCategory(budgetEntriesList, category) {
     let cat = [];
+    console.log(budgetEntriesList)
     budgetEntriesList.forEach((el, idx) => {
         if(el.category === category) {
             const dataEntry = {id: idx, label: el.description, value: el.positiveAmount};
@@ -31,15 +32,7 @@ function getCategory(budgetEntriesList, category) {
     return cat;
 }
 
-export default function IncomeAccordion() {
-
-    const [incomeList, setIncomeList] = useState([]);
-    useEffect(() => {
-        // retrieve list of income sources
-        getApi('income/').then((data) => {
-            setIncomeList(data);
-        });
-    }, []);
+export default function IncomeAccordion({incomeList}) {
 
     const stipendioArr = getCategory(incomeList, 'stipendio');
     const assetArr = getCategory(incomeList, 'sell_asset');
