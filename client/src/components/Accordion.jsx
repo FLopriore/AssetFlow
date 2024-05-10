@@ -24,7 +24,7 @@ function getCategory(budgetEntriesList, category) {
     let cat = [];
     budgetEntriesList.forEach((el, idx) => {
         if(el.category === category) {
-            const dataEntry = {id: idx, label: el.description};
+            const dataEntry = {id: idx, label: el.description, value: el.positiveAmount};
             cat.push(dataEntry);
         }
     })
@@ -41,9 +41,15 @@ export default function IncomeAccordion() {
         });
     }, []);
 
+    const stipendioArr = getCategory(incomeList, 'stipendio');
+    const assetArr = getCategory(incomeList, 'sell_asset');
+    const regaliArr = getCategory(incomeList, 'regali');
+    const dividendiArr = getCategory(incomeList, 'dividendi');
+    const othersArr = getCategory(incomeList, 'others');
+
   return (
     <Box sx={{
-        maxWidth: '50%',
+        width: '50%',
         height: '100%'
     }}>
       <Accordion>
@@ -55,8 +61,7 @@ export default function IncomeAccordion() {
           Stipendio: +{calculateTotalCategory(incomeList, 'stipendio')}
         </AccordionSummary>
         <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
+        <BudgetTable budgetEntriesList={stipendioArr} isPositive={true}/>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -68,8 +73,7 @@ export default function IncomeAccordion() {
           Vendita asset: +{calculateTotalCategory(incomeList, 'sell_asset')}
         </AccordionSummary>
         <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
+            <BudgetTable budgetEntriesList={assetArr} isPositive={true}/>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -81,8 +85,7 @@ export default function IncomeAccordion() {
           Regali: +{calculateTotalCategory(incomeList, 'regali')}
         </AccordionSummary>
         <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
+            <BudgetTable budgetEntriesList={regaliArr} isPositive={true}/>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -94,8 +97,7 @@ export default function IncomeAccordion() {
           Dividendi: +{calculateTotalCategory(incomeList, 'dividendi')}
         </AccordionSummary>
         <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
+            <BudgetTable budgetEntriesList={dividendiArr} isPositive={true}/>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -107,7 +109,7 @@ export default function IncomeAccordion() {
           Altro: +{calculateTotalCategory(incomeList, 'others')}
         </AccordionSummary>
         <AccordionDetails>
-          <BudgetTable budgetEntriesList={incomeList} isPositive={true}/>
+          <BudgetTable budgetEntriesList={othersArr} isPositive={true}/>
         </AccordionDetails>
       </Accordion>
       </Box>
