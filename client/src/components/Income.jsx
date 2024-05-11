@@ -78,7 +78,7 @@ export default function Income() {
                             <IncomeAccordion incomeList={incomeList}/>
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
-                                top: '670px'
+                                top: '87vh'
                             }}>
                                 <AddIcon />
                             </Fab>
@@ -108,7 +108,7 @@ export default function Income() {
                             <IncomeAccordion incomeList={incomeList}/>
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
-                                top: '670px'
+                                top: '87vh'
                             }}>
                                 <AddIcon />
                             </Fab>

@@ -84,7 +84,7 @@ export default function Expense() {
                             <ExpenseAccordion expenseList={expenseMonthlyList}/>
                             <Fab onClick={handleOpen} color='secondary' sx={{
                                 position: 'absolute',
-                                top: '670px'
+                                top: '87vh'
                             }}>
                                 <AddIcon />
                             </Fab>
@@ -114,7 +114,7 @@ export default function Expense() {
                             <ExpenseAccordion expenseList={expenseList}/>
                             <Fab onClick={handleOpen} color='secondary' sx={{
                                 position: 'absolute',
-                                top: '670px'
+                                top: '87vh'
                             }}>
                                 <AddIcon />
                             </Fab>
