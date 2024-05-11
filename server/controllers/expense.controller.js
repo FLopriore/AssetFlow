@@ -87,8 +87,8 @@ const getLastMonthExpenses = async (req, res) => {
         const today = dayjs();
         const lastMonthDate = today.subtract(30, 'day');
 
-        let allExpenses = await Expense.find({userId: req.userId});
-        allExpenses = allExpenses.filter((el) => el.createdAt >= lastMonthDate);
+        let allExpenses = await Expense.find({userId: req.userId, createdAt: {$gte: lastMonthDate}});
+        //allExpenses = allExpenses.filter((el) => el.createdAt >= lastMonthDate);
 
         if (!allExpenses.length) {
             return res.status(404).json({message: 'Expenses not found!'});
@@ -100,4 +100,22 @@ const getLastMonthExpenses = async (req, res) => {
     }
 };
 
-module.exports = {getExpenseById, addExpense, deleteExpense, getAllExpenses, getLastMonthExpenses};
+const getLastYearExpenses = async (req, res) => {
+    try {
+        const today = dayjs();
+        const lastYearDate = today.subtract(1, 'year');
+
+        let allExpenses = await Expense.find({userId: req.userId, createdAt: {$gte: lastYearDate}});
+        //allExpenses = allExpenses.filter((el) => el.createdAt >= lastMonthDate);
+
+        if (!allExpenses.length) {
+            return res.status(404).json({message: 'Expenses not found!'});
+        }
+        allExpenses = filterResponse(allExpenses, ['_id', 'category', 'negativeAmount', 'description', 'createdAt']);
+        res.status(200).json(allExpenses);
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+};
+
+module.exports = {getExpenseById, addExpense, deleteExpense, getAllExpenses, getLastMonthExpenses, getLastYearExpenses};
