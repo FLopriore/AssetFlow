@@ -6,8 +6,9 @@ const {getExpenseById, addExpense, deleteExpense, getAllExpenses, getLastMonthEx
 router.use(verifyToken);
 
 router.get("/", getAllExpenses);
-router.get("/:id", getExpenseById);
 router.get("/lastmonth", getLastMonthExpenses);
+router.get("/:id", getExpenseById);
+
 
 router.post("/", addExpense);
 
