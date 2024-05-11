@@ -1,10 +1,10 @@
 const Income = require("../models/income.model.js");
 const mongoose = require("mongoose");
 const {filterResponse} = require("../utils/response.utils");
+const dayjs = require("dayjs");
 
 // Gets all the incomes
 // TODO: set a limit of entries
-// TODO: get values in a time frame
 const getAllIncomes = async (req, res) => {
     try {
         let allIncomes = await Income.find({userId: req.userId});
@@ -83,4 +83,40 @@ const deleteIncome = async (req, res) => {
     }
 };
 
-module.exports = {getIncomeById, addIncome, deleteIncome, getAllIncomes};
+const getLastMonthIncomes = async (req, res) => {
+    try {
+        const today = dayjs();
+        const lastMonthDate = today.subtract(30, 'day');
+
+        let allIncomes = await Income.find({userId: req.userId, createdAt: {$gte: lastMonthDate}});
+        //allIncomes = allIncomes.filter((el) => el.createdAt >= lastMonthDate);
+
+        if (!allIncomes.length) {
+            return res.status(404).json({message: 'Incomes not found!'});
+        }
+        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description','createdAt']);
+        res.status(200).json(allIncomes);
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+};
+
+const getLastYearIncomes = async (req, res) => {
+    try {
+        const today = dayjs();
+        const lastYearDate = today.subtract(1, 'year');
+
+        let allIncomes = await Income.find({userId: req.userId, createdAt: {$gte: lastYearDate}});
+        //allIncomes = allIncomes.filter((el) => el.createdAt >= lastMonthDate);
+
+        if (!allIncomes.length) {
+            return res.status(404).json({message: 'Incomes not found!'});
+        }
+        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description','createdAt']);
+        res.status(200).json(allIncomes);
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+};
+
+module.exports = {getIncomeById, addIncome, deleteIncome, getAllIncomes, getLastMonthIncomes, getLastYearIncomes};
