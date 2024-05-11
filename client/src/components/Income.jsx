@@ -5,9 +5,9 @@ import {Box, Fab, Tab} from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import {IncomePie} from './PieChart';
+import { IncomePie } from './PieChart';
 import getApi from '../utils/api.utils';
-import IncomeAccordion from './Accordion';
+import { IncomeAccordion } from './Accordion';
 import AddIcon from '@mui/icons-material/Add';
 import Modal from '@mui/material/Modal';
 
@@ -78,8 +78,7 @@ export default function Income() {
                             <IncomeAccordion incomeList={incomeList}/>
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
-                                top: '87%',
-                                left: '20%'
+                                top: '670px'
                             }}>
                                 <AddIcon />
                             </Fab>
@@ -100,7 +99,7 @@ export default function Income() {
                                 justifyItems: 'center',
                                 flexDirection: 'column'
                             }}>
-                                <h3>Entrate totali nel mese di Aprile</h3>
+                                <h3>Entrate totali nell'anno 2023</h3>
                                 <h2>+{incomeTotal}</h2>
                                 <Box sx={{ml: '2.2rem', mt: '2rem'}}>
                                     <IncomePie incomesList={incomeList}/>
@@ -109,8 +108,7 @@ export default function Income() {
                             <IncomeAccordion incomeList={incomeList}/>
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
-                                top: '87%',
-                                left: '20%'
+                                top: '670px'
                             }}>
                                 <AddIcon />
                             </Fab>

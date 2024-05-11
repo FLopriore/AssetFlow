@@ -21,19 +21,20 @@ function calculateTotalCategory(budgetEntriesList, category) {
 }
 
 function getCategory(budgetEntriesList, category) {
-    let cat = [];
-    console.log(budgetEntriesList)
-    budgetEntriesList.forEach((el, idx) => {
+    let data = [];
+    if(budgetEntriesList.lenght!==0){
+      budgetEntriesList.forEach((el, idx) => {
         if(el.category === category) {
             const dataEntry = {id: idx, label: el.description, value: el.positiveAmount};
-            cat.push(dataEntry);
+            data.push(dataEntry);
         }
     })
-    return cat;
+    }
+    return data;
 }
 
-export default function IncomeAccordion({incomeList}) {
-
+export function IncomeAccordion({incomeList}) {
+    
     const stipendioArr = getCategory(incomeList, 'stipendio');
     const assetArr = getCategory(incomeList, 'sell_asset');
     const regaliArr = getCategory(incomeList, 'regali');
@@ -107,4 +108,81 @@ export default function IncomeAccordion({incomeList}) {
       </Accordion>
       </Box>
   );
+}
+
+export function ExpenseAccordion({expenseList}) {
+    
+  const shoppingArr = getCategory(expenseList, 'shopping');
+  const bolletteArr = getCategory(expenseList, 'bollette');
+  const affittoArr = getCategory(expenseList, 'affitto');
+  const assetArr = getCategory(expenseList, 'buy_asset');
+  const othersArr = getCategory(expenseList, 'others');
+
+return (
+  <Box sx={{
+      width: '50%',
+      height: '100%'
+  }}>
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1-content"
+        id="panel1-header"
+      >
+        Shopping: -{calculateTotalCategory(expenseList, 'shopping')}
+      </AccordionSummary>
+      <AccordionDetails>
+      <BudgetTable budgetEntriesList={shoppingArr} isPositive={false}/>
+      </AccordionDetails>
+    </Accordion>
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel2-content"
+        id="panel2-header"
+      >
+        Bollette: -{calculateTotalCategory(expenseList, 'bollette')}
+      </AccordionSummary>
+      <AccordionDetails>
+          <BudgetTable budgetEntriesList={bolletteArr} isPositive={false}/>
+      </AccordionDetails>
+    </Accordion>
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel3-content"
+        id="panel3-header"
+      >
+        Affitto: -{calculateTotalCategory(expenseList, 'affitto')}
+      </AccordionSummary>
+      <AccordionDetails>
+          <BudgetTable budgetEntriesList={affittoArr} isPositive={true}/>
+      </AccordionDetails>
+    </Accordion>
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel3-content"
+        id="panel3-header"
+      >
+        Acquisto asset: -{calculateTotalCategory(expenseList, 'asset')}
+      </AccordionSummary>
+      <AccordionDetails>
+          <BudgetTable budgetEntriesList={assetArr} isPositive={false}/>
+      </AccordionDetails>
+    </Accordion>
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel3-content"
+        id="panel3-header"
+      >
+        Altro: -{calculateTotalCategory(expenseList, 'others')}
+      </AccordionSummary>
+      <AccordionDetails>
+        <BudgetTable budgetEntriesList={othersArr} isPositive={false}/>
+      </AccordionDetails>
+    </Accordion>
+    </Box>
+);
 }

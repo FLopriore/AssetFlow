@@ -49,7 +49,7 @@ export function ExpensePie({expensesList}) {
                 {
                     data: data,
                     innerRadius: 24,
-                    outerRadius: 100,
+                    outerRadius: 150,
                     paddingAngle: 4,
                     cornerRadius: 5,
                     startAngle: -90,
@@ -58,8 +58,8 @@ export function ExpensePie({expensesList}) {
                     cy: 150,
                 },
             ]}
-            width={300}
-            height={300}
+            width={350}
+            height={350}
             slotProps={{legend: {hidden: true}}}  // nasconde la legenda
         />
     );
