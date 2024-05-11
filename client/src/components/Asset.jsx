@@ -43,7 +43,7 @@ export default function Asset() {
        //Pulisco l'array con gli asset prendendo quello che mi interessa
       console.log(assetList);
 
-      protobuf.load("../../public/Data.proto",(error,root)=>{
+      protobuf.load("Data.proto",(error,root)=>{
         if (error){console.log(error)}
         const Ticker = root.lookupType("ticker");
         let ws = new WebSocket('wss://streamer.finance.yahoo.com');
@@ -104,7 +104,7 @@ export default function Asset() {
                         }}>
                         </Box>
                     </Grid>
-                    <div>{assetList.map(asset => <p>{asset.label}</p>)}</div>
+                    {/*<div>{assetList.map(asset => <p>{asset.label}</p>)}</div>*/}
                     <Grid item xs={6}>
                        <BasicLineChart /> 
                     </Grid>
@@ -121,23 +121,12 @@ export default function Asset() {
                         }}>
                             <h3>I tuoi asset</h3>
                             <List>
-                            {  /* assetList.map((asset) => {
-                                <ListItem
-                                    secondaryAction={
-                                        <IconButton edge="end" aria-label="delete">
-                                        <DeleteIcon />
-                                        </IconButton>
-                                    
-                                    
-                                    <ListItemButton>
-                                    <ListItemText
-                                        primary='prova'
-                                    />
-                                    </ListItemButton>
+                            {assetList.map(el =>{
+                                <ListItem key={el.label}>
+                                  <ListItemText primary={el.label}></ListItemText>
                                 </ListItem>
-                            
-                                */
                             }
+                            )}
                             </List>
 
                             <Fab color='primary' sx={{
