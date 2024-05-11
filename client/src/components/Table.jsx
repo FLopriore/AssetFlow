@@ -9,9 +9,8 @@ import Paper from '@mui/material/Paper';
 import getLatestEntriesData from "../utils/budgetEntries.utils.js";
 
 export default function BudgetTable({budgetEntriesList, isPositive}) {
-    // TODO: invocare getLatestEntriesData in App.jsx, ossia nel component genitore di BudgetTable
-    const rows = budgetEntriesList
-    //const rows = getLatestEntriesData(budgetEntriesList, isPositive);
+    const rows = budgetEntriesList;
+    
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">

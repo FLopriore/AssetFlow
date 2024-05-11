@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
-import {Box, Tab} from '@mui/material';
+import {Box, Grid, Tab} from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -54,33 +54,43 @@ export default function Income() {
                             width: '100%',
                             flexWrap: 'wrap'
                         }}>
-                            <IncomePie incomesList={incomeList}/>
                             <Box sx={{
-                                position: 'fixed',
                                 textAlign: 'center',
-                                top: '57%',
+                                width: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyItems: 'center',
+                                flexDirection: 'column'
                             }}>
-                                <h3 id='income-summary'>Entrate totali nel mese di Aprile</h3>
+                                <h3>Entrate totali nel mese di Aprile</h3>
                                 <h2>+{incomeTotal}</h2>
+                                <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                    <IncomePie incomesList={incomeList}/>
+                                </Box>
                             </Box>
                             <IncomeAccordion incomeList={incomeList}/>
                         </Box>
                     </TabPanel>
                     <TabPanel value="1">
-                        <Box sx={{
+                    <Box sx={{
                             display: 'flex',
                             flexDirection: 'row',
                             width: '100%',
                             flexWrap: 'wrap'
                         }}>
-                            <IncomePie incomesList={incomeList}/>
                             <Box sx={{
-                                position: 'fixed',
                                 textAlign: 'center',
-                                top: '57%'
+                                width: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyItems: 'center',
+                                flexDirection: 'column'
                             }}>
-                                <h3 id='income-summary'>Entrate totali nell'anno: 2023</h3>
+                                <h3>Entrate totali nel mese di Aprile</h3>
                                 <h2>+{incomeTotal}</h2>
+                                <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                    <IncomePie incomesList={incomeList}/>
+                                </Box>
                             </Box>
                             <IncomeAccordion incomeList={incomeList}/>
                         </Box>

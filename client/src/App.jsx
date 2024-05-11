@@ -6,6 +6,7 @@ import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import getApi from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
 import BudgetTable from "./components/Table.jsx";
+import getLatestEntriesData from './utils/budgetEntries.utils.js'
 
 
 function App() {
@@ -35,6 +36,9 @@ function App() {
             setIncomeList(data);
         });
     }, []);
+
+    const incomeTableList = getLatestEntriesData(incomeList, true);
+    const expenseTableList = getLatestEntriesData(expenseList, false);
 
     return (
         <>
@@ -66,7 +70,7 @@ function App() {
                                         minWidth: '400px'
                                     }}>
                                         <h3>Ultime entrate:</h3>
-                                        <BudgetTable budgetEntriesList={incomeList} isPositive={true}/>
+                                        <BudgetTable budgetEntriesList={incomeTableList} isPositive={true}/>
                                     </Box>
                                 </Grid>
                             </Grid>
@@ -96,7 +100,7 @@ function App() {
                                         minWidth: '400px'
                                     }}>
                                         <h3>Ultime spese:</h3>
-                                        <BudgetTable budgetEntriesList={expenseList} isPositive={false}/>
+                                        <BudgetTable budgetEntriesList={expenseTableList} isPositive={false}/>
                                     </Box>
                                 </Grid>
                             </Grid>
