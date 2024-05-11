@@ -19,6 +19,7 @@
     "@mui/material": "^5.15.16",
     "@mui/x-charts": "^7.3.2",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
