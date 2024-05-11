@@ -6,13 +6,25 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import getLatestEntriesData from "../utils/budgetEntries.utils.js";
+import TablePagination from '@mui/material/TablePagination';
+import { useState } from 'react';
 
 export default function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;
+    const [page, setPage] = useState(0);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
     
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper}
+        initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+        >
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -37,6 +49,11 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
                     ))}
                 </TableBody>
             </Table>
+            <TablePagination
+                component="div"
+                page={page}
+                onPageChange={handleChangePage}
+            />
         </TableContainer>
     );
 }
