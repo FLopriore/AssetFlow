@@ -9,18 +9,8 @@ import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
 import { useState, useEffect } from "react";
 import getApi from '../utils/api.utils';
-
 import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
-
-
-function generate(element) {
-    return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
-        key: value,
-      }),
-    );
-  }
 
 function getTicker(AssetList){
   const data = []
@@ -90,6 +80,12 @@ export default function Asset() {
       })
     };*/
 
+    const data = [
+      {id: 0, label:'A'},
+      {id: 1, label:'B'},
+      {id: 2, label:'C'},
+    ]
+
     return (
         <Box className='window'>
             <Sidebar />
@@ -117,16 +113,20 @@ export default function Asset() {
                             alignSelf: 'center',
                             textAlign: 'center',
                             padding: '0.5rem',
-                            overflowY: 'scroll'
                         }}>
                             <h3>I tuoi asset</h3>
                             <List>
-                            {assetList.map(el =>{
-                                <ListItem key={el.label}>
-                                  <ListItemText primary={el.label}></ListItemText>
-                                </ListItem>
-                            }
-                            )}
+                            {
+                                data.map((el) => (
+                            <ListItem key={el.id}>
+                                <ListItemButton>
+                                    <ListItemText primary={el.label}></ListItemText>
+                                                  
+                                </ListItemButton>
+                            </ListItem>
+                        
+                    ))
+                }
                             </List>
 
                             <Fab color='primary' sx={{

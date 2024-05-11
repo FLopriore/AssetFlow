@@ -18,13 +18,7 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
       };
     
     return (
-        <TableContainer component={Paper}
-        initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-        >
+        <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
