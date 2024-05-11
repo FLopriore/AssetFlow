@@ -12,13 +12,31 @@ import getApi from '../utils/api.utils';
 import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
 
+const BASE_URL = 'http://localhost:3000/';
+
 function getTicker(AssetList){
   const data = []
   AssetList.forEach((el, index) => {
-    const dataElement = {id: index, label: el.tracker};
+    const dataElement = {idx: index, label: el.tracker, id: el._id};
     data.push(dataElement)
   });
   return data;
+}
+
+async function deleteAsset(assetId){
+    try {
+        let response = await fetch(`${BASE_URL}api/asset/${assetId}?id`, {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+        });
+        response = await response.json();
+        return response;
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 export default function Asset() {
@@ -80,12 +98,6 @@ export default function Asset() {
       })
     };*/
 
-    const data = [
-      {id: 0, label:'A'},
-      {id: 1, label:'B'},
-      {id: 2, label:'C'},
-    ]
-
     return (
         <Box className='window'>
             <Sidebar />
@@ -117,12 +129,14 @@ export default function Asset() {
                             <h3>I tuoi asset</h3>
                             <List>
                             {
-                                data.map((el) => (
-                            <ListItem key={el.id}>
+                                assetList.map((el) => (
+                            <ListItem key={el.idx}>
+                                <ListItemButton onClick={() => deleteAsset(el.id)}>
+                                    <DeleteIcon/>    
+                                </ListItemButton> 
                                 <ListItemButton>
                                     <ListItemText primary={el.label}></ListItemText>
-                                                  
-                                </ListItemButton>
+                                </ListItemButton>           
                             </ListItem>
                         
                     ))
