@@ -7,6 +7,7 @@ router.use(verifyToken);
 
 router.get("/", getAllExpenses);
 router.get("/lastmonth", getLastMonthExpenses);
+//Lascia la route id per ultima perchè il controllo delle route avviene in maniera ordinata
 router.get("/:id", getExpenseById);
 
 
