@@ -1,4 +1,3 @@
-const request = require('request');
 const KEY =  process.env.ALPHA_API_KEY || "";
 
 const getMonthlyPrices = ((req,res)=>{
