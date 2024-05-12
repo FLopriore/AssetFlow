@@ -16,4 +16,21 @@ async function getApi(endpoint) {
     }
 }
 
-export default getApi;
+async function postApi(endpoint, body) {
+    try {
+        let response = await fetch(`${BASE_URL}api/${endpoint}`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+            body: body
+        });
+        response = await response.json();
+        return response;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export {getApi, postApi};

@@ -3,7 +3,7 @@ import './App.css'
 import Sidebar from './components/Sidebar'
 import {Box, Grid} from '@mui/material'
 import {HomeGreenPie, HomeRedPie} from './components/PieChart'
-import getApi from "./utils/api.utils.js";
+import {getApi} from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
 import BudgetTable from "./components/Table.jsx";
 import getLatestEntriesData from './utils/budgetEntries.utils.js'

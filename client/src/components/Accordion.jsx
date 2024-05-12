@@ -4,8 +4,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box } from '@mui/material';
-import getApi from '../utils/api.utils';
-import { useState, useEffect } from 'react';
 import BudgetTable from './Table';
 
 function calculateTotalCategory(budgetEntriesList, category) {
@@ -20,12 +18,13 @@ function calculateTotalCategory(budgetEntriesList, category) {
     return total;
 }
 
-function getCategory(budgetEntriesList, category) {
+function getCategory(budgetEntriesList, category, isPositive) {
     let data = [];
     if(budgetEntriesList.lenght!==0){
       budgetEntriesList.forEach((el, idx) => {
         if(el.category === category) {
-            const dataEntry = {id: idx, label: el.description, value: el.positiveAmount};
+            const dataEntry = {id: idx, label: el.description};
+            dataEntry.value = (isPositive) ? el.positiveAmount : el.negativeAmount*(-1);
             data.push(dataEntry);
         }
     })
@@ -35,11 +34,11 @@ function getCategory(budgetEntriesList, category) {
 
 export function IncomeAccordion({incomeList}) {
     
-    const stipendioArr = getCategory(incomeList, 'stipendio');
-    const assetArr = getCategory(incomeList, 'sell_asset');
-    const regaliArr = getCategory(incomeList, 'regali');
-    const dividendiArr = getCategory(incomeList, 'dividendi');
-    const othersArr = getCategory(incomeList, 'others');
+    const stipendioArr = getCategory(incomeList, 'stipendio', true);
+    const assetArr = getCategory(incomeList, 'sell_asset', true);
+    const regaliArr = getCategory(incomeList, 'regali', true);
+    const dividendiArr = getCategory(incomeList, 'dividendi', true);
+    const othersArr = getCategory(incomeList, 'others', true);
 
   return (
     <Box sx={{
@@ -112,11 +111,11 @@ export function IncomeAccordion({incomeList}) {
 
 export function ExpenseAccordion({expenseList}) {
     
-  const shoppingArr = getCategory(expenseList, 'shopping');
-  const bolletteArr = getCategory(expenseList, 'bollette');
-  const affittoArr = getCategory(expenseList, 'affitto');
-  const assetArr = getCategory(expenseList, 'buy_asset');
-  const othersArr = getCategory(expenseList, 'others');
+  const shoppingArr = getCategory(expenseList, 'shopping', false);
+  const bolletteArr = getCategory(expenseList, 'bollette', false);
+  const affittoArr = getCategory(expenseList, 'affitto', false);
+  const assetArr = getCategory(expenseList, 'buy_asset', false);
+  const othersArr = getCategory(expenseList, 'others', false);
 
 return (
   <Box sx={{

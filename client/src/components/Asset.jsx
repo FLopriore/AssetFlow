@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
 import { useState, useEffect } from "react";
-import getApi from '../utils/api.utils';
+import {getApi} from '../utils/api.utils';
 import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
 

@@ -1,4 +1,4 @@
-import getApi from "./api.utils.js";
+import {getApi} from "./api.utils.js";
 
 const verifyToken = () => {
     if (localStorage.length > 0) {

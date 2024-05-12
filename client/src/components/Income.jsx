@@ -6,10 +6,9 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { IncomePie } from './PieChart';
-import getApi from '../utils/api.utils';
+import {getApi} from '../utils/api.utils';
 import { IncomeAccordion } from './Accordion';
-import AddIcon from '@mui/icons-material/Add';
-import Modal from '@mui/material/Modal';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 export default function Income() {
     const [value, setValue] = useState('0');
@@ -80,7 +79,7 @@ export default function Income() {
                                 position: 'absolute',
                                 top: '87vh'
                             }}>
-                                <AddIcon />
+                                <AddRoundedIcon />
                             </Fab>
                         </Box>
                     </TabPanel>
@@ -110,7 +109,7 @@ export default function Income() {
                                 position: 'absolute',
                                 top: '87vh'
                             }}>
-                                <AddIcon />
+                                <AddRoundedIcon />
                             </Fab>
                         </Box>
                     </TabPanel>
