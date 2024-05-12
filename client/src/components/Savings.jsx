@@ -22,7 +22,7 @@ export default function Savings() {
                     { /* TODO qui generare la lista a partire dall'array dei savings */}
                     <Typography variant='h6'>Vacanze</Typography>
                     <SavingsProgress value={50}/>
-                    <Typography variant='body1'>currentValue/totalValue</Typography>
+                    <Typography variant='body1'>currentValue / totalValue</Typography>
                     { /* TODO aggiustare l'hover dei FAB */}
                     <Fab color='savings' sx={{
                                 position: 'absolute',
