@@ -9,15 +9,15 @@ import { IncomePie } from './PieChart';
 import {getApi} from '../utils/api.utils';
 import { IncomeAccordion } from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import AddIncomeDialog from "./AddIncomeDialog.jsx";
 
 export default function Income() {
     const [value, setValue] = useState('0');
-    const [incomeList, setIncomeList] = useState([]);
+    const [incomeMonthlyList, setIncomeMonthlyList] = useState([]);
     const [incomeTotal, setIncome] = useState(0);
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -29,15 +29,21 @@ export default function Income() {
             setIncome(data.totalIncome);
         });
 
-        // retrieve list of income sources
-        getApi('income/').then((data) => {
-            setIncomeList(data);
+        // retrieve list of last month income sources
+        getApi('income/lastmonth').then((data) => {
+            setIncomeMonthlyList(data);
+        });
+
+        // retrieve list of last year income sources
+        getApi('income/lastyear').then((data) => {
+            setIncomeMonthlyList(data);
         });
     }, []);
 
     return (
         <>
         <Box className='window'>
+            <AddIncomeDialog setOpen={setOpen} isOpen={open} incomeList={incomeMonthlyList} setIncomeList={setIncomeMonthlyList}/>
             <Sidebar/>
             <Box className='main-content' sx={{
                 border: '3px solid',
@@ -71,10 +77,10 @@ export default function Income() {
                                 <h3>Entrate totali nel mese di Aprile</h3>
                                 <h2>+{incomeTotal}</h2>
                                 <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                    <IncomePie incomesList={incomeList}/>
+                                    <IncomePie incomesList={incomeMonthlyList}/>
                                 </Box>
                             </Box>
-                            <IncomeAccordion incomeList={incomeList}/>
+                            <IncomeAccordion incomeList={incomeMonthlyList}/>
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
                                 top: '87vh'
@@ -101,10 +107,10 @@ export default function Income() {
                                 <h3>Entrate totali nell'anno 2023</h3>
                                 <h2>+{incomeTotal}</h2>
                                 <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                    <IncomePie incomesList={incomeList}/>
+                                    <IncomePie incomesList={incomeMonthlyList}/>
                                 </Box>
                             </Box>
-                            <IncomeAccordion incomeList={incomeList}/>
+                            <IncomeAccordion incomeList={incomeMonthlyList}/>
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
                                 top: '87vh'

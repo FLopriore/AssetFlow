@@ -9,16 +9,16 @@ import {ExpensePie} from './PieChart';
 import {getApi} from '../utils/api.utils';
 import {ExpenseAccordion}from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import AddExpenseDialog from "./AddExpenseDialog.jsx";
 
 export default function Expense() {
     const [value, setValue] = useState('0');
-    const [expenseList, setExpenseList] = useState([]);
+    const [expenseYearList, setExpenseYearList] = useState([]);
     const [expenseTotal, setExpense] = useState(0);
     const [expenseMonthlyList, setExpenseMonthlyList] = useState([]);
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -30,9 +30,8 @@ export default function Expense() {
             setExpense(data.totalExpenses);
         });
 
-        // TODO: retrieve last year expenses
-        getApi('expense/').then((data) => {
-            setExpenseList(data);
+        getApi('expense/lastyear').then((data) => {
+            setExpenseYearList(data);
         });
 
         //retrieve last month expenses
@@ -44,6 +43,7 @@ export default function Expense() {
     return (
         <>
         <Box className='window'>
+            <AddExpenseDialog setOpen={setOpen} isOpen={open} expenseList={expenseMonthlyList} setExpenseList={setExpenseMonthlyList}/>
             <Sidebar/>
             <Box className='main-content' sx={{
                 border: '3px solid',
@@ -107,10 +107,10 @@ export default function Expense() {
                                 <h3>Spese totali nell'anno 2023</h3>
                                 <h2>{expenseTotal}</h2>
                                 <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                    <ExpensePie expensesList={expenseList}/>
+                                    <ExpensePie expensesList={expenseYearList}/>
                                 </Box>
                             </Box>
-                            <ExpenseAccordion expenseList={expenseList}/>
+                            <ExpenseAccordion expenseList={expenseYearList}/>
                             <Fab onClick={handleOpen} color='secondary' sx={{
                                 position: 'absolute',
                                 top: '87vh'
