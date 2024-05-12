@@ -69,6 +69,7 @@ export default function Asset() {
           };
         ws.onclose = function close() {console.log("Socket closed");};
         });
+  
       
       console.log(priceList)
     },[assetList,priceList]);
