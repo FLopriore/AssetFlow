@@ -14,10 +14,19 @@ import {Buffer} from "buffer/"
 
 const BASE_URL = 'http://localhost:3000/';
 
+const removeMarket = (string) => {
+    const re = /:.*/;
+    if(!re.test(string)) return string
+    else {
+    const result = re.exec(string)
+    return result[0].slice(1,);
+}
+}
+
 function getTicker(AssetList){
   const data = []
   AssetList.forEach((el, index) => {
-    const dataElement = {idx: index, label: el.tracker, id: el._id};
+    const dataElement = {idx: index, label: removeMarket(el.tracker), id: el._id};
     data.push(dataElement)
   });
   return data;
