@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -13,6 +14,21 @@ import {useNavigate} from 'react-router-dom';
 const baseURL = 'http://localhost:3000'
 
 export default function SignIn({verify}) {
+
+    useEffect(() => {
+        window.history.pushState(null, '', '/login');
+
+        const handleBackButton = (event) => {
+            event.preventDefault();
+            window.history.pushState(null, '', '/login');
+        };
+
+        window.addEventListener('popstate', handleBackButton);
+
+        return () => {
+            window.removeEventListener('popstate', handleBackButton);
+        };
+    }, []);
 
     const navigate = useNavigate();
 
