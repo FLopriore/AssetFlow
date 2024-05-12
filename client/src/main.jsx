@@ -15,6 +15,9 @@ export const theme = createTheme({
         secondary: {
             main: '#FF5747',
         },
+        savings: {
+            main: '#FFC300'
+        }
     },
 });
 
