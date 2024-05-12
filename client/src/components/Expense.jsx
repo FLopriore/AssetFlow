@@ -6,10 +6,9 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {ExpensePie} from './PieChart';
-import getApi from '../utils/api.utils';
+import {getApi} from '../utils/api.utils';
 import {ExpenseAccordion}from './Accordion';
 import AddIcon from '@mui/icons-material/Add';
-import Modal from '@mui/material/Modal';
 
 export default function Expense() {
     const [value, setValue] = useState('0');

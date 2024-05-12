@@ -89,7 +89,6 @@ const getLastMonthIncomes = async (req, res) => {
         const lastMonthDate = today.subtract(30, 'day');
 
         let allIncomes = await Income.find({userId: req.userId, createdAt: {$gte: lastMonthDate}});
-        //allIncomes = allIncomes.filter((el) => el.createdAt >= lastMonthDate);
 
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
@@ -107,7 +106,6 @@ const getLastYearIncomes = async (req, res) => {
         const lastYearDate = today.subtract(1, 'year');
 
         let allIncomes = await Income.find({userId: req.userId, createdAt: {$gte: lastYearDate}});
-        //allIncomes = allIncomes.filter((el) => el.createdAt >= lastMonthDate);
 
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});

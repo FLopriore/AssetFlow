@@ -4,8 +4,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box } from '@mui/material';
-import getApi from '../utils/api.utils';
-import { useState, useEffect } from 'react';
 import BudgetTable from './Table';
 
 function calculateTotalCategory(budgetEntriesList, category) {
