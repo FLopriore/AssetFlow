@@ -5,6 +5,6 @@ const {getMonthlyPrices} = require("../controllers/price.controller.js");
 
 router.use(verifyToken);
 
-router.get("/", getMonthlyPrices);
+router.post("/", getMonthlyPrices);
 
 module.exports = router
