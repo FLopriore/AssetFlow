@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import { Fab } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
@@ -100,8 +100,8 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
                 labelDisplayedRows={({from, to, count}) => `${from}-${to} di ${count}`}
             />
         </TableContainer>
-        <Fab size='small' sx={{mt: 2}}>
-            <ClearRoundedIcon />
+        <Fab size='small' sx={{mt: 2, ml: 0.8}} disabled={!selected.length}>
+            <DeleteForeverRoundedIcon />
         </Fab>
         </>
     );
