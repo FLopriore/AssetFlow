@@ -10,7 +10,7 @@ const getAllObjectives = async (req, res) => {
         if (!allObjectives.length) {
             return res.status(404).json({message: 'Objectives not found!'});
         }
-        allObjectives = filterResponse(allExpenses, ['_id', 'name', 'objectiveMoney', 'savedMoney','createdAt']);
+        allObjectives = filterResponse(allObjectives, ['_id', 'name', 'percentage', 'objectiveMoney', 'savedMoney', 'createdAt']);
         res.status(200).json(allObjectives);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -33,6 +33,7 @@ const getObjectiveById = async (req, res) => {
             _id: objective._id,
             name: objective.name,
             objectiveMoney: objective.objectiveMoney,
+            percentage: objective.percentage,
             savedMoney: objective.savedMoney,
         };
         res.status(200).json(objective);
@@ -48,6 +49,7 @@ const addObjective = async (req, res) => {
             name: req.body.name,
             objectiveMoney: req.body.objectiveMoney,
             savedMoney: req.body.savedMoney,
+            percentage: req.body.percentage,
             userId: req.userId,
         };
         let newObjectiveAdded = await Objective.create(objectiveContent);
@@ -55,6 +57,7 @@ const addObjective = async (req, res) => {
             _id: newObjectiveAdded._id,
             name: newObjectiveAdded.name,
             objectiveMoney: newObjectiveAdded.objectiveMoney,
+            percentage: newObjectiveAdded.percentage,
             savedMoney: newObjectiveAdded.savedMoney,
         };
         res.status(200).json(newObjectiveAdded);

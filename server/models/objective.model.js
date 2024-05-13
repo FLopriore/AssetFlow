@@ -7,6 +7,12 @@ const objectiveSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        percentage: {
+            type: Number,
+            required: true,
+            min: [0, 'Percentage must be between 0 and 100!'],
+            max: [100, 'Percentage must be between 0 and 100!'],
+        },
         objectiveMoney: {
             type: Number,
             required: true,
