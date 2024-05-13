@@ -5,7 +5,7 @@ import {Box, Grid} from '@mui/material'
 import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import {getApi} from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
-import BudgetTable from "./components/Table.jsx";
+import { HomeTable } from './components/Table.jsx'
 import {getLatestEntriesData} from './utils/budgetEntries.utils.js'
 
 
@@ -70,7 +70,7 @@ function App() {
                                         minWidth: '400px'
                                     }}>
                                         <h3>Ultime entrate:</h3>
-                                        <BudgetTable budgetEntriesList={incomeTableList} isPositive={true}/>
+                                        <HomeTable budgetEntriesList={incomeTableList} isPositive={true}/>
                                     </Box>
                                 </Grid>
                             </Grid>
@@ -100,7 +100,7 @@ function App() {
                                         minWidth: '400px'
                                     }}>
                                         <h3>Ultime spese:</h3>
-                                        <BudgetTable budgetEntriesList={expenseTableList} isPositive={false}/>
+                                        <HomeTable budgetEntriesList={expenseTableList} isPositive={false}/>
                                     </Box>
                                 </Grid>
                             </Grid>

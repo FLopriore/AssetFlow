@@ -14,7 +14,7 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 
-export default function BudgetTable({budgetEntriesList, isPositive}) {
+export function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(6);
@@ -103,6 +103,41 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
         <Fab size='small' sx={{mt: 2}}>
             <ClearRoundedIcon />
         </Fab>
+        </>
+    );
+}
+
+export function HomeTable({budgetEntriesList, isPositive}) {
+    const rows = budgetEntriesList;
+
+    return (
+        <>
+        <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Descrizione</TableCell>
+                        <TableCell align="right">Euro</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map((row) => (
+                        <TableRow
+                            key={row.id}
+                            sx={{
+                                '&:last-child td, &:last-child th': {border: 0},
+                                'td': {color: (isPositive) ? 'green' : 'red'},
+                            }}
+                        >
+                            <TableCell component="th" scope="row">
+                                {row.label}
+                            </TableCell>
+                            <TableCell align="right">{row.value}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
         </>
     );
 }

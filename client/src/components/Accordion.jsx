@@ -4,7 +4,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Box} from '@mui/material';
-import BudgetTable from './Table';
+import { BudgetTable } from './Table';
 import {calculateTotalCategory} from "../utils/budgetEntries.utils.js";
 
 function getCategory(budgetEntriesList, category, isPositive) {
