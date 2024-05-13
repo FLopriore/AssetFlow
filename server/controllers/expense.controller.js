@@ -118,4 +118,32 @@ const getLastYearExpenses = async (req, res) => {
     }
 };
 
-module.exports = {getExpenseById, addExpense, deleteExpense, getAllExpenses, getLastMonthExpenses, getLastYearExpenses};
+const deleteManyExpenses = async (req, res) => {
+    try {
+        const expensesIds = req.body.map((el) => new mongoose.mongo.ObjectId(el._id));
+        const deletedCount = await Expense.deleteMany({
+            _id: {
+                $in: expensesIds
+            },
+            userId: req.userId,
+        });
+
+        if (deletedCount < expensesIds.length) {
+            return res.status(404).json({message: 'Some expenses were not found!'});
+        }
+
+        res.status(200).json({message: 'All expenses deleted!'});
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+};
+
+module.exports = {
+    getExpenseById,
+    addExpense,
+    deleteExpense,
+    getAllExpenses,
+    getLastMonthExpenses,
+    getLastYearExpenses,
+    deleteManyExpenses
+};

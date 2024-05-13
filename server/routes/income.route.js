@@ -7,7 +7,7 @@ const {
     deleteIncome,
     getAllIncomes,
     getLastMonthIncomes,
-    getLastYearIncomes
+    getLastYearIncomes, deleteManyIncomes
 } = require("../controllers/income.controller")
 
 router.use(verifyToken);
@@ -18,6 +18,8 @@ router.get("/lastyear", getLastYearIncomes);
 router.get("/:id", getIncomeById);
 
 router.post("/", addIncome);
+
+router.put("/delete", deleteManyIncomes);
 
 router.delete("/:id", deleteIncome);
 

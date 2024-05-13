@@ -4,7 +4,6 @@ const {filterResponse} = require("../utils/response.utils");
 const dayjs = require("dayjs");
 
 // Gets all the incomes
-// TODO: set a limit of entries
 const getAllIncomes = async (req, res) => {
     try {
         let allIncomes = await Income.find({userId: req.userId});
@@ -12,7 +11,7 @@ const getAllIncomes = async (req, res) => {
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
         }
-        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description','createdAt']);
+        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description', 'createdAt']);
         res.status(200).json(allIncomes);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -93,7 +92,7 @@ const getLastMonthIncomes = async (req, res) => {
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
         }
-        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description','createdAt']);
+        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description', 'createdAt']);
         res.status(200).json(allIncomes);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -110,11 +109,39 @@ const getLastYearIncomes = async (req, res) => {
         if (!allIncomes.length) {
             return res.status(404).json({message: 'Incomes not found!'});
         }
-        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description','createdAt']);
+        allIncomes = filterResponse(allIncomes, ['_id', 'category', 'positiveAmount', 'description', 'createdAt']);
         res.status(200).json(allIncomes);
     } catch (e) {
         res.status(500).json({message: e.message});
     }
 };
 
-module.exports = {getIncomeById, addIncome, deleteIncome, getAllIncomes, getLastMonthIncomes, getLastYearIncomes};
+const deleteManyIncomes = async (req, res) => {
+    try {
+        const incomesIds = req.body.map((el) => new mongoose.mongo.ObjectId(el._id));
+        const deletedCount = await Income.deleteMany({
+            _id: {
+                $in: incomesIds
+            },
+            userId: req.userId,
+        });
+
+        if (deletedCount < incomesIds.length) {
+            return res.status(404).json({message: 'Some income sources were not found!'});
+        }
+
+        res.status(200).json({message: 'All income sources deleted!'});
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+};
+
+module.exports = {
+    getIncomeById,
+    addIncome,
+    deleteIncome,
+    getAllIncomes,
+    getLastMonthIncomes,
+    getLastYearIncomes,
+    deleteManyIncomes
+};

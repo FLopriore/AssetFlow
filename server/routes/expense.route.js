@@ -7,7 +7,8 @@ const {
     deleteExpense,
     getAllExpenses,
     getLastMonthExpenses,
-    getLastYearExpenses
+    getLastYearExpenses,
+    deleteManyExpenses
 } = require("../controllers/expense.controller.js")
 
 router.use(verifyToken);
@@ -20,6 +21,8 @@ router.get("/:id", getExpenseById);
 
 
 router.post("/", addExpense);
+
+router.put("/delete", deleteManyExpenses);
 
 router.delete("/:id", deleteExpense);
 
