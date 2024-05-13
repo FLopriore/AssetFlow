@@ -14,6 +14,7 @@ import {useNavigate} from 'react-router-dom';
 const baseURL = 'http://localhost:3000'
 
 export default function SignIn({verify}) {
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.history.pushState(null, '', '/login');
@@ -29,8 +30,6 @@ export default function SignIn({verify}) {
             window.removeEventListener('popstate', handleBackButton);
         };
     }, []);
-
-    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,16 +8,21 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import { useState } from 'react';
 
 export default function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;
     const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(6);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-      };
-    
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
@@ -27,7 +33,10 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {(rowsPerPage > 0
+                            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : rows
+                    ).map((row) => (
                         <TableRow
                             key={row.id}
                             sx={{
@@ -44,9 +53,15 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
                 </TableBody>
             </Table>
             <TablePagination
+                rowsPerPageOptions={[6, 15, 25, {value: -1, label: 'All'}]}
+                count={rows.length}
                 component="div"
                 page={page}
                 onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage="Righe per pagina:"
+                rowsPerPage={rowsPerPage}
+                labelDisplayedRows={({from, to, count}) => `${from}-${to} di ${count}`}
             />
         </TableContainer>
     );

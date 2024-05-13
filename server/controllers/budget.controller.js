@@ -68,7 +68,6 @@ const getTotalIncome = async (req, res) => {
 const getTotalExpenses = async (req, res) => {
     try {
         const expensesList = await Expense.find({userId: req.userId});
-        console.log(expensesList)
         const totalExpenses = getTotal(expensesList, 'negativeAmount');
 
         const responseJson = {
