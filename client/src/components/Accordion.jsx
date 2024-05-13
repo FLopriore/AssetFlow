@@ -155,7 +155,7 @@ return (
         Affitto: -{calculateTotalCategory(expenseList, 'affitto')}
       </AccordionSummary>
       <AccordionDetails>
-          <BudgetTable budgetEntriesList={affittoArr} isPositive={true}/>
+          <BudgetTable budgetEntriesList={affittoArr} isPositive={false}/>
       </AccordionDetails>
     </Accordion>
     <Accordion>
@@ -164,7 +164,7 @@ return (
         aria-controls="panel3-content"
         id="panel3-header"
       >
-        Acquisto asset: -{calculateTotalCategory(expenseList, 'asset')}
+        Acquisto asset: -{calculateTotalCategory(expenseList, 'buy_asset')}
       </AccordionSummary>
       <AccordionDetails>
           <BudgetTable budgetEntriesList={assetArr} isPositive={false}/>

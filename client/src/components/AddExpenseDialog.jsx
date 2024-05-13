@@ -62,7 +62,7 @@ export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpen
                 onSubmit: handleSubmit,
             }}
         >
-            <DialogTitle>Aggiungi entrata</DialogTitle>
+            <DialogTitle>Aggiungi spesa</DialogTitle>
             <DialogContent>
                 <FormControl fullWidth>
                     <TextField
@@ -74,6 +74,7 @@ export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpen
                         type="number"
                         fullWidth
                         variant="outlined"
+                        color='secondary'
                         error={error}
                         helperText={(error)? "L'importo deve essere negativo." : ""}
                         onChange={handleChangeAmount}
@@ -82,6 +83,7 @@ export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpen
                         name="category"
                         id="category"
                         value={category}
+                        color='secondary'
                         onChange={handleChangeCategory}
                     >
                         <MenuItem value='shopping'>Shopping</MenuItem>
@@ -96,14 +98,15 @@ export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpen
                         id="description"
                         name="description"
                         label="Descrizione"
+                        color='secondary'
                         fullWidth
                         variant="outlined"
                     />
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Annulla</Button>
-                <Button type="submit" disabled={error}>Aggiungi</Button>
+                <Button color='secondary' onClick={handleClose}>Annulla</Button>
+                <Button color='secondary' type="submit" disabled={error}>Aggiungi</Button>
             </DialogActions>
         </Dialog>
     );

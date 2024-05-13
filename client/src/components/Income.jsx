@@ -14,6 +14,7 @@ import AddIncomeDialog from "./AddIncomeDialog.jsx";
 export default function Income() {
     const [value, setValue] = useState('0');
     const [incomeMonthlyList, setIncomeMonthlyList] = useState([]);
+    const [incomeYearList, setIncomeYearList] = useState([]);
     const [incomeTotal, setIncome] = useState(0);
 
     const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ export default function Income() {
 
         // retrieve list of last year income sources
         getApi('income/lastyear').then((data) => {
-            setIncomeMonthlyList(data);
+            setIncomeYearList(data);
         });
     }, []);
 
@@ -110,7 +111,7 @@ export default function Income() {
                                     <IncomePie incomesList={incomeMonthlyList}/>
                                 </Box>
                             </Box>
-                            <IncomeAccordion incomeList={incomeMonthlyList}/>
+                            <IncomeAccordion incomeList={incomeYearList}/>
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
                                 top: '87vh'

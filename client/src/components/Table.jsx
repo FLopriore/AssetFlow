@@ -18,6 +18,7 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
       };
     
     return (
+        <>
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
@@ -43,11 +44,8 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
                     ))}
                 </TableBody>
             </Table>
-            <TablePagination
-                component="div"
-                page={page}
-                onPageChange={handleChangePage}
-            />
+            { /* TODO aggiungere le pagine alla tabella e il numero di righe per pagina */}
         </TableContainer>
+        </>
     );
 }
