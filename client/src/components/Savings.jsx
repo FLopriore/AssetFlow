@@ -8,10 +8,12 @@ import PercentRoundedIcon from '@mui/icons-material/PercentRounded';
 import SavingsProgress from './LinearProgress';
 import AllocationDialog from "./AllocationDialog.jsx";
 import {getApi} from "../utils/api.utils.js";
+import AddObjectiveDialog from "./AddObjectiveDialog.jsx";
 
 export default function Savings() {
     const [objectivesList, setObjectivesList] = useState([]);
-    const [open, setOpen] = useState(false);
+    const [openAlloc, setOpenAlloc] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
 
     useEffect(() => {
         // retrieve all the objectives
@@ -22,12 +24,15 @@ export default function Savings() {
         });
     }, []);
 
-    const handleOpenDialog = () => setOpen(true);
+    const handleOpenAllocDialog = () => setOpenAlloc(true);
+    const handleOpenAddDialog = () => setOpenAdd(true);
 
     return (
         <Box className='window'>
-            <AllocationDialog isOpen={open} setOpen={setOpen} objectivesList={objectivesList}
+            <AllocationDialog isOpen={openAlloc} setOpen={setOpenAlloc} objectivesList={objectivesList}
                               setObjectivesList={setObjectivesList}/>
+            <AddObjectiveDialog isOpen={openAdd} setOpen={setOpenAdd} objectivesList={objectivesList}
+                                setObjectivesList={setObjectivesList}/>
             <Sidebar/>
             <Box className='main-content' sx={{
                 display: 'flex', flexDirection: 'row',
@@ -44,13 +49,13 @@ export default function Savings() {
                     <SavingsProgress value={50}/>
                     <Typography variant='body1'>currentValue / totalValue</Typography>
                     { /* TODO aggiustare l'hover dei FAB */}
-                    <Fab onClick={handleOpenDialog} color='savings' sx={{
+                    <Fab onClick={handleOpenAllocDialog} color='savings' sx={{
                         position: 'absolute',
                         top: '77vh',
                     }}>
                         <PercentRoundedIcon/>
                     </Fab>
-                    <Fab color='savings' sx={{
+                    <Fab onClick={handleOpenAddDialog} color='savings' sx={{
                         position: 'absolute',
                         top: '87vh'
                     }}>

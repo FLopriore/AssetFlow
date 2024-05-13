@@ -22,7 +22,6 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
         const body = JSON.stringify(objectivesList);
         putApi('objective/percent/', body)
             .then((data) => {
@@ -50,6 +49,8 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
         } else if (errorPercentage) {
             setObjectivesList(objectivesList); // aggiorna submitList
             setErrorPercentage(false);  // nascondi il messaggio di errore
+        } else {
+            setObjectivesList(objectivesList); // aggiorna submitList
         }
     };
 
