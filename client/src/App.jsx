@@ -6,7 +6,7 @@ import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import {getApi} from "./utils/api.utils.js";
 import {useEffect, useState} from "react";
 import BudgetTable from "./components/Table.jsx";
-import getLatestEntriesData from './utils/budgetEntries.utils.js'
+import {getLatestEntriesData} from './utils/budgetEntries.utils.js'
 
 
 function App() {

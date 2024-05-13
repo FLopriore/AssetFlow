@@ -78,10 +78,10 @@ export default function Income() {
                                 <h3>Entrate totali nel mese di Aprile</h3>
                                 <h2>+{incomeTotal}</h2>
                                 <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                    <IncomePie incomesList={incomeMonthlyList}/>
+                                    {incomeMonthlyList && <IncomePie incomesList={incomeMonthlyList}/>}
                                 </Box>
                             </Box>
-                            <IncomeAccordion incomeList={incomeMonthlyList}/>
+                            {incomeMonthlyList && <IncomeAccordion incomeList={incomeMonthlyList}/>}
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
                                 top: '87vh'
@@ -108,10 +108,10 @@ export default function Income() {
                                 <h3>Entrate totali nell'anno 2023</h3>
                                 <h2>+{incomeTotal}</h2>
                                 <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                    <IncomePie incomesList={incomeMonthlyList}/>
+                                    {incomeYearList && <IncomePie incomesList={incomeYearList}/>}
                                 </Box>
                             </Box>
-                            <IncomeAccordion incomeList={incomeYearList}/>
+                            {incomeYearList && <IncomeAccordion incomeList={incomeYearList}/>}
                             <Fab onClick={handleOpen} color='primary' sx={{
                                 position: 'absolute',
                                 top: '87vh'
