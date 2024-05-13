@@ -84,4 +84,29 @@ const deleteObjective = async (req, res) => {
     }
 };
 
-module.exports = {getObjectiveById, addObjective, deleteObjective, getAllObjectives};
+const modifyObjectivePercentages = async (req, res) => {
+    try {
+        const objectivesList = req.body;
+        const modifiedObjectives = [];
+        for (const element of objectivesList) {
+            const objective = await Objective.findOneAndUpdate(
+                {
+                    _id: new mongoose.mongo.ObjectId(element._id),
+                    userId: req.userId,
+                },
+                {
+                    percentage: element.percentage
+                });
+            modifiedObjectives.push(objective);
+        }
+
+        if (modifiedObjectives.length < objectivesList.length) {
+            return res.status(404).json({success: false, message: "Some percentages were not updated."});
+        }
+        res.status(200).json({success: true, message: "All percentages were updated successfully."});
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+};
+
+module.exports = {getObjectiveById, addObjective, deleteObjective, getAllObjectives, modifyObjectivePercentages};

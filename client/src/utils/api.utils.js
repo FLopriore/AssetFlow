@@ -33,4 +33,21 @@ async function postApi(endpoint, body) {
     }
 }
 
-export {getApi, postApi};
+async function putApi(endpoint, body) {
+    try {
+        let response = await fetch(`${BASE_URL}api/${endpoint}`, {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+            body: body
+        });
+        response = await response.json();
+        return response;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export {getApi, postApi, putApi};
