@@ -8,11 +8,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import { Fab } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
+import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 
 export default function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(6);
+    const [selected, setSelected] = useState([]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -23,12 +29,28 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
         setPage(0);
     };
 
+    const handleCheckboxChange = (event, id) => {
+        if (event.target.checked) {
+            setSelected([...selected, id]);
+        } else {
+            setSelected(selected.filter((selectedId) => selectedId !== id));
+        }
+    };
+
+    const handleDeleteSelected = () => {
+        // Filter out the selected entries from the list
+        const updatedList = budgetEntriesList.filter((entry) => !selected.includes(entry.id));
+        // Update the state with the filtered list
+        // Qui la logica del delete
+    };
+    
     return (
         <>
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                        <TableCell padding="checkbox" />
                         <TableCell>Descrizione</TableCell>
                         <TableCell align="right">Euro</TableCell>
                     </TableRow>
@@ -45,6 +67,19 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
                                 'td': {color: (isPositive) ? 'green' : 'red'},
                             }}
                         >
+                            <TableCell padding="checkbox">
+                                <Checkbox
+                                    checked={selected.includes(row.id)}
+                                    onChange={(event) => handleCheckboxChange(event, row.id)}
+                                    sx={{
+                                        '&.Mui-checked': {
+                                            color: `${(isPositive)? 'green' : 'red' }`
+                                          }
+                                    }}
+                                    icon={<CheckBoxOutlineBlankRoundedIcon />}
+                                    checkedIcon={<DisabledByDefaultRoundedIcon />}
+                                />
+                            </TableCell>
                             <TableCell component="th" scope="row">
                                 {row.label}
                             </TableCell>
@@ -65,6 +100,9 @@ export default function BudgetTable({budgetEntriesList, isPositive}) {
                 labelDisplayedRows={({from, to, count}) => `${from}-${to} di ${count}`}
             />
         </TableContainer>
+        <Fab size='small' sx={{mt: 2}}>
+            <ClearRoundedIcon />
+        </Fab>
         </>
     );
 }
