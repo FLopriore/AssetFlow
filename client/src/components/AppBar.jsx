@@ -10,60 +10,57 @@ import Menu from '@mui/material/Menu';
 import {useNavigate} from "react-router-dom";
 
 export default function MenuAppBar() {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const navigate = useNavigate();
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    window.localStorage.clear();
-    navigate('../login', {replace: true});
-  };
+    const handleClose = () => {
+        setAnchorEl(null);
+        window.localStorage.clear();
+        navigate('/login');
+    };
 
-  return (
-    <Box sx={{ height: '10%', width: '100%'}}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Welcome to AssetFlow!
-          </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </Menu>
-            </div>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
+    return (
+        <Box sx={{height: '10%', width: '100%'}}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        Welcome to AssetFlow!
+                    </Typography>
+                    <div>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleMenu}
+                            color="inherit"
+                        >
+                            <AccountCircle/>
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        </Menu>
+                    </div>
+                </Toolbar>
+            </AppBar>
+        </Box>
+    );
 }
