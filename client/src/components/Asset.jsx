@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
 import { useState, useEffect } from "react";
-import {getApi} from '../utils/api.utils';
+import {getApi, postApi} from '../utils/api.utils';
 import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
 
@@ -48,10 +48,44 @@ async function deleteAsset(assetId){
     }
 }
 
+async function getHistData(symbol){
+    // fai la fetch all'url
+    const startDate = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().split('T')[0];
+    symbol = symbol.toLowerCase()
+    const data = await postApi("price",{'symbol':symbol ,'startDate':startDate})
+    console.log(data)
+}
+
 export default function Asset() {
 
     const [assetList, setAssetList] = useState([])
     const [priceList,setPriceList] = useState([])
+    const [graphData,setGraphData] = useState([])
+
+    async function getGraphData(symbol) {
+        if((!localStorage.getItem(symbol)) || ((new Date).getDate >= JSON.parse(localStorage.getItem(symbol)).expDate)){
+            const date = new Date(new Date().setDate(new Date().getDate() + 1));
+            const data = await getHistData(symbol)
+            setGraphData(data)
+            localStorage.setItem(symbol,JSON.stringify({
+                "data": data,
+                "expDate": date
+            }))
+        }else setGraphData(JSON.parse(localStorage.getItem(symbol)).data)
+    }
+
+    const getActualPrice = (symbol) => {
+        const str = symbol+"_price"
+        if (!priceList || symbol!==priceList.id) {
+            if(localStorage.getItem(str)) return localStorage.getItem(str) 
+                else return 0
+        }
+        if(symbol===priceList.id){
+            localStorage.setItem(str,(priceList.price).toFixed(2))
+            return (priceList.price).toFixed(2)
+        }
+    }
+
 
     useEffect(()=>{
       getApi('asset/').then((data) => {
@@ -60,6 +94,7 @@ export default function Asset() {
        //Pulisco l'array con gli asset prendendo quello che mi interessa
       console.log(assetList);
 
+      //WebSocket yahoo finance
       protobuf.load("Data.proto",(error,root)=>{
         if (error){console.log(error)}
         const Ticker = root.lookupType("ticker");
@@ -78,7 +113,7 @@ export default function Asset() {
           };
         ws.onclose = function close() {console.log("Socket closed");};
         });
-  
+        
       
       console.log(priceList)
     },[assetList,priceList]);
@@ -124,7 +159,7 @@ export default function Asset() {
                     </Grid>
                     {/*<div>{assetList.map(asset => <p>{asset.label}</p>)}</div>*/}
                     <Grid item xs={6}>
-                       <BasicLineChart /> 
+                       <BasicLineChart histData={graphData}/> 
                     </Grid>
                     <Grid item xs={6} display='flex' flexWrap='wrap' justifyContent='center'>
                         <Box sx={{
@@ -144,9 +179,10 @@ export default function Asset() {
                                 <ListItemButton onClick={() => deleteAsset(el.id)}>
                                     <DeleteIcon/>    
                                 </ListItemButton> 
-                                <ListItemButton>
+                                <ListItemButton onClick={()=> getGraphData(el.label)}>
                                     <ListItemText primary={el.label}></ListItemText>
-                                </ListItemButton>           
+                                </ListItemButton>
+                                <ListItemText primary={getActualPrice(el.label)}></ListItemText>           
                             </ListItem>
                         
                     ))

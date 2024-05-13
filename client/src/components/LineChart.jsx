@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 
-export default function BasicLineChart() {
+export default function BasicLineChart({histData}) {
   return (
     <LineChart
       xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
