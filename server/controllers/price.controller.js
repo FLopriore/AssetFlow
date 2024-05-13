@@ -1,9 +1,15 @@
-const KEY =  process.env.ALPHA_API_KEY || "";
+const KEY =  process.env.API_KEY || "";
 
-const getMonthlyPrices = ((req,res)=>{
-        //const {tracker} = req.params;
-        const url = 'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=AAPL&apikey=BY6LBJPX9GB3433O';
-        fetch(url).then(resp => {resp.json();}).then(data => {res.status(200).json(data)}).catch(e => res.status(500).json(e.message))
-})
+const getMonthlyPrices = async (req,res) =>{
+  const symbol = req.body.symbol;
+  const startDate = req.body.startDate;
+  const url = "https://api.tiingo.com/tiingo/daily/"+symbol+"/prices?startDate="+startDate+"&token="+KEY;
+  const response = await fetch(url,{
+        method:"get",
+  });
+  const data = await response.json()
+  if(data) res.status(200).json(data)
+  else res.status(500).json({success:"false"})
+}
 
 module.exports = {getMonthlyPrices}
