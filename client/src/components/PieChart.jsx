@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {PieChart} from '@mui/x-charts/PieChart';
-import getLatestEntriesData from "../utils/budgetEntries.utils.js";
+import {calculateTotalCategory, getLatestEntriesData} from "../utils/budgetEntries.utils.js";
 
 export function IncomePie({incomesList}) {
 
@@ -114,18 +114,4 @@ export function HomeRedPie({expensesList}) {
             slotProps={{legend: {hidden: true}}}  // nasconde la legenda
         />
     );
-}
-
-
-// TODO: fix errors when server is down (?)
-function calculateTotalCategory(budgetEntriesList, category) {
-    let total = 0;
-    budgetEntriesList.forEach((el) => {
-        if (el.positiveAmount && el.category === category) {
-            total += el.positiveAmount;
-        } else {
-            if (el.category === category) total += el.negativeAmount * (-1);
-        }
-    });
-    return total;
 }

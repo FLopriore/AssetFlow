@@ -7,7 +7,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {ExpensePie} from './PieChart';
 import {getApi} from '../utils/api.utils';
-import {ExpenseAccordion}from './Accordion';
+import {ExpenseAccordion} from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddExpenseDialog from "./AddExpenseDialog.jsx";
 
@@ -42,86 +42,87 @@ export default function Expense() {
 
     return (
         <>
-        <Box className='window'>
-            <AddExpenseDialog setOpen={setOpen} isOpen={open} expenseList={expenseMonthlyList} setExpenseList={setExpenseMonthlyList}/>
-            <Sidebar/>
-            <Box className='main-content' sx={{
-                border: '3px solid',
-                borderColor: '#CE310E', margin: '1rem',
-                borderRadius: '20px',
-                padding: '1rem',
-                overflowY: 'auto'
-            }}>
-                <TabContext value={value}>
-                    <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
-                        <TabList onChange={handleChange} indicatorColor="secondary" textColor="secondary">
-                            <Tab label="Ultimo mese" value='0'/>
-                            <Tab label="Ultimo anno" value='1'/>
-                        </TabList>
-                    </Box>
-                    <TabPanel value="0">
-                        <Box sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            width: '100%',
-                            flexWrap: 'wrap'
-                        }}>
-                            <Box sx={{
-                                textAlign: 'center',
-                                width: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyItems: 'center',
-                                flexDirection: 'column'
-                            }}>
-                                <h3>Spese totali nel mese di Aprile</h3>
-                                <h2>{expenseTotal}</h2>
-                                <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                    <ExpensePie expensesList={expenseMonthlyList}/>
-                                </Box>
-                            </Box>
-                            <ExpenseAccordion expenseList={expenseMonthlyList}/>
-                            <Fab onClick={handleOpen} color='secondary' sx={{
-                                position: 'absolute',
-                                top: '87vh'
-                            }}>
-                                <AddRoundedIcon />
-                            </Fab>
+            <Box className='window'>
+                <AddExpenseDialog setOpen={setOpen} isOpen={open} expenseList={expenseMonthlyList}
+                                  setExpenseList={setExpenseMonthlyList}/>
+                <Sidebar/>
+                <Box className='main-content' sx={{
+                    border: '3px solid',
+                    borderColor: '#CE310E', margin: '1rem',
+                    borderRadius: '20px',
+                    padding: '1rem',
+                    overflowY: 'auto'
+                }}>
+                    <TabContext value={value}>
+                        <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
+                            <TabList onChange={handleChange} indicatorColor="secondary" textColor="secondary">
+                                <Tab label="Ultimo mese" value='0'/>
+                                <Tab label="Ultimo anno" value='1'/>
+                            </TabList>
                         </Box>
-                    </TabPanel>
-                    <TabPanel value="1">
-                    <Box sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            width: '100%',
-                            flexWrap: 'wrap'
-                        }}>
+                        <TabPanel value="0">
                             <Box sx={{
-                                textAlign: 'center',
-                                width: '50%',
                                 display: 'flex',
-                                alignItems: 'center',
-                                justifyItems: 'center',
-                                flexDirection: 'column'
+                                flexDirection: 'row',
+                                width: '100%',
+                                flexWrap: 'wrap'
                             }}>
-                                <h3>Spese totali nell'anno 2023</h3>
-                                <h2>{expenseTotal}</h2>
-                                <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                    <ExpensePie expensesList={expenseYearList}/>
+                                <Box sx={{
+                                    textAlign: 'center',
+                                    width: '50%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyItems: 'center',
+                                    flexDirection: 'column'
+                                }}>
+                                    <h3>Spese totali nel mese di Aprile</h3>
+                                    <h2>{expenseTotal}</h2>
+                                    <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                        {expenseMonthlyList && <ExpensePie expensesList={expenseMonthlyList}/>}
+                                    </Box>
                                 </Box>
+                                {expenseMonthlyList && <ExpenseAccordion expenseList={expenseMonthlyList}/>}
+                                <Fab onClick={handleOpen} color='secondary' sx={{
+                                    position: 'absolute',
+                                    top: '87vh'
+                                }}>
+                                    <AddRoundedIcon/>
+                                </Fab>
                             </Box>
-                            <ExpenseAccordion expenseList={expenseYearList}/>
-                            <Fab onClick={handleOpen} color='secondary' sx={{
-                                position: 'absolute',
-                                top: '87vh'
+                        </TabPanel>
+                        <TabPanel value="1">
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                width: '100%',
+                                flexWrap: 'wrap'
                             }}>
-                                <AddRoundedIcon />
-                            </Fab>
-                        </Box>
-                    </TabPanel>
-                </TabContext>
+                                <Box sx={{
+                                    textAlign: 'center',
+                                    width: '50%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyItems: 'center',
+                                    flexDirection: 'column'
+                                }}>
+                                    <h3>Spese totali nell'anno 2023</h3>
+                                    <h2>{expenseTotal}</h2>
+                                    <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                        {expenseYearList && <ExpensePie expensesList={expenseYearList}/>}
+                                    </Box>
+                                </Box>
+                                {expenseYearList && <ExpenseAccordion expenseList={expenseYearList}/>}
+                                <Fab onClick={handleOpen} color='secondary' sx={{
+                                    position: 'absolute',
+                                    top: '87vh'
+                                }}>
+                                    <AddRoundedIcon/>
+                                </Fab>
+                            </Box>
+                        </TabPanel>
+                    </TabContext>
+                </Box>
             </Box>
-        </Box>
         </>
     );
 }
