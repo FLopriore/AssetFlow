@@ -29,6 +29,8 @@ export default function Savings() {
 
     const calculatePercentage = (a, b) => Math.round(a / b * 100);
 
+    const hoverFab = {backgroundColor: "#ffe182"};
+
     return (
         <Box className='window'>
             <AllocationDialog isOpen={openAlloc} setOpen={setOpenAlloc} objectivesList={objectivesList}
@@ -61,16 +63,17 @@ export default function Savings() {
                                 variant='body1'>€{objective.savedMoney} / {objective.objectiveMoney}</Typography>
                         </>
                     ))}
-                    { /* TODO aggiustare l'hover dei FAB */}
                     <Fab onClick={handleOpenAllocDialog} color='savings' sx={{
                         position: 'absolute',
                         top: '77vh',
+                        "&:hover": hoverFab
                     }}>
-                        <PercentRoundedIcon/>
-                    </Fab>
+                        < PercentRoundedIcon/>
+                    < /Fab>
                     <Fab onClick={handleOpenAddDialog} color='savings' sx={{
                         position: 'absolute',
-                        top: '87vh'
+                        top: '87vh',
+                        "&:hover": hoverFab
                     }}>
                         <AddRoundedIcon/>
                     </Fab>
