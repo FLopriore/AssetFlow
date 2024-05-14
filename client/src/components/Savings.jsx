@@ -27,6 +27,8 @@ export default function Savings() {
     const handleOpenAllocDialog = () => setOpenAlloc(true);
     const handleOpenAddDialog = () => setOpenAdd(true);
 
+    const calculatePercentage = (a, b) => Math.round(a / b * 100);
+
     return (
         <Box className='window'>
             <AllocationDialog isOpen={openAlloc} setOpen={setOpenAlloc} objectivesList={objectivesList}
@@ -35,8 +37,14 @@ export default function Savings() {
                                 setObjectivesList={setObjectivesList}/>
             <Sidebar/>
             <Box className='main-content' sx={{
-                display: 'flex', flexDirection: 'row',
-                width: '100%'
+                display: 'flex',
+                flexDirection: 'row',
+                border: '3px solid',
+                borderColor: '#FFA200',
+                margin: '1rem',
+                borderRadius: '20px',
+                padding: '1rem',
+                overflowY: 'auto',
             }}>
                 <Box sx={{width: '50%', height: '100%', m: 3}}>
                     <p>box 1</p>
@@ -44,10 +52,15 @@ export default function Savings() {
                 <Divider orientation="vertical" flexItem/>
                 <Box sx={{width: '50%', height: '100%', m: 3, overflowY: 'auto'}}>
                     <Typography variant='h4' sx={{mb: 3}}>I tuoi obiettivi</Typography>
-                    { /* TODO qui generare la lista a partire dall'array dei savings */}
-                    <Typography variant='h6'>Vacanze</Typography>
-                    <SavingsProgress value={50}/>
-                    <Typography variant='body1'>currentValue / totalValue</Typography>
+                    {objectivesList && objectivesList.map((objective) => (
+                        <>
+                            <Typography variant='h6'>{objective.name}</Typography>
+                            <SavingsProgress
+                                value={calculatePercentage(objective.savedMoney, objective.objectiveMoney)}/>
+                            <Typography
+                                variant='body1'>€{objective.savedMoney} / {objective.objectiveMoney}</Typography>
+                        </>
+                    ))}
                     { /* TODO aggiustare l'hover dei FAB */}
                     <Fab onClick={handleOpenAllocDialog} color='savings' sx={{
                         position: 'absolute',
