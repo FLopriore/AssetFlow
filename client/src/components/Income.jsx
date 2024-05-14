@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext, createContext} from 'react';
 import Sidebar from './Sidebar';
 import {Box, Fab, Tab} from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
@@ -10,6 +10,7 @@ import {getApi} from '../utils/api.utils';
 import { IncomeAccordion } from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddIncomeDialog from "./AddIncomeDialog.jsx";
+import { ListContext } from './ListContext.jsx';
 
 export default function Income() {
     const [value, setValue] = useState('0');
@@ -41,6 +42,8 @@ export default function Income() {
         });
     }, []);
 
+    const list = {incomeTotal, setIncome}
+
     return (
         <>
         <Box className='window'>
@@ -53,6 +56,7 @@ export default function Income() {
                 padding: '1rem',
                 overflowY: 'auto'
             }}>
+            <ListContext.Provider value={list}>
                 <TabContext value={value}>
                     <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
                         <TabList onChange={handleChange}>
@@ -120,7 +124,8 @@ export default function Income() {
                             </Fab>
                         </Box>
                     </TabPanel>
-                </TabContext>
+                 </TabContext>
+                </ListContext.Provider>
             </Box>
         </Box>
         </>

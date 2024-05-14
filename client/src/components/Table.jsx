@@ -13,12 +13,16 @@ import { Fab } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
+import DeleteDialog from './DeleteDialog';
 
 export function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(6);
     const [selected, setSelected] = useState([]);
+    const [open, setOpen] = useState(false);
+    
+    const handleOpen = () => setOpen(true);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -46,6 +50,7 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
     
     return (
         <>
+        <DeleteDialog isOpen={open} setOpen={setOpen} isPositive={true} selected={selected} />
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
@@ -100,7 +105,7 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
                 labelDisplayedRows={({from, to, count}) => `${from}-${to} di ${count}`}
             />
         </TableContainer>
-        <Fab size='small' sx={{mt: 2, ml: 0.8}} disabled={!selected.length}>
+        <Fab size='small' sx={{mt: 2, ml: 0.8}} disabled={!selected.length} onClick={handleOpen}>
             <DeleteForeverRoundedIcon />
         </Fab>
         </>
