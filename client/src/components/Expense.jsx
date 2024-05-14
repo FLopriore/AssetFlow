@@ -10,12 +10,15 @@ import {getApi} from '../utils/api.utils';
 import {ExpenseAccordion} from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddExpenseDialog from "./AddExpenseDialog.jsx";
+import { ListContext } from './ListContext.jsx';
 
 export default function Expense() {
     const [value, setValue] = useState('0');
     const [expenseYearList, setExpenseYearList] = useState([]);
     const [expenseTotal, setExpense] = useState(0);
     const [expenseMonthlyList, setExpenseMonthlyList] = useState([]);
+    const [expenseList, setExpenseList] = useState([]);
+    const listValue = { expenseList, setExpenseList }
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -38,6 +41,11 @@ export default function Expense() {
         getApi('expense/lastmonth').then((data) => {
             setExpenseMonthlyList(data);
         });
+
+        getApi('expense/').then((data) => {
+            setExpenseList(data);
+        });
+
     }, []);
 
     return (
@@ -53,6 +61,7 @@ export default function Expense() {
                     padding: '1rem',
                     overflowY: 'auto'
                 }}>
+                    <ListContext.Provider value={listValue}>
                     <TabContext value={value}>
                         <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
                             <TabList onChange={handleChange} indicatorColor="secondary" textColor="secondary">
@@ -121,6 +130,7 @@ export default function Expense() {
                             </Box>
                         </TabPanel>
                     </TabContext>
+                    </ListContext.Provider>
                 </Box>
             </Box>
         </>

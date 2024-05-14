@@ -10,7 +10,7 @@ import { ListContext } from './ListContext.jsx';
 import { useContext } from 'react';
 
 export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
-    const { list, setList } = useContext(ListContext)
+    const { incomeList, setIncomeList, expenseList, setExpenseList } = useContext(ListContext)
     
     const handleClose = () => {
         setOpen(false);
@@ -21,15 +21,16 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
         const body = JSON.stringify(selected);
         if(isPositive) {
             putApi('income/delete', body).then((data) => {
-                setList(list.filter((entry) => !selected.includes(entry.id)));
+                setIncomeList(incomeList.filter((entry) => !selected.includes(entry.id)));
                 handleClose();
+                console.log(incomeList)
             }).catch((e) => {
                 console.log(e);
                 handleClose();
             })
         } else {
             putApi('expense/delete', body).then((data) => {
-                setList(list.filter((entry) => !selected.includes(entry.id)));
+                setExpenseList(expenseList.filter((entry) => !selected.includes(entry.id)));
                 handleClose();
             }).catch((e) => {
                 console.log(e);

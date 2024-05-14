@@ -16,7 +16,9 @@ export default function Income() {
     const [value, setValue] = useState('0');
     const [incomeMonthlyList, setIncomeMonthlyList] = useState([]);
     const [incomeYearList, setIncomeYearList] = useState([]);
+    const [incomeList, setIncomeList] = useState([]);
     const [incomeTotal, setIncome] = useState(0);
+    const listValue = { incomeList, setIncomeList }
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -40,9 +42,12 @@ export default function Income() {
         getApi('income/lastyear').then((data) => {
             setIncomeYearList(data);
         });
-    }, []);
 
-    const list = {incomeTotal, setIncome}
+        // retrieve total entries
+        getApi('income/').then((data) => {
+            setIncomeList(data);
+        });
+    }, []);
 
     return (
         <>
@@ -56,7 +61,7 @@ export default function Income() {
                 padding: '1rem',
                 overflowY: 'auto'
             }}>
-            <ListContext.Provider value={list}>
+            <ListContext.Provider value={listValue}>
                 <TabContext value={value}>
                     <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
                         <TabList onChange={handleChange}>
