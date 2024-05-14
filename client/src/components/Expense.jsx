@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
-import {Box, Fab, Tab} from '@mui/material';
+import {Box, Fab, Tab, Typography} from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -84,8 +84,8 @@ export default function Expense() {
                                     justifyItems: 'center',
                                     flexDirection: 'column'
                                 }}>
-                                    <h3>Spese totali nel mese di Aprile</h3>
-                                    <h2>{expenseTotal}</h2>
+                                   <Typography variant='h5' sx={{mt: 2, mb:2}}>Spese totali nell'ultimo mese</Typography>
+                                    <h2>{expenseTotal} €</h2>
                                     <Box sx={{ml: '2.2rem', mt: '2rem'}}>
                                         {expenseMonthlyList && <ExpensePie expensesList={expenseMonthlyList}/>}
                                     </Box>
@@ -114,8 +114,8 @@ export default function Expense() {
                                     justifyItems: 'center',
                                     flexDirection: 'column'
                                 }}>
-                                    <h3>Spese totali nell'anno 2023</h3>
-                                    <h2>{expenseTotal}</h2>
+                                    <Typography variant='h5' sx={{mt: 2, mb:2}}>Entrate totali nell'ultimo anno</Typography>
+                                    <h2>{expenseTotal} €</h2>
                                     <Box sx={{ml: '2.2rem', mt: '2rem'}}>
                                         {expenseYearList && <ExpensePie expensesList={expenseYearList}/>}
                                     </Box>

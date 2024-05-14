@@ -8,7 +8,7 @@ import SavingsRoundedIcon from '@mui/icons-material/SavingsRounded';
 import ListItemText from '@mui/material/ListItemText';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
-import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import EuroRoundedIcon from '@mui/icons-material/EuroRounded';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import {Link, useLocation} from "react-router-dom";
 import {ListItemIcon} from '@mui/material';
@@ -26,7 +26,7 @@ export default function Sidebar() {
 
     const routes = [
         {path: "/", value: 0, label: "Home", icon: HomeRoundedIcon},
-        {path: "/income", value: 1, label: "Entrate", icon: AttachMoneyRoundedIcon},
+        {path: "/income", value: 1, label: "Entrate", icon: EuroRoundedIcon},
         {path: "/expense", value: 2, label: "Spese", icon: AddShoppingCartRoundedIcon},
         {path: "/savings", value: 3, label: "Salvadanaio", icon: SavingsRoundedIcon},
         {path: "/asset", value: 4, label: "Trading", icon: AccountBalanceRoundedIcon}

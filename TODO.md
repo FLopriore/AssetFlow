@@ -5,7 +5,6 @@ Cose da sistemare:
 [] alert per delete in trading (è già presente la funzione)
 [] assemblare i pezzi di AddAssetDialogue
 [] separare le logiche di liste mensili e liste annuali
-[] sistemare il font
 [] sistemare la grafica di trading
 [] fixare selected in Table
 [] finire la sezione Savings
