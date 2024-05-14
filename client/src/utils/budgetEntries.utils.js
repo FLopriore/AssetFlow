@@ -10,7 +10,7 @@ function getLatestEntriesData(budgetEntriesList, isPositive) {
         });
         budgetEntriesList.forEach((el, index) => {
             if (index <= 5) {
-                const dataElement = {id: index, label: el.description};
+                const dataElement = {id: index, label: el.description, dbId: el._id};
                 dataElement.value = (isPositive) ? el.positiveAmount : el.negativeAmount * (-1);
                 data.push(dataElement);
             }

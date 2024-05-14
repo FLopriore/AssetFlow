@@ -8,9 +8,24 @@ import {putApi} from "../utils/api.utils.js";
 import { Button } from '@mui/material';
 import { ListContext } from './ListContext.jsx';
 import { useContext } from 'react';
+import { IncomePie } from './PieChart.jsx';
+
+function filterById (array, idsToRemove) {
+    return array.filter(item => !idsToRemove.includes(item.dbId));
+  };
+
+const data = [
+    {dbId: '1', label: 'a'},
+    {dbId: '2', label: 'b'},
+    {dbId: '3', label: 'c'}
+]
+const rem = ['1', '2']
+console.log(filterById(data, rem))
 
 export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
     const { incomeList, setIncomeList, expenseList, setExpenseList } = useContext(ListContext)
+    
+    console.log("incomeList fuori " + incomeList)
     
     const handleClose = () => {
         setOpen(false);
@@ -18,21 +33,23 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const body = JSON.stringify(selected);
+        const body = JSON.stringify({selected});
+        console.log(body)
+        console.log("incomeList dentro " + incomeList)
         if(isPositive) {
             putApi('income/delete', body).then(() => {
-                setIncomeList(incomeList.filter((entry) => !selected.includes(entry.id)));
+                setIncomeList(filterById(incomeList, selected));
+                console.log("selected " + selected)
+                console.log("incomeList dopo " + incomeList)
                 handleClose();
-                console.log(incomeList)
             }).catch((e) => {
                 console.log(e);
                 handleClose();
             })
         } else {
             putApi('expense/delete', body).then(() => {
-                setExpenseList(expenseList.filter((entry) => !selected.includes(entry.id)));
+                setExpenseList(filterById(expenseList, selected));
                 handleClose();
-                console.log(expenseList)
             }).catch((e) => {
                 console.log(e);
                 handleClose();

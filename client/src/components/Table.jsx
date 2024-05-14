@@ -66,7 +66,7 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
                             : rows
                     ).map((row) => (
                         <TableRow
-                            key={row.id}
+                            key={row.dbId}
                             sx={{
                                 '&:last-child td, &:last-child th': {border: 0},
                                 'td': {color: (isPositive) ? 'green' : 'red'},
@@ -74,8 +74,8 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
                         >
                             <TableCell padding="checkbox">
                                 <Checkbox
-                                    checked={selected.includes(row.id)}
-                                    onChange={(event) => handleCheckboxChange(event, row.id)}
+                                    checked={selected.includes(row.dbId)}
+                                    onChange={(event) => handleCheckboxChange(event, row.dbId)}
                                     sx={{
                                         '&.Mui-checked': {
                                             color: `${(isPositive)? 'green' : 'red' }`
