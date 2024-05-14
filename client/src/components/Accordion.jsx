@@ -9,7 +9,7 @@ import {calculateTotalCategory} from "../utils/budgetEntries.utils.js";
 
 function getCategory(budgetEntriesList, category, isPositive) {
     let data = [];
-    if (!budgetEntriesList) {
+    if (budgetEntriesList.length !== 0) {
         budgetEntriesList.forEach((el, idx) => {
             if (el.category === category) {
                 const dataEntry = {id: idx, label: el.description, dbId: el._id};

@@ -30,22 +30,22 @@ export default function Income() {
     useEffect(() => {
         // retrieve total income
         getApi('budget/income/').then((data) => {
-            if(!data.message){setIncome(data.totalIncome);}
+            setIncome(data.totalIncome);
         });
 
         // retrieve list of last month income sources
         getApi('income/lastmonth').then((data) => {
-            if(!data.message){setIncomeMonthlyList(data);}
+            setIncomeMonthlyList(data);
         });
 
         // retrieve list of last year income sources
         getApi('income/lastyear').then((data) => {
-            if(!data.message){setIncomeYearList(data);}
+            setIncomeYearList(data);
         });
 
         // retrieve total entries
         getApi('income/').then((data) => {
-            if(!data.message){setIncomeList(data);}
+            setIncomeList(data);
         });
     }, []);
 

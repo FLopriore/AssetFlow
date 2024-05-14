@@ -30,20 +30,20 @@ export default function Expense() {
     useEffect(() => {
         // retrieve total income
         getApi('budget/expense/').then((data) => {
-            if(!data.message){setExpense(data.totalExpenses);}
+            setExpense(data.totalExpenses);
         });
 
         getApi('expense/lastyear').then((data) => {
-            if(!data.message){setExpenseYearList(data);}
+            setExpenseYearList(data);
         });
 
         //retrieve last month expenses
         getApi('expense/lastmonth').then((data) => {
-            if(!data.message){setExpenseMonthlyList(data);}
+            setExpenseMonthlyList(data);
         });
 
         getApi('expense/').then((data) => {
-            if(!data.message){setExpenseList(data);}
+            setExpenseList(data);
         });
 
     }, []);
