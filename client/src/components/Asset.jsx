@@ -26,7 +26,7 @@ const removeMarket = (string) => {
 function getTicker(AssetList){
   const data = []
   AssetList.forEach((el, index) => {
-    const dataElement = {idx: index, label: removeMarket(el.tracker), id: el._id};
+    const dataElement = {idx: index, label: (el.tracker).toUpperCase(), id: el._id};
     data.push(dataElement)
   });
   return data;

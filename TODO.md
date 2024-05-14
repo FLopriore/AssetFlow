@@ -1,7 +1,8 @@
 Cose da sistemare:
 
 [] fixare le chiamate asincrone con loading e messaggio di dati assenti in Income, Expense, Savings, Home
-[] fixare le chiamate asincrone per il grafico e trading
+[X] fixare le chiamate asincrone per il grafico e trading
+[X] Fixare l'errore se non ho nessuna income o expense
 [] alert per delete in trading (è già presente la funzione)
 [] assemblare i pezzi di AddAssetDialogue
 [] separare le logiche di liste mensili e liste annuali

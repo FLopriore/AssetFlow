@@ -4,23 +4,28 @@ import dayjs from 'dayjs'
 
 function getXData(data) {
   const output = []
+  if(!data.detail){
   data.forEach(el => {
-    output.push(dayjs((el.date).split('T')[0]))
-  });
-  return output
+    output.push(dayjs((el.date).split('T')[0]))})
+    return output
+  ;}else return []
 }
 
 function getYData(data){
   const output = []
-  data.forEach(el => {
-    output.push(el.close)
-  });
-  return output
+  if(!data.detail){
+    data.forEach((el) => {
+    output.push(el.close)})
+    return output
+  }
+   else return []
+  
 }
 
 export default function BasicLineChart({histData}) {
   const xData = getXData(histData);
   const yData = getYData(histData);
+
 
   return (
     <LineChart
