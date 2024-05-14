@@ -48,12 +48,14 @@ async function deleteAsset(assetId){
     }
 }
 
+//Prende i dati facendo la chiamata all'API
 async function getHistData(symbol){
     // fai la fetch all'url
     const startDate = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().split('T')[0];
     symbol = symbol.toLowerCase()
-    const data = await postApi("price",{'symbol':symbol ,'startDate':startDate})
+    const data = await postApi("price/",{"symbol":symbol ,"startDate":startDate})
     console.log(data)
+    return data
 }
 
 export default function Asset() {
@@ -91,8 +93,6 @@ export default function Asset() {
       getApi('asset/').then((data) => {
         setAssetList(getTicker(data));
     });
-       //Pulisco l'array con gli asset prendendo quello che mi interessa
-      console.log(assetList);
 
       //WebSocket yahoo finance
       protobuf.load("Data.proto",(error,root)=>{
@@ -113,9 +113,6 @@ export default function Asset() {
           };
         ws.onclose = function close() {console.log("Socket closed");};
         });
-        
-      
-      console.log(priceList)
     },[assetList,priceList]);
     
 
