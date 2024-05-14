@@ -13,6 +13,7 @@ import AddIncomeDialog from "./AddIncomeDialog.jsx";
 import { ListContext } from './ListContext.jsx';
 
 export default function Income() {
+
     const [value, setValue] = useState('0');
     const [incomeMonthlyList, setIncomeMonthlyList] = useState([]);
     const [incomeYearList, setIncomeYearList] = useState([]);

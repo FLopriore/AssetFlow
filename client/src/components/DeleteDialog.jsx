@@ -10,6 +10,7 @@ import { ListContext } from './ListContext.jsx';
 import { useContext } from 'react';
 import { IncomePie } from './PieChart.jsx';
 
+//confronto tra due array che elimina gli elemanti del primo se matchano gli id del secondo
 function filterById (array, idsToRemove) {
     return array.filter(item => !idsToRemove.includes(item.dbId));
   };
@@ -33,7 +34,7 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const body = JSON.stringify({selected});
+        const body = JSON.stringify(selected);
         console.log(body)
         console.log("incomeList dentro " + incomeList)
         if(isPositive) {
