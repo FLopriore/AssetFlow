@@ -12,7 +12,7 @@ function getCategory(budgetEntriesList, category, isPositive) {
     if (!budgetEntriesList) {
         budgetEntriesList.forEach((el, idx) => {
             if (el.category === category) {
-                const dataEntry = {id: idx, label: el.description};
+                const dataEntry = {id: idx, label: el.description, dbId: el._id};
                 dataEntry.value = (isPositive) ? el.positiveAmount : el.negativeAmount * (-1);
                 data.push(dataEntry);
             }
