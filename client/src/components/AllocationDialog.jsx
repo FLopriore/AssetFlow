@@ -36,21 +36,22 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
     };
 
     const handleChangeAmount = (event) => {
+        const changedList = objectivesList;
         const amount = event.target.value;
-        const changedIndex = objectivesList.findIndex((el) => el._id === event.target.id);
+        const changedIndex = changedList.findIndex((el) => el._id === event.target.id);
         if (changedIndex !== -1) {
-            objectivesList[changedIndex].percentage = amount;  // update percentage amount for the specific ID
+            changedList[changedIndex].percentage = amount;  // update percentage amount for the specific ID
         }
 
         // Check if total percentage = 100
-        const totalPercentages = objectivesList.reduce((accum, current) => accum + current.percentage, 0);
+        const totalPercentages = changedList.reduce((accum, current) => accum + current.percentage, 0);
         if (totalPercentages !== 100) {
             if (!errorPercentage) setErrorPercentage(true);  // mostra messaggio di errore della percentuale
         } else if (errorPercentage) {
-            setObjectivesList(objectivesList); // aggiorna submitList
+            setObjectivesList(changedList); // aggiorna submitList
             setErrorPercentage(false);  // nascondi il messaggio di errore
         } else {
-            setObjectivesList(objectivesList); // aggiorna submitList
+            setObjectivesList(changedList); // aggiorna submitList
         }
     };
 
