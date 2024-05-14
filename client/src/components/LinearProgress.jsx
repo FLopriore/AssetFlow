@@ -23,7 +23,7 @@ BorderLinearProgress.propTypes = {
 
 export default function SavingsProgress({value}) {
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', m: 1 }}>
       <Box sx={{ width: '100%', mr: 1 }}>
         <BorderLinearProgress variant="determinate" value={value}/>
       </Box>

@@ -20,7 +20,7 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
         event.preventDefault();
         const body = JSON.stringify(selected);
         if(isPositive) {
-            putApi('income/delete', body).then((data) => {
+            putApi('income/delete', body).then(() => {
                 setIncomeList(incomeList.filter((entry) => !selected.includes(entry.id)));
                 handleClose();
                 console.log(incomeList)
@@ -29,9 +29,10 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
                 handleClose();
             })
         } else {
-            putApi('expense/delete', body).then((data) => {
+            putApi('expense/delete', body).then(() => {
                 setExpenseList(expenseList.filter((entry) => !selected.includes(entry.id)));
                 handleClose();
+                console.log(expenseList)
             }).catch((e) => {
                 console.log(e);
                 handleClose();

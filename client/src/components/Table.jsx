@@ -50,7 +50,7 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
     
     return (
         <>
-        <DeleteDialog isOpen={open} setOpen={setOpen} isPositive={true} selected={selected} />
+        <DeleteDialog isOpen={open} setOpen={setOpen} isPositive={isPositive} selected={selected} />
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
