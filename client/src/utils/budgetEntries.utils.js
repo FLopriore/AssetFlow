@@ -21,13 +21,14 @@ function getLatestEntriesData(budgetEntriesList, isPositive) {
 
 function calculateTotalCategory(budgetEntriesList, category) {
     let total = 0;
+    if(budgetEntriesList){
     budgetEntriesList.forEach((el) => {
         if (el.positiveAmount && el.category === category) {
             total += el.positiveAmount;
         } else {
             if (el.category === category) total += el.negativeAmount * (-1);
         }
-    });
+    });}
     return total;
 }
 
