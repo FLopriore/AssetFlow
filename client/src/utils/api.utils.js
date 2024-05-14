@@ -24,7 +24,7 @@ async function postApi(endpoint, body) {
                 'Content-Type': 'application/json',
                 'token': localStorage.getItem('token')
             },
-            body: body
+            body: JSON.stringify(body)
         });
         response = await response.json();
         return response;
