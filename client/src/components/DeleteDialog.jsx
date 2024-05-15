@@ -6,27 +6,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {putApi} from "../utils/api.utils.js";
 import { Button } from '@mui/material';
-import { IncomeListContext } from './ListContext.jsx';
 import { useContext } from 'react';
-import { IncomePie } from './PieChart.jsx';
+import { ExpenseListContext, IncomeListContext } from './ListContext';
 
 //confronto tra due array che elimina gli elemanti del primo se matchano gli id del secondo
 function filterById (array, idsToRemove) {
     return array.filter(item => !idsToRemove.includes(item.dbId));
   };
 
-const data = [
-    {dbId: '1', label: 'a'},
-    {dbId: '2', label: 'b'},
-    {dbId: '3', label: 'c'}
-]
-const rem = ['1', '2']
-console.log(filterById(data, rem))
 
 export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
-    const { incomeList, setIncomeList, expenseList, setExpenseList } = useContext(ListContext)
-    
-    console.log("incomeList fuori " + incomeList)
+    const { incomeList, setIncomeList } = useContext(IncomeListContext)
+    const { expenseList, setExpenseList } = useContext(ExpenseListContext)
     
     const handleClose = () => {
         setOpen(false);
@@ -35,13 +26,9 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const body = JSON.stringify(selected);
-        console.log(body)
-        console.log("incomeList dentro " + incomeList)
         if(isPositive) {
             putApi('income/delete', body).then(() => {
                 setIncomeList(filterById(incomeList, selected));
-                console.log("selected " + selected)
-                console.log("incomeList dopo " + incomeList)
                 handleClose();
             }).catch((e) => {
                 console.log(e);

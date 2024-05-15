@@ -80,6 +80,7 @@ export default function Sidebar() {
         <div>
             <Drawer variant="permanent" open={open} onClose={toggleDrawer(false)} sx={{
                 width: 250,
+                overflow: 'hidden',
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: 250,

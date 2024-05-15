@@ -10,10 +10,13 @@ import {postApi} from "../utils/api.utils.js";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useContext } from 'react';
+import { IncomeListContext } from './ListContext.jsx';
 
 export default function AddIncomeDialog({isOpen, setOpen, incomeList, setIncomeList}) {
     const [error, setError] = useState(false);
     const [category, setCategory] = useState('others');
+   // const {incomeList, setIncomeList} = useContext(IncomeListContext)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -23,6 +26,7 @@ export default function AddIncomeDialog({isOpen, setOpen, incomeList, setIncomeL
             category: data.get('category'),
             description: data.get('description')
         });
+        console.log(body)
         postApi('income/', body)
             .then((data) => {
                 incomeList.push(data);

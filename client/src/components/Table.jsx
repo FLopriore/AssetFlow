@@ -42,13 +42,6 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
             setSelected(selected.filter((selectedId) => selectedId !== id));
         }
     };
-
-    const handleDeleteSelected = () => {
-        // Filter out the selected entries from the list
-        const updatedList = budgetEntriesList.filter((entry) => !selected.includes(entry.id));
-        // Update the state with the filtered list
-        // Qui la logica del delete
-    };
     
     return (
         <>

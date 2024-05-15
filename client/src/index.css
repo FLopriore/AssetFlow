@@ -75,6 +75,7 @@ button:focus-visible {
  .sidebar {
   grid-area: sidebar;
   padding: 1em;
+  overflow: hidden;
   border-radius: 8px;
 }
 

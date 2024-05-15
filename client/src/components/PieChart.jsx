@@ -1,15 +1,20 @@
 import * as React from 'react';
 import {PieChart} from '@mui/x-charts/PieChart';
 import {calculateTotalCategory} from "../utils/budgetEntries.utils.js";
+import { useContext } from 'react';
+import { IncomeListContext, ExpenseListContext } from './ListContext.jsx';
 
-export function IncomePie({incomesList}) {
+export function IncomePie({isMonthly}) {
+    const { incomeMonthlyList, incomeYearList } = useContext(IncomeListContext)
+    let list;
+    isMonthly? list = incomeMonthlyList : list = incomeYearList
 
     const data = [
-        {id: 0, value: calculateTotalCategory(incomesList, 'stipendio'), label: 'Stipendio'},
-        {id: 1, value: calculateTotalCategory(incomesList, 'sell_asset'), label: 'Vendita asset'},
-        {id: 2, value: calculateTotalCategory(incomesList, 'regali'), label: 'Regali'},
-        {id: 3, value: calculateTotalCategory(incomesList, 'dividendi'), label: 'Dividendi'},
-        {id: 4, value: calculateTotalCategory(incomesList, 'others'), label: 'Altro'},
+        {id: 0, value: calculateTotalCategory(list, 'stipendio'), label: 'Stipendio'},
+        {id: 1, value: calculateTotalCategory(list, 'sell_asset'), label: 'Vendita asset'},
+        {id: 2, value: calculateTotalCategory(list, 'regali'), label: 'Regali'},
+        {id: 3, value: calculateTotalCategory(list, 'dividendi'), label: 'Dividendi'},
+        {id: 4, value: calculateTotalCategory(list, 'others'), label: 'Altro'},
     ];
     return (
         <PieChart

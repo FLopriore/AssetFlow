@@ -6,7 +6,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Box} from '@mui/material';
 import { BudgetTable } from './Table';
 import {calculateTotalCategory} from "../utils/budgetEntries.utils.js";
+import { useContext } from 'react';
+import { IncomeListContext, ExpenseListContext } from './ListContext.jsx';
 
+//TODO: spostare questa funzione in budget utils
 function getCategory(budgetEntriesList, category, isPositive) {
     let data = [];
     if (budgetEntriesList.length !== 0) {
@@ -21,13 +24,16 @@ function getCategory(budgetEntriesList, category, isPositive) {
     return data;
 }
 
-export function IncomeAccordion({incomeList}) {
+export function IncomeAccordion({isMonthly}) {
+    const { incomeMonthlyList, incomeYearList } = useContext(IncomeListContext);
+    let list;
+    isMonthly? list = incomeMonthlyList : list = incomeYearList
 
-    const stipendioArr = getCategory(incomeList, 'stipendio', true);
-    const assetArr = getCategory(incomeList, 'sell_asset', true);
-    const regaliArr = getCategory(incomeList, 'regali', true);
-    const dividendiArr = getCategory(incomeList, 'dividendi', true);
-    const othersArr = getCategory(incomeList, 'others', true);
+    const stipendioArr = getCategory(list, 'stipendio', true);
+    const assetArr = getCategory(list, 'sell_asset', true);
+    const regaliArr = getCategory(list, 'regali', true);
+    const dividendiArr = getCategory(list, 'dividendi', true);
+    const othersArr = getCategory(list, 'others', true);
 
     return (
         <Box sx={{
@@ -40,7 +46,7 @@ export function IncomeAccordion({incomeList}) {
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    Stipendio: +{calculateTotalCategory(incomeList, 'stipendio')}
+                    Stipendio: +{calculateTotalCategory(list, 'stipendio')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={stipendioArr} isPositive={true}/>
@@ -52,7 +58,7 @@ export function IncomeAccordion({incomeList}) {
                     aria-controls="panel2-content"
                     id="panel2-header"
                 >
-                    Vendita asset: +{calculateTotalCategory(incomeList, 'sell_asset')}
+                    Vendita asset: +{calculateTotalCategory(list, 'sell_asset')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={assetArr} isPositive={true}/>
@@ -64,7 +70,7 @@ export function IncomeAccordion({incomeList}) {
                     aria-controls="panel3-content"
                     id="panel3-header"
                 >
-                    Regali: +{calculateTotalCategory(incomeList, 'regali')}
+                    Regali: +{calculateTotalCategory(list, 'regali')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={regaliArr} isPositive={true}/>
@@ -76,7 +82,7 @@ export function IncomeAccordion({incomeList}) {
                     aria-controls="panel3-content"
                     id="panel3-header"
                 >
-                    Dividendi: +{calculateTotalCategory(incomeList, 'dividendi')}
+                    Dividendi: +{calculateTotalCategory(list, 'dividendi')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={dividendiArr} isPositive={true}/>
@@ -88,7 +94,7 @@ export function IncomeAccordion({incomeList}) {
                     aria-controls="panel3-content"
                     id="panel3-header"
                 >
-                    Altro: +{calculateTotalCategory(incomeList, 'others')}
+                    Altro: +{calculateTotalCategory(list, 'others')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={othersArr} isPositive={true}/>
