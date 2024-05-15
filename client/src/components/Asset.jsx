@@ -164,9 +164,9 @@ export default function Asset() {
                                     <DeleteIcon/>    
                                 </ListItemButton> 
                                 <ListItemButton onClick={()=> getGraphData(el.label)}>
-                                    <ListItemText primary={el.label} sx={{ml: 15}}></ListItemText>
+                                    <ListItemText primary={el.label} ></ListItemText>
                                 </ListItemButton>
-                                <ListItemText primary={getActualPrice(el.label)} sx={{ml: 15}}></ListItemText>           
+                                <ListItemText primary={getActualPrice(el.label)} ></ListItemText>           
                             </ListItem>
                         
                     ))
