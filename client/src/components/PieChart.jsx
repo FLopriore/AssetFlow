@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {PieChart} from '@mui/x-charts/PieChart';
-import {calculateTotalCategory, getLatestEntriesData} from "../utils/budgetEntries.utils.js";
+import {calculateTotalCategory} from "../utils/budgetEntries.utils.js";
 
 export function IncomePie({incomesList}) {
 
@@ -65,9 +65,7 @@ export function ExpensePie({expensesList}) {
     );
 }
 
-export function HomeGreenPie({incomesList}) {
-    const data = getLatestEntriesData(incomesList, true);
-
+export function HomeGreenPie({data}) {
     return (
         <PieChart
             colors={['#61C86A', '#81ff7a', '#009b7e', '#9adcbf', '#039655']}
@@ -91,8 +89,7 @@ export function HomeGreenPie({incomesList}) {
     );
 }
 
-export function HomeRedPie({expensesList}) {
-    const data = getLatestEntriesData(expensesList, false);
+export function HomeRedPie({data}) {
     return (
         <PieChart
             colors={['#ff9c83', '#ff0000', '#b71000', '#ff5e00', '#FF5747']}

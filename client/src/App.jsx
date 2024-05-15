@@ -33,8 +33,12 @@ function App() {
             .then((responses) => {
                 setIncome(responses[0].totalIncome);
                 setExpenses(responses[1].totalExpenses);
-                setExpenseList(responses[2]);
-                setIncomeList(responses[3]);
+
+                const expenseTableList = getLatestEntriesData(responses[2], false);
+                const incomeTableList = getLatestEntriesData(responses[3], true);
+
+                setExpenseList(expenseTableList);
+                setIncomeList(incomeTableList);
                 setLoading(false);
             })
             .catch((e) => {
@@ -46,9 +50,6 @@ function App() {
     if (loading) {
         return <Loading color='#61c86a'/>
     }
-
-    const incomeTableList = getLatestEntriesData(incomeList, true);
-    const expenseTableList = getLatestEntriesData(expenseList, false);
 
     return (
         <>
@@ -71,7 +72,7 @@ function App() {
                                     <h2>+{incomeTotal} €</h2>
                                 </Grid>
                                 <Grid item>
-                                    <HomeGreenPie incomesList={incomeList}/>
+                                    <HomeGreenPie data={incomeList}/>
                                 </Grid>
                                 <Grid item>
                                     <Box sx={{
@@ -79,8 +80,8 @@ function App() {
                                         textAlign: 'center',
                                         minWidth: '400px'
                                     }}>
-                                        <h3>Ultime entrate:</h3>
-                                        <HomeTable budgetEntriesList={incomeTableList} isPositive={true}/>
+                                        <h3>Ultime entrate</h3>
+                                        <HomeTable budgetEntriesList={incomeList} isPositive={true}/>
                                     </Box>
                                 </Grid>
                             </Grid>
@@ -101,7 +102,7 @@ function App() {
                                     <h2>{expenseTotal} €</h2>
                                 </Grid>
                                 <Grid item>
-                                    <HomeRedPie expensesList={expenseList}/>
+                                    <HomeRedPie data={expenseList}/>
                                 </Grid>
                                 <Grid item>
                                     <Box sx={{
@@ -109,8 +110,8 @@ function App() {
                                         textAlign: 'center',
                                         minWidth: '400px'
                                     }}>
-                                        <h3>Ultime spese:</h3>
-                                        <HomeTable budgetEntriesList={expenseTableList} isPositive={false}/>
+                                        <h3>Ultime spese</h3>
+                                        <HomeTable budgetEntriesList={expenseList} isPositive={false}/>
                                     </Box>
                                 </Grid>
                             </Grid>
