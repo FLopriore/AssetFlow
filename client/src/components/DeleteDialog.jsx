@@ -29,9 +29,7 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (isPositive) {
-
-            const body = JSON.stringify(selected);
-            putApi('income/delete', body).then(() => {
+            putApi('income/delete', selected).then(() => {
                 setIncomeList(deleteById(incomeList, selected));
                 handleClose();
             }).catch((e) => {
@@ -39,7 +37,7 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
                 handleClose();
             })
         } else {
-            putApi('expense/delete', body).then(() => {
+            putApi('expense/delete', selected).then(() => {
                 setExpenseList(deleteById(expenseList, selected));
                 handleClose();
             }).catch((e) => {
