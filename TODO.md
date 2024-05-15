@@ -25,3 +25,5 @@ Cose da sistemare:
 [] vedere che hanno in capa le pie della home
 
 [] vedere se usare solo amount invece di positiveAmount e negativeAmount
+
+[] fixare il tasto di logout
