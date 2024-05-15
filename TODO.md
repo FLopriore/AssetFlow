@@ -6,7 +6,7 @@ Cose da sistemare:
 
 [X] Fixare l'errore se non ho nessuna income o expense
 
-[] alert per delete in trading (è già presente la funzione)
+[X] alert per delete in trading (è già presente la funzione)
 
 [X] assemblare i pezzi di AddAssetDialogue
 
