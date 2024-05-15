@@ -13,10 +13,10 @@ import Select from '@mui/material/Select';
 import { useContext } from 'react';
 import { IncomeListContext } from './ListContext.jsx';
 
-export default function AddIncomeDialog({isOpen, setOpen, incomeList, setIncomeList}) {
+export default function AddIncomeDialog({isOpen, setOpen}) {
     const [error, setError] = useState(false);
     const [category, setCategory] = useState('others');
-   // const {incomeList, setIncomeList} = useContext(IncomeListContext)
+    const {incomeList, setIncomeList, incomeYearList, setIncomeYearList} = useContext(IncomeListContext)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -31,6 +31,7 @@ export default function AddIncomeDialog({isOpen, setOpen, incomeList, setIncomeL
             .then((data) => {
                 incomeList.push(data);
                 setIncomeList(incomeList);
+                setIncomeYearList(incomeYearList);
                 handleClose();
             })
             .catch((e) => {

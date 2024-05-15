@@ -20,9 +20,10 @@ export default function Expense() {
     const [expenseMonthlyList, setExpenseMonthlyList] = useState([]);
     const [expenseList, setExpenseList] = useState([]);
     
-    const expenseMonthlyValue = {expenseMonthlyList, setExpenseMonthlyList, expenseList, setExpenseList }
-    const expenseYearValue = {expenseYearList, setExpenseYearList, expenseList, setExpenseList }
-
+    const expenseMonthlyValue = {expenseMonthlyList, setExpenseMonthlyList, expenseList, setExpenseList}
+    const expenseYearValue = {expenseYearList, setExpenseYearList, expenseList, setExpenseList}
+    const expenseValue = {expenseList, setExpenseList, expenseYearList, setExpenseYearList, expenseMonthlyList, setExpenseMonthlyList}
+    
     const [loading, setLoading] = useState(true);
 
     const [open, setOpen] = useState(false);
@@ -63,8 +64,9 @@ export default function Expense() {
     return (
         <>
             <Box className='window'>
-                <AddExpenseDialog setOpen={setOpen} isOpen={open} expenseList={expenseMonthlyList}
-                                  setExpenseList={setExpenseMonthlyList}/>
+                <ExpenseListContext.Provider value={expenseValue}>
+                    <AddExpenseDialog setOpen={setOpen} isOpen={open} />
+                </ExpenseListContext.Provider>
                 <Sidebar/>
                 <Box className='main-content' sx={{
                     border: '3px solid',

@@ -10,26 +10,29 @@ import { useContext } from 'react';
 import { ExpenseListContext, IncomeListContext } from './ListContext';
 
 //confronto tra due array che elimina gli elemanti del primo se matchano gli id del secondo
-function filterById (array, idsToRemove) {
+function deleteById (array, idsToRemove) {
     return array.filter(item => !idsToRemove.includes(item.dbId));
   };
 
+function filterById(array, ids) {
+    return array.filter(item => ids.includes(item.dbId));
+}
 
 export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
     const { incomeList, setIncomeList } = useContext(IncomeListContext)
     const { expenseList, setExpenseList } = useContext(ExpenseListContext)
     
-    console.log(incomeList)
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const body = JSON.stringify(selected);
         if(isPositive) {
+            
+            const body = JSON.stringify(selected);
             putApi('income/delete', body).then(() => {
-                setIncomeList(filterById(incomeList, selected));
+                setIncomeList(deleteById(incomeList, selected));
                 handleClose();
             }).catch((e) => {
                 console.log(e);
@@ -37,7 +40,7 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
             })
         } else {
             putApi('expense/delete', body).then(() => {
-                setExpenseList(filterById(expenseList, selected));
+                setExpenseList(deleteById(expenseList, selected));
                 handleClose();
             }).catch((e) => {
                 console.log(e);

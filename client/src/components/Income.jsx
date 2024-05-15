@@ -22,7 +22,7 @@ export default function Income() {
     const [incomeTotal, setIncome] = useState(0);
     
     const incomeMonthlyValue = {incomeMonthlyList, setIncomeMonthlyList, incomeList, setIncomeList }
-    const incomeYearValue = {incomeYearList, setIncomeYearList, incomeList, setIncomeList }
+    const incomeYearValue = {incomeYearList, setIncomeYearList, incomeList, setIncomeList}
 
     const [loading, setLoading] = useState(true);
 
@@ -64,7 +64,9 @@ export default function Income() {
     return (
         <>
             <Box className='window'>
-                <AddIncomeDialog setOpen={setOpen} isOpen={open} incomeList={incomeList} setIncomeList={setIncomeList}/>
+                <IncomeListContext.Provider value={incomeYearValue}>
+                    <AddIncomeDialog setOpen={setOpen} isOpen={open}/>
+                </IncomeListContext.Provider>
                 <Sidebar/>
                 <Box className='main-content' sx={{
                     border: '3px solid',

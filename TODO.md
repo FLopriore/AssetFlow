@@ -18,7 +18,7 @@ Cose da sistemare:
 
 [] finire la sezione Savings
 
-[] sistemare il titolo delle entrate e uscite sopra il PieChart
+[X] sistemare il titolo delle entrate e uscite sopra il PieChart
 
 [] separare i context e aggiungere ad ognuno lista totale, mensile, annuali e rispettivi setter
 
