@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -10,13 +10,19 @@ import {postApi} from "../utils/api.utils.js";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useContext } from 'react';
-import { IncomeListContext } from './ListContext.jsx';
+import {IncomeListContext} from './ListContext.jsx';
 
 export default function AddIncomeDialog({isOpen, setOpen}) {
     const [error, setError] = useState(false);
     const [category, setCategory] = useState('others');
-    const {incomeList, setIncomeList, incomeYearList, setIncomeYearList} = useContext(IncomeListContext)
+    const {
+        incomeList,
+        setIncomeList,
+        incomeMonthlyList,
+        setIncomeMonthlyList,
+        incomeYearList,
+        setIncomeYearList
+    } = useContext(IncomeListContext);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -30,7 +36,10 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
         postApi('income/', body)
             .then((data) => {
                 incomeList.push(data);
+                incomeMonthlyList.push(data);
+                incomeYearList.push(data);
                 setIncomeList(incomeList);
+                setIncomeMonthlyList(incomeMonthlyList);
                 setIncomeYearList(incomeYearList);
                 handleClose();
             })
@@ -79,7 +88,7 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
                         fullWidth
                         variant="outlined"
                         error={error}
-                        helperText={(error)? "L'importo deve essere positivo." : ""}
+                        helperText={(error) ? "L'importo deve essere positivo." : ""}
                         onChange={handleChangeAmount}
                     />
                     <Select
