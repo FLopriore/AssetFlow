@@ -21,9 +21,8 @@ export default function Income() {
     const [incomeList, setIncomeList] = useState([]);
     const [incomeTotal, setIncome] = useState(0);
     
-    const incomeMonthlyValue = {incomeMonthlyList, setIncomeMonthlyList }
-    const incomeYearValue = {incomeYearList, setIncomeYearList }
-    const incomeValue = {incomeList, setIncomeList}
+    const incomeMonthlyValue = {incomeMonthlyList, setIncomeMonthlyList, incomeList, setIncomeList }
+    const incomeYearValue = {incomeYearList, setIncomeYearList, incomeList, setIncomeList }
 
     const [loading, setLoading] = useState(true);
 
