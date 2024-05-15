@@ -21,11 +21,11 @@ export default function AddIncomeDialog({isOpen, setOpen, incomeList, setIncomeL
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const body = JSON.stringify({
+        const body = {
             positiveAmount: data.get('positiveAmount'),
             category: data.get('category'),
             description: data.get('description')
-        });
+        };
         console.log(body)
         postApi('income/', body)
             .then((data) => {

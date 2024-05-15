@@ -14,15 +14,16 @@ import Select from '@mui/material/Select';
 export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpenseList}) {
     const [error, setError] = useState(false);
     const [category, setCategory] = useState('others');
+    console.log(expenseList)
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const body = JSON.stringify({
+        const body = {
             negativeAmount: data.get('negativeAmount'),
             category: data.get('category'),
             description: data.get('description')
-        });
+        };
         postApi('expense/', body)
             .then((data) => {
                 expenseList.push(data);

@@ -19,7 +19,7 @@ import { ExpenseListContext, IncomeListContext } from './ListContext';
 
 export function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;
-    console.log(rows)
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(6);
     const [selected, setSelected] = useState([]);

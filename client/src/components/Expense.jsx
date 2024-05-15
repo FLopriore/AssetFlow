@@ -20,9 +20,8 @@ export default function Expense() {
     const [expenseMonthlyList, setExpenseMonthlyList] = useState([]);
     const [expenseList, setExpenseList] = useState([]);
     
-    const expenseMonthlyValue = {expenseMonthlyList, setExpenseMonthlyList }
-    const expenseYearValue = {expenseYearList, setExpenseYearList }
-    const expenseValue = {expenseList, setExpenseList}
+    const expenseMonthlyValue = {expenseMonthlyList, setExpenseMonthlyList, expenseList, setExpenseList }
+    const expenseYearValue = {expenseYearList, setExpenseYearList, expenseList, setExpenseList }
 
     const [loading, setLoading] = useState(true);
 

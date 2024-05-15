@@ -24,12 +24,12 @@ export default function AddObjectiveDialog({isOpen, setOpen, objectivesList, set
         const savedMoney = data.get('savedMoney');
         setSavedLessThanObjective(savedMoney <= objectiveMoney);
         if (savedMoney <= objectiveMoney) {
-            const body = JSON.stringify({
+            const body = {
                 name: data.get('name'),
                 percentage: 0,
                 objectiveMoney: objectiveMoney,
                 savedMoney: savedMoney
-            });
+            };
             postApi('objective/', body)
                 .then((data) => {
                     objectivesList.push(data);

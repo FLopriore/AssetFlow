@@ -19,6 +19,7 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
     const { incomeList, setIncomeList } = useContext(IncomeListContext)
     const { expenseList, setExpenseList } = useContext(ExpenseListContext)
     
+    console.log(incomeList)
     const handleClose = () => {
         setOpen(false);
     };
