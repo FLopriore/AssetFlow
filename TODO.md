@@ -10,17 +10,17 @@ Cose da sistemare:
 
 [X] assemblare i pezzi di AddAssetDialogue
 
-[] separare le logiche di liste mensili e liste annuali
+[X] separare le logiche di liste mensili e liste annuali
 
 [] sistemare la grafica di trading
 
-[] fixare selected in Table
+[X] fixare selected in Table
 
 [] finire la sezione Savings
 
 [X] sistemare il titolo delle entrate e uscite sopra il PieChart
 
-[] separare i context e aggiungere ad ognuno lista totale, mensile, annuali e rispettivi setter
+[X] separare i context e aggiungere ad ognuno lista totale, mensile, annuali e rispettivi setter
 
 [] vedere che hanno in capa le pie della home
 
