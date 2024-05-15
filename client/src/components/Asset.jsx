@@ -12,6 +12,7 @@ import {getApi, postApi} from '../utils/api.utils';
 import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
 import AddAssetDialog from './AddAssetDialog';
+import DeleteAssetDialog from './DeleteAssetDialog';
 
 const BASE_URL = 'http://localhost:3000/';
 
@@ -56,8 +57,12 @@ export default function Asset() {
     const [priceList,setPriceList] = useState([])
     const [graphData,setGraphData] = useState([])
     const [openAdd, setOpenAdd] = useState(false);
+    const [openDelete,setOpenDelete] = useState(false);
+    const [assetDelete,setAssetDelete] = useState("");
 
+    const handleDeleteAssetDialog = () => setOpenDelete(true);
     const handleOpenAssetDialog = () => setOpenAdd(true);
+
 
     async function getGraphData(symbol) {
         if((!localStorage.getItem(symbol)) || ((new Date).getDate >= JSON.parse(localStorage.getItem(symbol)).expDate)){
@@ -114,6 +119,7 @@ export default function Asset() {
         <Box className='window'>
             <AddAssetDialog setOpen={setOpenAdd} isOpen={openAdd} assetList={assetList}
                                   setAssetList={setAssetList}/>
+            <DeleteAssetDialog setOpen={setOpenDelete} isOpen={openDelete} assetId={assetDelete} setAssetId={setAssetDelete}/>
             <Sidebar />
             <Box className='main-content'>
                 <Grid container display='flex' flexDirection='row' alignItems='stretch'>
@@ -145,7 +151,11 @@ export default function Asset() {
                             {
                                 assetList.map((el) => (
                             <ListItem key={el.idx}>
-                                <ListItemButton onClick={() => deleteAsset(el.id)}>
+                                <ListItemButton onClick={() => {
+                                    setAssetDelete(el.id)
+                                    console.log(assetDelete)
+                                    handleDeleteAssetDialog()
+                                    }}>
                                     <DeleteIcon/>    
                                 </ListItemButton> 
                                 <ListItemButton onClick={()=> getGraphData(el.label)}>
