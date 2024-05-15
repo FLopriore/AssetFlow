@@ -4,9 +4,11 @@ import Sidebar from './components/Sidebar'
 import {Box, Grid, Typography} from '@mui/material'
 import {HomeGreenPie, HomeRedPie} from './components/PieChart'
 import {getApi} from "./utils/api.utils.js";
+import * as React from "react";
 import {useEffect, useState} from "react";
-import { HomeTable } from './components/Table.jsx'
+import {HomeTable} from './components/Table.jsx'
 import {getLatestEntriesData} from './utils/budgetEntries.utils.js'
+import Loading from "./components/Loading.jsx";
 
 
 function App() {
@@ -15,27 +17,35 @@ function App() {
     const [expenseList, setExpenseList] = useState([]);
     const [incomeList, setIncomeList] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         // retrieve total income
-        getApi('budget/income/').then((data) => {
-            setIncome(data.totalIncome);
-        });
-
+        const budgetIncomePromise = getApi('budget/income/');
         // retrieve total expenses
-        getApi('budget/expense/').then((data) => {
-            setExpenses(data.totalExpenses);
-        });
-
+        const budgetExpensesPromise = getApi('budget/expense/');
         // retrieve list of expenses
-        getApi('expense/').then((data) => {
-            setExpenseList(data);
-        });
-
+        const expensePromise = getApi('expense/');
         // retrieve list of income sources
-        getApi('income/').then((data) => {
-            setIncomeList(data);
-        });
+        const incomePromise = getApi('income/');
+
+        Promise.all([budgetIncomePromise, budgetExpensesPromise, expensePromise, incomePromise])
+            .then((responses) => {
+                setIncome(responses[0].totalIncome);
+                setExpenses(responses[1].totalExpenses);
+                setExpenseList(responses[2]);
+                setIncomeList(responses[3]);
+                setLoading(false);
+            })
+            .catch((e) => {
+                console.log(e);
+                setLoading(false);
+            })
     }, []);
+
+    if (loading) {
+        return <Loading color='#61c86a'/>
+    }
 
     const incomeTableList = getLatestEntriesData(incomeList, true);
     const expenseTableList = getLatestEntriesData(expenseList, false);

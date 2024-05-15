@@ -9,20 +9,31 @@ import SavingsProgress from './LinearProgress';
 import AllocationDialog from "./AllocationDialog.jsx";
 import {getApi} from "../utils/api.utils.js";
 import AddObjectiveDialog from "./AddObjectiveDialog.jsx";
+import Loading from "./Loading.jsx";
 
 export default function Savings() {
     const [objectivesList, setObjectivesList] = useState([]);
     const [openAlloc, setOpenAlloc] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         // retrieve all the objectives
-        getApi('objective/').then((data) => {
-            if (!data.message) {
+        getApi('objective/')
+            .then((data) => {
                 setObjectivesList(data);
-            }
-        });
+                setLoading(false);
+            })
+            .catch((e) => {
+                console.log(e);
+                setLoading(false);
+            });
     }, []);
+
+    if (loading) {
+        return <Loading color='#FFA200'/>
+    }
 
     const handleOpenAllocDialog = () => setOpenAlloc(true);
     const handleOpenAddDialog = () => setOpenAdd(true);

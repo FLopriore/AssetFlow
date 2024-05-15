@@ -2,17 +2,22 @@ const BASE_URL = 'http://localhost:3000/';
 
 async function getApi(endpoint) {
     try {
-        let response = await fetch(`${BASE_URL}api/${endpoint}`, {
+        const response = await fetch(`${BASE_URL}api/${endpoint}`, {
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
                 'token': localStorage.getItem('token')
             },
         });
-        response = await response.json();
-        return response;
+        const content = await response.json();
+
+        if (!response.ok) {
+            throw new Error(`Errore ${response.status}: ${content.message}`);
+        }
+
+        return content;
     } catch (e) {
-        console.log(e);
+        throw new Error(`${e.message}`);
     }
 }
 

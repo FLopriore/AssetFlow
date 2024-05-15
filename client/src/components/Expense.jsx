@@ -10,7 +10,8 @@ import {getApi} from '../utils/api.utils';
 import {ExpenseAccordion} from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddExpenseDialog from "./AddExpenseDialog.jsx";
-import { ListContext } from './ListContext.jsx';
+import {ListContext} from './ListContext.jsx';
+import Loading from "./Loading.jsx";
 
 export default function Expense() {
     const [value, setValue] = useState('0');
@@ -18,7 +19,9 @@ export default function Expense() {
     const [expenseTotal, setExpense] = useState(0);
     const [expenseMonthlyList, setExpenseMonthlyList] = useState([]);
     const [expenseList, setExpenseList] = useState([]);
-    const listValue = { expenseList, setExpenseList }
+    const listValue = {expenseList, setExpenseList};
+
+    const [loading, setLoading] = useState(true);
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -28,25 +31,32 @@ export default function Expense() {
     };
 
     useEffect(() => {
-        // retrieve total income
-        getApi('budget/expense/').then((data) => {
-            if(!data.message){setExpense(data.totalExpenses);}
-        });
+        // retrieve total expense
+        const budgetPromise = getApi('budget/expense/');
+        // retrieve list of last month expenses
+        const lastMonthPromise = getApi('expense/lastmonth');
+        // retrieve list of last year expenses
+        const lastYearPromise = getApi('expense/lastyear');
+        // retrieve total entries
+        const allIncomesPromise = getApi('expense/');
 
-        getApi('expense/lastyear').then((data) => {
-            if(!data.message){setExpenseYearList(data);}
-        });
-
-        //retrieve last month expenses
-        getApi('expense/lastmonth').then((data) => {
-            if(!data.message){setExpenseMonthlyList(data);}
-        });
-
-        getApi('expense/').then((data) => {
-            if(!data.message){setExpenseList(data);}
-        });
-
+        Promise.all([budgetPromise, lastMonthPromise, lastYearPromise, allIncomesPromise])
+            .then((responses) => {
+                setExpense(responses[0].totalExpenses);
+                setExpenseMonthlyList(responses[1]);
+                setExpenseYearList(responses[2]);
+                setExpenseList(responses[3]);
+                setLoading(false);
+            })
+            .catch((e) => {
+                console.log(e);
+                setLoading(false);
+            })
     }, []);
+
+    if (loading) {
+        return <Loading color='#CE310E'/>
+    }
 
     return (
         <>
@@ -62,74 +72,76 @@ export default function Expense() {
                     overflowY: 'auto'
                 }}>
                     <ListContext.Provider value={listValue}>
-                    <TabContext value={value}>
-                        <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
-                            <TabList onChange={handleChange} indicatorColor="secondary" textColor="secondary">
-                                <Tab label="Ultimo mese" value='0'/>
-                                <Tab label="Ultimo anno" value='1'/>
-                            </TabList>
-                        </Box>
-                        <TabPanel value="0">
-                            <Box sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                width: '100%',
-                                flexWrap: 'wrap'
-                            }}>
-                                <Box sx={{
-                                    textAlign: 'center',
-                                    width: '50%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyItems: 'center',
-                                    flexDirection: 'column'
-                                }}>
-                                   <Typography variant='h5' sx={{mt: 2, mb:2}}>Spese totali nell'ultimo mese</Typography>
-                                    <h2>{expenseTotal} €</h2>
-                                    <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                        {expenseMonthlyList && <ExpensePie expensesList={expenseMonthlyList}/>}
-                                    </Box>
-                                </Box>
-                                {expenseMonthlyList && <ExpenseAccordion expenseList={expenseMonthlyList}/>}
-                                <Fab onClick={handleOpen} color='secondary' sx={{
-                                    position: 'absolute',
-                                    top: '87vh'
-                                }}>
-                                    <AddRoundedIcon/>
-                                </Fab>
+                        <TabContext value={value}>
+                            <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
+                                <TabList onChange={handleChange} indicatorColor="secondary" textColor="secondary">
+                                    <Tab label="Ultimo mese" value='0'/>
+                                    <Tab label="Ultimo anno" value='1'/>
+                                </TabList>
                             </Box>
-                        </TabPanel>
-                        <TabPanel value="1">
-                            <Box sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                width: '100%',
-                                flexWrap: 'wrap'
-                            }}>
+                            <TabPanel value="0">
                                 <Box sx={{
-                                    textAlign: 'center',
-                                    width: '50%',
                                     display: 'flex',
-                                    alignItems: 'center',
-                                    justifyItems: 'center',
-                                    flexDirection: 'column'
+                                    flexDirection: 'row',
+                                    width: '100%',
+                                    flexWrap: 'wrap'
                                 }}>
-                                    <Typography variant='h5' sx={{mt: 2, mb:2}}>Entrate totali nell'ultimo anno</Typography>
-                                    <h2>{expenseTotal} €</h2>
-                                    <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                        {expenseYearList && <ExpensePie expensesList={expenseYearList}/>}
+                                    <Box sx={{
+                                        textAlign: 'center',
+                                        width: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyItems: 'center',
+                                        flexDirection: 'column'
+                                    }}>
+                                        <Typography variant='h5' sx={{mt: 2, mb: 2}}>Spese totali nell'ultimo
+                                            mese</Typography>
+                                        <h2>{expenseTotal} €</h2>
+                                        <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                            {expenseMonthlyList && <ExpensePie expensesList={expenseMonthlyList}/>}
+                                        </Box>
                                     </Box>
+                                    {expenseMonthlyList && <ExpenseAccordion expenseList={expenseMonthlyList}/>}
+                                    <Fab onClick={handleOpen} color='secondary' sx={{
+                                        position: 'absolute',
+                                        top: '87vh'
+                                    }}>
+                                        <AddRoundedIcon/>
+                                    </Fab>
                                 </Box>
-                                {expenseYearList && <ExpenseAccordion expenseList={expenseYearList}/>}
-                                <Fab onClick={handleOpen} color='secondary' sx={{
-                                    position: 'absolute',
-                                    top: '87vh'
+                            </TabPanel>
+                            <TabPanel value="1">
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    width: '100%',
+                                    flexWrap: 'wrap'
                                 }}>
-                                    <AddRoundedIcon/>
-                                </Fab>
-                            </Box>
-                        </TabPanel>
-                    </TabContext>
+                                    <Box sx={{
+                                        textAlign: 'center',
+                                        width: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyItems: 'center',
+                                        flexDirection: 'column'
+                                    }}>
+                                        <Typography variant='h5' sx={{mt: 2, mb: 2}}>Entrate totali nell'ultimo
+                                            anno</Typography>
+                                        <h2>{expenseTotal} €</h2>
+                                        <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                            {expenseYearList && <ExpensePie expensesList={expenseYearList}/>}
+                                        </Box>
+                                    </Box>
+                                    {expenseYearList && <ExpenseAccordion expenseList={expenseYearList}/>}
+                                    <Fab onClick={handleOpen} color='secondary' sx={{
+                                        position: 'absolute',
+                                        top: '87vh'
+                                    }}>
+                                        <AddRoundedIcon/>
+                                    </Fab>
+                                </Box>
+                            </TabPanel>
+                        </TabContext>
                     </ListContext.Provider>
                 </Box>
             </Box>
