@@ -6,7 +6,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {putApi} from "../utils/api.utils.js";
 import { Button } from '@mui/material';
-import { ListContext } from './ListContext.jsx';
+import { IncomeListContext } from './ListContext.jsx';
 import { useContext } from 'react';
 import { IncomePie } from './PieChart.jsx';
 

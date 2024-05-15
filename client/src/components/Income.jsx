@@ -10,7 +10,6 @@ import {getApi} from '../utils/api.utils';
 import {IncomeAccordion} from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddIncomeDialog from "./AddIncomeDialog.jsx";
-import {ListContext} from './ListContext.jsx';
 import Loading from "./Loading.jsx";
 
 export default function Income() {

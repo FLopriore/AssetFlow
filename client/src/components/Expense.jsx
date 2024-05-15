@@ -10,7 +10,7 @@ import {getApi} from '../utils/api.utils';
 import {ExpenseAccordion} from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddExpenseDialog from "./AddExpenseDialog.jsx";
-import {ListContext} from './ListContext.jsx';
+import {ExpenseListContext} from './ListContext.jsx';
 import Loading from "./Loading.jsx";
 
 export default function Expense() {

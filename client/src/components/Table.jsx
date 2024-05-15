@@ -14,6 +14,8 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import DeleteDialog from './DeleteDialog';
+import { useContext } from 'react';
+import { ExpenseListContext, IncomeListContext } from './ListContext';
 
 export function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;
@@ -112,8 +114,11 @@ export function BudgetTable({budgetEntriesList, isPositive}) {
     );
 }
 
-export function HomeTable({budgetEntriesList, isPositive}) {
-    const rows = budgetEntriesList;
+export function HomeTable({isPositive}) {
+    const { incomeList } = useContext(IncomeListContext)
+    const { expenseList } = useContext(ExpenseListContext)
+    let rows;
+    isPositive? rows = incomeList : rows = expenseList
 
     return (
         <>
