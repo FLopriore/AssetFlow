@@ -19,11 +19,11 @@ export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpen
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const body = JSON.stringify({
+        const body = {
             negativeAmount: data.get('negativeAmount'),
             category: data.get('category'),
             description: data.get('description')
-        });
+        };
         postApi('expense/', body)
             .then((data) => {
                 expenseList.push(data);

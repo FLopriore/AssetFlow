@@ -15,10 +15,10 @@ export default function AddAssetDialog() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const body = JSON.stringify({
+        const body = {
             tracker: data.get('asset'),
             investedCapital: data.get('investedCapital')
-        });
+        };
         postApi('asset/', body)
             .then((data) => {
                 // TODO: add element to list
