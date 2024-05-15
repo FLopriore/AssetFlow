@@ -26,4 +26,4 @@ Cose da sistemare:
 
 [] vedere se usare solo amount invece di positiveAmount e negativeAmount
 
-[] fixare il tasto di logout
+[X] fixare il tasto di logout

@@ -13,12 +13,11 @@ export default function MenuAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const navigate = useNavigate();
 
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleMenu = (event) => setAnchorEl(event.currentTarget);
 
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleClose = () => setAnchorEl(null);
+
+    const handleLogout = () => {
         window.localStorage.clear();
         navigate('/login');
     };
@@ -56,7 +55,7 @@ export default function MenuAppBar() {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
