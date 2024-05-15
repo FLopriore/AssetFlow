@@ -39,13 +39,17 @@ export function IncomePie({isMonthly}) {
     );
 }
 
-export function ExpensePie({expensesList}) {
+export function ExpensePie({isMonthly}) {
+    const { expenseMonthlyList, expenseYearList } = useContext(ExpenseListContext)
+    let list;
+    isMonthly? list = expenseMonthlyList : list = expenseYearList
+
     const data = [
-        {id: 0, value: calculateTotalCategory(expensesList, 'shopping'), label: 'Shopping'},
-        {id: 1, value: calculateTotalCategory(expensesList, 'bollette'), label: 'Bollette'},
-        {id: 2, value: calculateTotalCategory(expensesList, 'affitto'), label: 'Affitto'},
-        {id: 3, value: calculateTotalCategory(expensesList, 'buy_asset'), label: 'Acquisto asset'},
-        {id: 4, value: calculateTotalCategory(expensesList, 'others'), label: 'Altro'},
+        {id: 0, value: calculateTotalCategory(list, 'shopping'), label: 'Shopping'},
+        {id: 1, value: calculateTotalCategory(list, 'bollette'), label: 'Bollette'},
+        {id: 2, value: calculateTotalCategory(list, 'affitto'), label: 'Affitto'},
+        {id: 3, value: calculateTotalCategory(list, 'buy_asset'), label: 'Acquisto asset'},
+        {id: 4, value: calculateTotalCategory(list, 'others'), label: 'Altro'},
     ];
     return (
         <PieChart

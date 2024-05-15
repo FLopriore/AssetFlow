@@ -104,13 +104,16 @@ export function IncomeAccordion({isMonthly}) {
     );
 }
 
-export function ExpenseAccordion({expenseList}) {
+export function ExpenseAccordion({isMonthly}) {
+    const { expenseMonthlyList, expenseYearList } = useContext(ExpenseListContext);
+    let list;
+    isMonthly? list = expenseMonthlyList : list = expenseYearList
 
-    const shoppingArr = getCategory(expenseList, 'shopping', false);
-    const bolletteArr = getCategory(expenseList, 'bollette', false);
-    const affittoArr = getCategory(expenseList, 'affitto', false);
-    const assetArr = getCategory(expenseList, 'buy_asset', false);
-    const othersArr = getCategory(expenseList, 'others', false);
+    const shoppingArr = getCategory(list, 'shopping', false);
+    const bolletteArr = getCategory(list, 'bollette', false);
+    const affittoArr = getCategory(list, 'affitto', false);
+    const assetArr = getCategory(list, 'buy_asset', false);
+    const othersArr = getCategory(list, 'others', false);
 
     return (
         <Box sx={{
@@ -123,7 +126,7 @@ export function ExpenseAccordion({expenseList}) {
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    Shopping: -{calculateTotalCategory(expenseList, 'shopping')}
+                    Shopping: -{calculateTotalCategory(list, 'shopping')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={shoppingArr} isPositive={false}/>
@@ -135,7 +138,7 @@ export function ExpenseAccordion({expenseList}) {
                     aria-controls="panel2-content"
                     id="panel2-header"
                 >
-                    Bollette: -{calculateTotalCategory(expenseList, 'bollette')}
+                    Bollette: -{calculateTotalCategory(list, 'bollette')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={bolletteArr} isPositive={false}/>
@@ -147,7 +150,7 @@ export function ExpenseAccordion({expenseList}) {
                     aria-controls="panel3-content"
                     id="panel3-header"
                 >
-                    Affitto: -{calculateTotalCategory(expenseList, 'affitto')}
+                    Affitto: -{calculateTotalCategory(list, 'affitto')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={affittoArr} isPositive={false}/>
@@ -159,7 +162,7 @@ export function ExpenseAccordion({expenseList}) {
                     aria-controls="panel3-content"
                     id="panel3-header"
                 >
-                    Acquisto asset: -{calculateTotalCategory(expenseList, 'buy_asset')}
+                    Acquisto asset: -{calculateTotalCategory(list, 'buy_asset')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={assetArr} isPositive={false}/>
@@ -171,7 +174,7 @@ export function ExpenseAccordion({expenseList}) {
                     aria-controls="panel3-content"
                     id="panel3-header"
                 >
-                    Altro: -{calculateTotalCategory(expenseList, 'others')}
+                    Altro: -{calculateTotalCategory(list, 'others')}
                 </AccordionSummary>
                 <AccordionDetails>
                     <BudgetTable budgetEntriesList={othersArr} isPositive={false}/>

@@ -19,7 +19,10 @@ export default function Expense() {
     const [expenseTotal, setExpense] = useState(0);
     const [expenseMonthlyList, setExpenseMonthlyList] = useState([]);
     const [expenseList, setExpenseList] = useState([]);
-    const listValue = {expenseList, setExpenseList};
+    
+    const expenseMonthlyValue = {expenseMonthlyList, setExpenseMonthlyList }
+    const expenseYearValue = {expenseYearList, setExpenseYearList }
+    const expenseValue = {expenseList, setExpenseList}
 
     const [loading, setLoading] = useState(true);
 
@@ -71,7 +74,6 @@ export default function Expense() {
                     padding: '1rem',
                     overflowY: 'auto'
                 }}>
-                    <ListContext.Provider value={listValue}>
                         <TabContext value={value}>
                             <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
                                 <TabList onChange={handleChange} indicatorColor="secondary" textColor="secondary">
@@ -80,37 +82,40 @@ export default function Expense() {
                                 </TabList>
                             </Box>
                             <TabPanel value="0">
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    width: '100%',
-                                    flexWrap: 'wrap'
-                                }}>
+                                <ExpenseListContext.Provider value={expenseMonthlyValue}>
                                     <Box sx={{
-                                        textAlign: 'center',
-                                        width: '50%',
                                         display: 'flex',
-                                        alignItems: 'center',
-                                        justifyItems: 'center',
-                                        flexDirection: 'column'
+                                        flexDirection: 'row',
+                                        width: '100%',
+                                        flexWrap: 'wrap'
                                     }}>
-                                        <Typography variant='h5' sx={{mt: 2, mb: 2}}>Spese totali nell'ultimo
-                                            mese</Typography>
-                                        <h2>{expenseTotal} €</h2>
-                                        <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                            {expenseMonthlyList && <ExpensePie expensesList={expenseMonthlyList}/>}
+                                        <Box sx={{
+                                            textAlign: 'center',
+                                            width: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyItems: 'center',
+                                            flexDirection: 'column'
+                                        }}>
+                                            <Typography variant='h5' sx={{mt: 2, mb: 2}}>Spese totali nell'ultimo
+                                                mese</Typography>
+                                            <h2>{expenseTotal} €</h2>
+                                            <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                                {expenseMonthlyList && <ExpensePie isMonthly={true}/>}
+                                            </Box>
                                         </Box>
+                                        {expenseMonthlyList && <ExpenseAccordion isMonthly={true}/>}
+                                        <Fab onClick={handleOpen} color='secondary' sx={{
+                                            position: 'absolute',
+                                            top: '87vh'
+                                        }}>
+                                            <AddRoundedIcon/>
+                                        </Fab>
                                     </Box>
-                                    {expenseMonthlyList && <ExpenseAccordion expenseList={expenseMonthlyList}/>}
-                                    <Fab onClick={handleOpen} color='secondary' sx={{
-                                        position: 'absolute',
-                                        top: '87vh'
-                                    }}>
-                                        <AddRoundedIcon/>
-                                    </Fab>
-                                </Box>
+                                </ExpenseListContext.Provider>
                             </TabPanel>
                             <TabPanel value="1">
+                            <ExpenseListContext.Provider value={expenseYearValue}>
                                 <Box sx={{
                                     display: 'flex',
                                     flexDirection: 'row',
@@ -129,10 +134,10 @@ export default function Expense() {
                                             anno</Typography>
                                         <h2>{expenseTotal} €</h2>
                                         <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                            {expenseYearList && <ExpensePie expensesList={expenseYearList}/>}
+                                            {expenseYearList && <ExpensePie isMonthly={false}/>}
                                         </Box>
                                     </Box>
-                                    {expenseYearList && <ExpenseAccordion expenseList={expenseYearList}/>}
+                                    {expenseYearList && <ExpenseAccordion isMonthly={false}/>}
                                     <Fab onClick={handleOpen} color='secondary' sx={{
                                         position: 'absolute',
                                         top: '87vh'
@@ -140,9 +145,9 @@ export default function Expense() {
                                         <AddRoundedIcon/>
                                     </Fab>
                                 </Box>
+                                </ExpenseListContext.Provider>
                             </TabPanel>
                         </TabContext>
-                    </ListContext.Provider>
                 </Box>
             </Box>
         </>
