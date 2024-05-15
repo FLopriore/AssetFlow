@@ -1,6 +1,6 @@
 Cose da sistemare:
 
-[] fixare le chiamate asincrone con loading e messaggio di dati assenti in Income, Expense, Savings, Home
+[X] fixare le chiamate asincrone con loading e messaggio di dati assenti in Income, Expense, Savings, Home
 
 [X] fixare le chiamate asincrone per il grafico e trading
 
