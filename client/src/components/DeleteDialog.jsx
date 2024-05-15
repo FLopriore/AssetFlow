@@ -11,16 +11,30 @@ import {ExpenseListContext, IncomeListContext} from './ListContext';
 
 //confronto tra due array che elimina gli elemanti del primo se matchano gli id del secondo
 function deleteById(array, idsToRemove) {
-    return array.filter(item => !idsToRemove.includes(item.dbId));
+    return array.filter(item => !idsToRemove.includes(item._id));
 }
 
 function filterById(array, ids) {
-    return array.filter(item => ids.includes(item.dbId));
+    return array.filter(item => ids.includes(item._id));
 }
 
 export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
-    const {incomeList, setIncomeList} = useContext(IncomeListContext)
-    const {expenseList, setExpenseList} = useContext(ExpenseListContext)
+    const {
+        incomeList,
+        setIncomeList,
+        incomeMonthlyList,
+        setIncomeMonthlyList,
+        incomeYearList,
+        setIncomeYearList
+    } = useContext(IncomeListContext);
+    const {
+        expenseList,
+        setExpenseList,
+        expenseMonthlyList,
+        setExpenseMonthlyList,
+        expenseYearList,
+        setExpenseYearList,
+    } = useContext(ExpenseListContext);
 
     const handleClose = () => {
         setOpen(false);
@@ -28,17 +42,24 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const body = selected.map((id) => {
+            return {_id: id};
+        });
         if (isPositive) {
-            putApi('income/delete', selected).then(() => {
+            putApi('income/delete', body).then(() => {
                 setIncomeList(deleteById(incomeList, selected));
+                setIncomeMonthlyList(deleteById(incomeMonthlyList, selected));
+                setIncomeYearList(deleteById(incomeYearList, selected));
                 handleClose();
             }).catch((e) => {
                 console.log(e);
                 handleClose();
             })
         } else {
-            putApi('expense/delete', selected).then(() => {
+            putApi('expense/delete', body).then(() => {
                 setExpenseList(deleteById(expenseList, selected));
+                setExpenseMonthlyList(deleteById(expenseMonthlyList, selected));
+                setExpenseYearList(deleteById(expenseYearList, selected));
                 handleClose();
             }).catch((e) => {
                 console.log(e);
