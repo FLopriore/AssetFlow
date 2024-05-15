@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,22 +8,27 @@ import {postApi} from "../utils/api.utils.js";
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 
-export default function AddAssetDialog() {
-    const [open, setOpen] = useState(false);
+export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const body = JSON.stringify({
-            tracker: data.get('asset'),
-            investedCapital: data.get('investedCapital')
-        });
+        const body = {
+            'tracker': data.get('asset'),
+            'investedCapital': '0', //Perchè non usiamo il capitale investito
+        };
         postApi('asset/', body)
             .then((data) => {
                 // TODO: add element to list
+                assetList.push(data)
+                setAssetList(assetList);
                 handleClose();
-            })
+            }).then((response) => response.json()).then((data) => {
+                if(!data.success) {
+                    alert("Impossibile aggiungere asset")
+                }})
             .catch((e) => {
+                console.log(e)
                 handleClose();
                 // TODO: show error message
             })
@@ -36,7 +40,7 @@ export default function AddAssetDialog() {
 
     return (
         <Dialog
-            open={open}
+            open={isOpen}
             onClose={handleClose}
             PaperProps={{
                 component: 'form',
@@ -53,16 +57,7 @@ export default function AddAssetDialog() {
                     label="Ticker del titolo"
                     fullWidth
                     variant="outlined"
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="investedCapital"
-                    name="investedCapital"
-                    type="number"
-                    label="Capitale investito"
-                    fullWidth
-                    variant="outlined"
+                    helperText={"Ricorda di inserire un ticker valido"}
                 />
             </DialogContent>
             <DialogActions>

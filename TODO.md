@@ -8,7 +8,7 @@ Cose da sistemare:
 
 [] alert per delete in trading (è già presente la funzione)
 
-[] assemblare i pezzi di AddAssetDialogue
+[X] assemblare i pezzi di AddAssetDialogue
 
 [] separare le logiche di liste mensili e liste annuali
 

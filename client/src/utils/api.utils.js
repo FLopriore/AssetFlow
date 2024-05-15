@@ -6,7 +6,7 @@ async function getApi(endpoint) {
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
-                'token': localStorage.getItem('token')
+                'token': localStorage.getItem('token'),
             },
         });
         const content = await response.json();

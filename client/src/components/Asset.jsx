@@ -11,17 +11,9 @@ import { useState, useEffect } from "react";
 import {getApi, postApi} from '../utils/api.utils';
 import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
+import AddAssetDialog from './AddAssetDialog';
 
 const BASE_URL = 'http://localhost:3000/';
-
-const removeMarket = (string) => {
-    const re = /:.*/;
-    if(!re.test(string)) return string
-    else {
-    const result = re.exec(string)
-    return result[0].slice(1,);
-}
-}
 
 function getTicker(AssetList){
   const data = []
@@ -63,6 +55,9 @@ export default function Asset() {
     const [assetList, setAssetList] = useState([])
     const [priceList,setPriceList] = useState([])
     const [graphData,setGraphData] = useState([])
+    const [openAdd, setOpenAdd] = useState(false);
+
+    const handleOpenAssetDialog = () => setOpenAdd(true);
 
     async function getGraphData(symbol) {
         if((!localStorage.getItem(symbol)) || ((new Date).getDate >= JSON.parse(localStorage.getItem(symbol)).expDate)){
@@ -115,33 +110,10 @@ export default function Asset() {
         });
     },[assetList,priceList]);
     
-
-    //FUNZIONE PROVVISORIA PER L'AGGIUNTA DELL'ASSET
-    /*
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      const data = new FormData(event.currentTarget);
-      fetch(`${baseURL}/api/user/asset`, {
-          method: 'post',
-          headers: {
-              'Content-Type': 'application/json',
-              'token': localStorage.getItem('token')
-          },
-          body: JSON.stringify({
-              tracker: data.get('tracker'),
-              investedCapital: data.get('capital')
-          })
-      }).then((response) => response.json()).then((data) => {
-          if(!data.success) {
-              alert("Impossibile aggiungere asset")
-          }
-      }).catch(e => {
-          console.log(e)
-      })
-    };*/
-
     return (
         <Box className='window'>
+            <AddAssetDialog setOpen={setOpenAdd} isOpen={openAdd} assetList={assetList}
+                                  setAssetList={setAssetList}/>
             <Sidebar />
             <Box className='main-content'>
                 <Grid container display='flex' flexDirection='row' alignItems='stretch'>
@@ -186,7 +158,7 @@ export default function Asset() {
                 }
                             </List>
 
-                            <Fab color='primary' sx={{
+                            <Fab onClick={handleOpenAssetDialog} color='primary' sx={{
                                 position: 'absolute',
                                 top: '71%',
                                 left: '91%'
