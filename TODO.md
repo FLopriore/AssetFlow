@@ -27,3 +27,5 @@ Cose da sistemare:
 [] vedere se usare solo amount invece di positiveAmount e negativeAmount
 
 [X] fixare il tasto di logout
+
+[] migliorare prestazioni selezione liste in fase di delete
