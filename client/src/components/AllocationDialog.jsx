@@ -22,8 +22,7 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const body = JSON.stringify(objectivesList);
-        putApi('objective/percent/', body)
+        putApi('objective/percent/', objectivesList)
             .then((data) => {
                 if (data.success) {
                     setErrorAllocate(false);

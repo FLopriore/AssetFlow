@@ -10,11 +10,15 @@ import AllocationDialog from "./AllocationDialog.jsx";
 import {getApi} from "../utils/api.utils.js";
 import AddObjectiveDialog from "./AddObjectiveDialog.jsx";
 import Loading from "./Loading.jsx";
+import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
+import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
 
 export default function Savings() {
     const [objectivesList, setObjectivesList] = useState([]);
     const [openAlloc, setOpenAlloc] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
+    const [savings, setSavings] = useState(0)
+    const [isPositive, setIsPositive] = useState(true)
 
     const [loading, setLoading] = useState(true);
 
@@ -29,7 +33,20 @@ export default function Savings() {
                 console.log(e);
                 setLoading(false);
             });
+        
+        //retrieve savings
+        getApi('budget/total').then((data) => {
+            setSavings(data.total);
+            if(data.total>0) {
+                setIsPositive(true)
+            } else (setIsPositive(false));
+            setLoading(false);
+        }).catch((e) => {
+            console.log(e);
+            setLoading(false);
+        })
     }, []);
+
 
     if (loading) {
         return <Loading color='#FFA200'/>
@@ -59,8 +76,47 @@ export default function Savings() {
                 padding: '1rem',
                 overflowY: 'auto',
             }}>
-                <Box sx={{width: '50%', height: '100%', m: 3}}>
-                    <p>box 1</p>
+                <Box sx={{width: '50%', height: '100%', m: 3, display: 'flex', flexDirection:'column'}}>
+                    <Typography variant='h4' sx={{mb: 3, width:'100%'}}>I tuoi risparmi</Typography>
+                    <Typography sx={{textAlign: 'center'}} variant='h5'>Nell'ultimo mese hai risparmiato</Typography>
+                    <Box sx={{
+                        display: 'flex',
+                        alignSelf:'center',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: '3vw',
+                        mt: 3
+                    }}>
+                        {isPositive ? <TrendingUpRoundedIcon fontSize='large' color='primary'/> 
+                        : <TrendingDownRoundedIcon fontSize='large' color='secondary'/>}   
+                        <Box sx={{
+                            maxWidth: '50%',
+                            minWidth: '15vw',
+                            height: '10vh',
+                            borderRadius: '10px',
+                            bgcolor: '#fff0bd',
+                            alignSelf: 'center', 
+                            textAlign: 'center',
+                            p: 2
+
+
+                            
+                        }}>  
+                            <h2>{savings} €</h2>
+                        </Box>
+                    </Box>
+                    {
+                        isPositive && <Box sx={{
+                            textAlign: 'center',
+                            bgcolor: '#c4ffc4',
+                            mt: 4,
+                            borderRadius: '10px',
+                            p: 3
+                        }}> 
+                            <Typography variant='body1'>Continua così! 
+                            A fine mese i tuoi risparmi verranno assegnati agli obiettivi secondo le tue preferenze.</Typography>
+                        </Box>
+                    }
                 </Box>
                 <Divider orientation="vertical" flexItem/>
                 <Box sx={{width: '50%', height: '100%', m: 3, overflowY: 'auto'}}>
@@ -80,7 +136,7 @@ export default function Savings() {
                         "&:hover": hoverFab
                     }}>
                         < PercentRoundedIcon/>
-                    < /Fab>
+                    </Fab>
                     <Fab onClick={handleOpenAddDialog} color='savings' sx={{
                         position: 'absolute',
                         top: '87vh',

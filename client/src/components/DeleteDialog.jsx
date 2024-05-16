@@ -1,35 +1,55 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {putApi} from "../utils/api.utils.js";
-import { Button } from '@mui/material';
-import { useContext } from 'react';
-import { ExpenseListContext, IncomeListContext } from './ListContext';
+import {Button} from '@mui/material';
+import {ExpenseListContext, IncomeListContext} from './ListContext';
 
 //confronto tra due array che elimina gli elemanti del primo se matchano gli id del secondo
-function filterById (array, idsToRemove) {
-    return array.filter(item => !idsToRemove.includes(item.dbId));
-  };
-
+function deleteById(array, idsToRemove) {
+    return array.filter(item => !idsToRemove.includes(item._id));
+}
 
 export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
-    const { incomeList, setIncomeList } = useContext(IncomeListContext)
-    const { expenseList, setExpenseList } = useContext(ExpenseListContext)
-    
-    console.log(incomeList)
+    const {
+        incomeList,
+        setIncomeList,
+        incomeMonthlyList,
+        setIncomeMonthlyList,
+        incomeYearList,
+        setIncomeYearList,
+        incomeTotal,
+        setIncome
+    } = useContext(IncomeListContext);
+    const {
+        expenseList,
+        setExpenseList,
+        expenseMonthlyList,
+        setExpenseMonthlyList,
+        expenseYearList,
+        setExpenseYearList,
+        expenseTotal,
+        setExpense
+    } = useContext(ExpenseListContext);
+
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const body = JSON.stringify(selected);
-        if(isPositive) {
+        const body = selected.map((id) => {
+            return {_id: id};
+        });
+        if (isPositive) {
             putApi('income/delete', body).then(() => {
-                setIncomeList(filterById(incomeList, selected));
+                setIncomeList(deleteById(incomeList, selected));
+                setIncomeMonthlyList(deleteById(incomeMonthlyList, selected));
+                setIncomeYearList(deleteById(incomeYearList, selected));
                 handleClose();
             }).catch((e) => {
                 console.log(e);
@@ -37,14 +57,16 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
             })
         } else {
             putApi('expense/delete', body).then(() => {
-                setExpenseList(filterById(expenseList, selected));
+                setExpenseList(deleteById(expenseList, selected));
+                setExpenseMonthlyList(deleteById(expenseMonthlyList, selected));
+                setExpenseYearList(deleteById(expenseYearList, selected));
                 handleClose();
             }).catch((e) => {
                 console.log(e);
                 handleClose();
             })
         }
-        
+
     }
 
     return (
@@ -57,19 +79,19 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
             }}
         >
             <DialogTitle id="delete-dialog-title">
-            {"Elimina selezionati"}
+                {"Elimina selezionati"}
             </DialogTitle>
             <DialogContent>
-            <DialogContentText id="delete-dialog-description">
-                Vuoi eliminare gli elementi selezionati? 
-            </DialogContentText>
+                <DialogContentText id="delete-dialog-description">
+                    Vuoi eliminare gli elementi selezionati?
+                </DialogContentText>
             </DialogContent>
             <DialogActions>
-            <Button onClick={handleClose}>Anulla</Button>
-            <Button type='submit' autoFocus>
-                Elimina
-            </Button>
+                <Button onClick={handleClose}>Anulla</Button>
+                <Button type='submit' autoFocus>
+                    Elimina
+                </Button>
             </DialogActions>
-      </Dialog>
+        </Dialog>
     );
 }

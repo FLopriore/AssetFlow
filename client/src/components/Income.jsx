@@ -11,7 +11,7 @@ import {IncomeAccordion} from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddIncomeDialog from "./AddIncomeDialog.jsx";
 import Loading from "./Loading.jsx";
-import { IncomeListContext } from './ListContext.jsx';
+import {IncomeListContext} from './ListContext.jsx';
 
 export default function Income() {
 
@@ -20,9 +20,17 @@ export default function Income() {
     const [incomeYearList, setIncomeYearList] = useState([]);
     const [incomeList, setIncomeList] = useState([]);
     const [incomeTotal, setIncome] = useState(0);
-    
-    const incomeMonthlyValue = {incomeMonthlyList, setIncomeMonthlyList, incomeList, setIncomeList }
-    const incomeYearValue = {incomeYearList, setIncomeYearList, incomeList, setIncomeList }
+
+    const incomesValue = {
+        incomeList,
+        setIncomeList,
+        incomeMonthlyList,
+        setIncomeMonthlyList,
+        incomeYearList,
+        setIncomeYearList,
+        incomeTotal,
+        setIncome
+    }
 
     const [loading, setLoading] = useState(true);
 
@@ -64,15 +72,16 @@ export default function Income() {
     return (
         <>
             <Box className='window'>
-                <AddIncomeDialog setOpen={setOpen} isOpen={open} incomeList={incomeList} setIncomeList={setIncomeList}/>
-                <Sidebar/>
-                <Box className='main-content' sx={{
-                    border: '3px solid',
-                    borderColor: '#61c86a', margin: '1rem',
-                    borderRadius: '20px',
-                    padding: '1rem',
-                    overflowY: 'auto'
-                }}>
+                <IncomeListContext.Provider value={incomesValue}>
+                    <AddIncomeDialog setOpen={setOpen} isOpen={open}/>
+                    <Sidebar/>
+                    <Box className='main-content' sx={{
+                        border: '3px solid',
+                        borderColor: '#61c86a', margin: '1rem',
+                        borderRadius: '20px',
+                        padding: '1rem',
+                        overflowY: 'auto'
+                    }}>
                         <TabContext value={value}>
                             <Box sx={{borderBottom: 1, borderColor: 'divider', width: '100%', display: 'flex'}}>
                                 <TabList onChange={handleChange}>
@@ -81,73 +90,70 @@ export default function Income() {
                                 </TabList>
                             </Box>
                             <TabPanel value="0">
-                                <IncomeListContext.Provider value={incomeMonthlyValue}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    width: '100%',
+                                    flexWrap: 'wrap'
+                                }}>
                                     <Box sx={{
+                                        textAlign: 'center',
+                                        width: '50%',
                                         display: 'flex',
-                                        flexDirection: 'row',
-                                        width: '100%',
-                                        flexWrap: 'wrap'
+                                        alignItems: 'center',
+                                        justifyItems: 'center',
+                                        flexDirection: 'column'
                                     }}>
-                                        <Box sx={{
-                                            textAlign: 'center',
-                                            width: '50%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyItems: 'center',
-                                            flexDirection: 'column'
-                                        }}>
-                                            <Typography variant='h5' sx={{mt: 2, mb: 2}}>Entrate totali nell'ultimo
-                                                mese</Typography>
-                                            <h2>+{incomeTotal} €</h2>
-                                            <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                                {incomeMonthlyList && <IncomePie isMonthly={true}/>}
-                                            </Box>
+                                        <Typography variant='h5' sx={{mt: 2, mb: 2}}>Entrate totali nell'ultimo
+                                            mese</Typography>
+                                        <h2>+{incomeTotal} €</h2>
+                                        <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                            {incomeMonthlyList && <IncomePie isMonthly={true}/>}
                                         </Box>
-                                        {incomeMonthlyList && <IncomeAccordion isMonthly={true}/>}
-                                        <Fab onClick={handleOpen} color='primary' sx={{
-                                            position: 'absolute',
-                                            top: '87vh'
-                                        }}>
-                                            <AddRoundedIcon/>
-                                        </Fab>
                                     </Box>
-                                </IncomeListContext.Provider>
+                                    {incomeMonthlyList && <IncomeAccordion isMonthly={true}/>}
+                                    <Fab onClick={handleOpen} color='primary' sx={{
+                                        position: 'absolute',
+                                        top: '87vh'
+                                    }}>
+                                        <AddRoundedIcon/>
+                                    </Fab>
+                                </Box>
                             </TabPanel>
                             <TabPanel value="1">
-                                <IncomeListContext.Provider value={incomeYearValue}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    width: '100%',
+                                    flexWrap: 'wrap'
+                                }}>
                                     <Box sx={{
+                                        textAlign: 'center',
+                                        width: '50%',
                                         display: 'flex',
-                                        flexDirection: 'row',
-                                        width: '100%',
-                                        flexWrap: 'wrap'
+                                        alignItems: 'center',
+                                        justifyItems: 'center',
+                                        flexDirection: 'column'
                                     }}>
-                                        <Box sx={{
-                                            textAlign: 'center',
-                                            width: '50%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyItems: 'center',
-                                            flexDirection: 'column'
-                                        }}>
-                                            <Typography variant='h5' sx={{mt: 2, mb: 2}}>Entrate totali nell'ultimo
-                                                anno</Typography>
-                                            <h2>+{incomeTotal} €</h2>
-                                            <Box sx={{ml: '2.2rem', mt: '2rem'}}>
-                                                {incomeYearList && <IncomePie isMonthly={false}/>}
-                                            </Box>
+                                        <Typography variant='h5' sx={{mt: 2, mb: 2}}>Entrate totali nell'ultimo
+                                            anno</Typography>
+                                        <h2>+{incomeTotal} €</h2>
+                                        <Box sx={{ml: '2.2rem', mt: '2rem'}}>
+                                            {incomeYearList && <IncomePie isMonthly={false}/>}
                                         </Box>
-                                        {incomeYearList && <IncomeAccordion incomeList={incomeYearList}/>}
-                                        <Fab onClick={handleOpen} color='primary' sx={{
-                                            position: 'absolute',
-                                            top: '87vh'
-                                        }}>
-                                            <AddRoundedIcon/>
-                                        </Fab>
                                     </Box>
-                                </IncomeListContext.Provider>
+                                    {incomeYearList && <IncomeAccordion incomeList={incomeYearList}/>}
+                                    <Fab onClick={handleOpen} color='primary' sx={{
+                                        position: 'absolute',
+                                        top: '87vh'
+                                    }}>
+                                        <AddRoundedIcon/>
+                                    </Fab>
+                                </Box>
                             </TabPanel>
                         </TabContext>
-                </Box>
+                    </Box>
+                </IncomeListContext.Provider>
             </Box>
         </>
     );

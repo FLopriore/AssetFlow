@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Sidebar from './Sidebar';
-import { Box, Fab, Grid, List, ListItem, ListItemButton } from '@mui/material';
+import { Box, Fab, Grid, List, ListItem, ListItemButton, Typography } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BasicLineChart from './LineChart';
@@ -89,8 +89,7 @@ export default function Asset() {
           );
           };    
         ws.onmessage = function incoming(message) {
-          const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON(); //
-          console.log(ticker)
+          const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON(); 
           setPriceList(ticker)
           };
         });
@@ -102,32 +101,39 @@ export default function Asset() {
                                   setAssetList={setAssetList}/>
             <DeleteAssetDialog setOpen={setOpenDelete} isOpen={openDelete} assetId={assetDelete} setAssetId={setAssetDelete}/>
             <Sidebar />
-            <Box className='main-content'>
-                <Grid container display='flex' flexDirection='row' alignItems='stretch'>
-                    <Grid item xs={12}>
-                        <Box sx={{ 
-                            width: '100%',
-                            textAlign: 'center',
-                            mt: '1rem',
-                            mb: '4rem'
-                        }}>
-                        </Box>
-                    </Grid>
-                    {/*<div>{assetList.map(asset => <p>{asset.label}</p>)}</div>*/}
-                    <Grid item xs={6}>
-                       <BasicLineChart histData={graphData}/> 
-                    </Grid>
-                    <Grid item xs={6} display='flex' flexWrap='wrap' justifyContent='center'>
+            <Box className='main-content' sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                flexWrap: 'wrap'
+            }}>
+                <Box sx={{ 
+                        width: '100%',
+                        textAlign: 'center',
+                        mt: 3,
+                        height: '10%'
+                    }}>
+                    <Typography variant='h4'>La tua watchlist</Typography>
+                </Box>
+                <Box sx={{width: '50%', height: '100%'}}>
+                    <BasicLineChart histData={graphData}/> 
+                </Box>
                         <Box sx={{
-                            width: '80%',
+                            width: '50%',
                             height: '100%',
-                            bgcolor: '#eaeaea',
-                            borderRadius: '20px',
-                            alignSelf: 'center',
-                            textAlign: 'center',
-                            padding: '0.5rem',
                         }}>
-                            <h3>I tuoi asset</h3>
+                            <Box sx={{
+                                 bgcolor: '#eaeaea',
+                                 borderRadius: '20px',
+                                 textAlign: 'center',
+                                 padding: '0.5rem',
+                                 ml: '10%',
+                                 mr: '10%',
+                                 height: '70%',
+                                 overflowY: 'auto'
+                                 
+                            }}>
+                            <Typography variant='h5' sx={{mt: 2}}>I tuoi Ticker</Typography>
                             <List>
                             {
                                 assetList.map((el) => (
@@ -140,9 +146,9 @@ export default function Asset() {
                                     <DeleteIcon/>    
                                 </ListItemButton> 
                                 <ListItemButton onClick={()=> getGraphData(el.label)}>
-                                    <ListItemText primary={el.label}></ListItemText>
+                                    <ListItemText primary={el.label} ></ListItemText>
                                 </ListItemButton>
-                                <ListItemText primary={getActualPrice(el.label)}></ListItemText>           
+                                <ListItemText primary={getActualPrice(el.label)} ></ListItemText>           
                             </ListItem>
                         
                     ))
@@ -156,9 +162,8 @@ export default function Asset() {
                             }}>
                             <AddIcon />
                             </Fab>
+                            </Box>
                         </Box>
-                    </Grid>
-                </Grid>
             </Box>
         </Box>
     );

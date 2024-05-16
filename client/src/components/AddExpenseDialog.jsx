@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -10,11 +10,21 @@ import {postApi} from "../utils/api.utils.js";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {ExpenseListContext} from './ListContext.jsx';
 
-export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpenseList}) {
+export default function AddExpenseDialog({isOpen, setOpen}) {
     const [error, setError] = useState(false);
     const [category, setCategory] = useState('others');
-    console.log(expenseList)
+    const {
+        expenseList,
+        setExpenseList,
+        expenseMonthlyList,
+        setExpenseMonthlyList,
+        expenseYearList,
+        setExpenseYearList,
+        expenseTotal,
+        setExpense
+    } = useContext(ExpenseListContext);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -27,7 +37,12 @@ export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpen
         postApi('expense/', body)
             .then((data) => {
                 expenseList.push(data);
+                expenseMonthlyList.push(data);
+                expenseYearList.push(data);
                 setExpenseList(expenseList);
+                setExpenseMonthlyList(expenseMonthlyList);
+                setExpenseYearList(expenseYearList);
+                setExpense(expenseTotal+data.negativeAmount)
                 handleClose();
             })
             .catch((e) => {
@@ -77,7 +92,7 @@ export default function AddExpenseDialog({isOpen, setOpen, expenseList, setExpen
                         variant="outlined"
                         color='secondary'
                         error={error}
-                        helperText={(error)? "L'importo deve essere negativo." : ""}
+                        helperText={(error) ? "L'importo deve essere negativo." : ""}
                         onChange={handleChangeAmount}
                     />
                     <Select
