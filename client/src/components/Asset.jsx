@@ -69,16 +69,16 @@ export default function Asset() {
         }
     }
 
-    let ws = new WebSocket('wss://streamer.finance.yahoo.com');
-
     useEffect(() => {
-        getApi("asset/").then((data) => {
-            if (!data.message) setAssetList(getTicker(data));
-            else setAssetList([])
-        });
+        getApi("asset/")
+            .then((data) => {
+                setAssetList(getTicker(data));
+            })
+            .catch((e) => console.log(e));
     }, []);
 
     useEffect(() => {
+        const ws = new WebSocket('wss://streamer.finance.yahoo.com');
         //WebSocket yahoo finance, protobuf serve per decodificare i messaggi provenienti dal socket
         protobuf.load("Data.proto", (error, root) => {
             if (error) {
@@ -96,6 +96,10 @@ export default function Asset() {
                 const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON();
                 setPriceList(ticker)
             };
+
+            return () => {
+                ws.close();
+            };
         });
     }, [assetList]);
 
@@ -104,7 +108,7 @@ export default function Asset() {
             <AddAssetDialog setOpen={setOpenAdd} isOpen={openAdd} assetList={assetList}
                             setAssetList={setAssetList}/>
             <DeleteAssetDialog setOpen={setOpenDelete} isOpen={openDelete} assetId={assetDelete}
-                               setAssetId={setAssetDelete}/>
+                               setAssetId={setAssetDelete} assetList={assetList} setAssetList={setAssetList}/>
             <Sidebar/>
             <Box className='main-content' sx={{
                 display: 'flex',

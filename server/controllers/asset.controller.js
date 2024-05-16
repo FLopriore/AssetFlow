@@ -8,7 +8,7 @@ const getAllAssets = async (req, res) => {
         let allAssets = await Asset.find({userId: req.userId});
 
         if (!allAssets.length) {
-            return res.status(200).json({message: 'Assets not found!'});
+            return res.status(404).json({message: 'Assets not found!'});
         }
         allAssets = filterResponse(allAssets, ['_id', 'tracker', 'investedCapital','createdAt']);
         res.status(200).json(allAssets);
