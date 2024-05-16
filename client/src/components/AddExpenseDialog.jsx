@@ -22,8 +22,6 @@ export default function AddExpenseDialog({isOpen, setOpen}) {
         setExpenseMonthlyList,
         expenseYearList,
         setExpenseYearList,
-        expenseTotal,
-        setExpense
     } = useContext(ExpenseListContext);
 
     const handleSubmit = (event) => {
@@ -42,7 +40,7 @@ export default function AddExpenseDialog({isOpen, setOpen}) {
                 setExpenseList(expenseList);
                 setExpenseMonthlyList(expenseMonthlyList);
                 setExpenseYearList(expenseYearList);
-                setExpense(expenseTotal+data.negativeAmount)
+                //setExpense(expenseTotal+data.negativeAmount)
                 handleClose();
             })
             .catch((e) => {

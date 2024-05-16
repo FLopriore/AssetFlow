@@ -28,8 +28,6 @@ export default function Income() {
         setIncomeMonthlyList,
         incomeYearList,
         setIncomeYearList,
-        incomeTotal,
-        setIncome
     }
 
     const [loading, setLoading] = useState(true);
@@ -42,8 +40,6 @@ export default function Income() {
     };
 
     useEffect(() => {
-        // retrieve total income
-        const budgetPromise = getApi('budget/income/');
         // retrieve list of last month income sources
         const lastMonthPromise = getApi('income/lastmonth');
         // retrieve list of last year income sources
@@ -51,12 +47,11 @@ export default function Income() {
         // retrieve total entries
         const allIncomesPromise = getApi('income/');
 
-        Promise.all([budgetPromise, lastMonthPromise, lastYearPromise, allIncomesPromise])
+        Promise.all([lastMonthPromise, lastYearPromise, allIncomesPromise])
             .then((responses) => {
-                setIncome(responses[0].totalIncome);
-                setIncomeMonthlyList(responses[1]);
-                setIncomeYearList(responses[2]);
-                setIncomeList(responses[3]);
+                setIncomeMonthlyList(responses[0]);
+                setIncomeYearList(responses[1]);
+                setIncomeList(responses[2]);
                 setLoading(false);
             })
             .catch((e) => {
@@ -64,6 +59,16 @@ export default function Income() {
                 setLoading(false);
             })
     }, []);
+
+    useEffect(() => {
+        getApi('budget/income/')
+            .then((res) => {
+                setIncome(res.totalIncome);
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    }, [incomeList]);
 
     if (loading) {
         return <Loading color='#61c86a'/>

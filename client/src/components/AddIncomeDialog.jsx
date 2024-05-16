@@ -22,8 +22,6 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
         setIncomeMonthlyList,
         incomeYearList,
         setIncomeYearList,
-        incomeTotal,
-        setIncome
     } = useContext(IncomeListContext);
 
     const handleSubmit = (event) => {
@@ -44,7 +42,6 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
                 setIncomeList(incomeList);
                 setIncomeMonthlyList(incomeMonthlyList);
                 setIncomeYearList(incomeYearList);
-                setIncome(incomeTotal+data.positiveAmount)
                 handleClose();
             })
             .catch((e) => {

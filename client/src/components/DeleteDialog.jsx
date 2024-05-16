@@ -22,8 +22,6 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
         setIncomeMonthlyList,
         incomeYearList,
         setIncomeYearList,
-        incomeTotal,
-        setIncome
     } = useContext(IncomeListContext);
     const {
         expenseList,
@@ -32,8 +30,6 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
         setExpenseMonthlyList,
         expenseYearList,
         setExpenseYearList,
-        expenseTotal,
-        setExpense
     } = useContext(ExpenseListContext);
 
     const handleClose = () => {

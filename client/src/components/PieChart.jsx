@@ -6,8 +6,7 @@ import { IncomeListContext, ExpenseListContext } from './ListContext.jsx';
 
 export function IncomePie({isMonthly}) {
     const { incomeMonthlyList, incomeYearList } = useContext(IncomeListContext)
-    let list;
-    isMonthly? list = incomeMonthlyList : list = incomeYearList
+    const list = (isMonthly) ? incomeMonthlyList : incomeYearList;
 
     const data = [
         {id: 0, value: calculateTotalCategory(list, 'stipendio'), label: 'Stipendio'},
@@ -41,8 +40,7 @@ export function IncomePie({isMonthly}) {
 
 export function ExpensePie({isMonthly}) {
     const { expenseMonthlyList, expenseYearList } = useContext(ExpenseListContext)
-    let list;
-    isMonthly? list = expenseMonthlyList : list = expenseYearList
+    const list = (isMonthly) ? expenseMonthlyList : expenseYearList;
 
     const data = [
         {id: 0, value: calculateTotalCategory(list, 'shopping'), label: 'Shopping'},

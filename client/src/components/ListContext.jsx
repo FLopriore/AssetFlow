@@ -8,9 +8,6 @@ export const IncomeListContext = createContext({
     incomeYearList: [],
     setIncomeYearList: () => {},
     isPositive: true,
-    incomeTotal: 0,
-    setIncome: () => {}
-    
 })
 
 export const ExpenseListContext = createContext({
@@ -21,6 +18,4 @@ export const ExpenseListContext = createContext({
     expenseYearList: [],
     setExpenseYearList: () => {},
     isPositive: false,
-    expenseTotal: 0,
-    setExpense: () => {}
 })

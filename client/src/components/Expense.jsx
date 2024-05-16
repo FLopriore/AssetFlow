@@ -27,8 +27,6 @@ export default function Expense() {
         setExpenseYearList,
         expenseMonthlyList,
         setExpenseMonthlyList,
-        expenseTotal,
-        setExpense
     };
 
     const [loading, setLoading] = useState(true);
@@ -42,7 +40,7 @@ export default function Expense() {
 
     useEffect(() => {
         // retrieve total expense
-        const budgetPromise = getApi('budget/expense/');
+        //const budgetPromise = getApi('budget/expense/');
         // retrieve list of last month expenses
         const lastMonthPromise = getApi('expense/lastmonth');
         // retrieve list of last year expenses
@@ -50,12 +48,11 @@ export default function Expense() {
         // retrieve total entries
         const allIncomesPromise = getApi('expense/');
 
-        Promise.all([budgetPromise, lastMonthPromise, lastYearPromise, allIncomesPromise])
+        Promise.all([lastMonthPromise, lastYearPromise, allIncomesPromise])
             .then((responses) => {
-                setExpense(responses[0].totalExpenses);
-                setExpenseMonthlyList(responses[1]);
-                setExpenseYearList(responses[2]);
-                setExpenseList(responses[3]);
+                setExpenseMonthlyList(responses[0]);
+                setExpenseYearList(responses[1]);
+                setExpenseList(responses[2]);
                 setLoading(false);
             })
             .catch((e) => {
@@ -63,6 +60,16 @@ export default function Expense() {
                 setLoading(false);
             })
     }, []);
+
+    useEffect(() => {
+        getApi('budget/expense/')
+            .then((res) => {
+                setExpense(res.totalExpenses);
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    }, [expenseList]);
 
     if (loading) {
         return <Loading color='#CE310E'/>
