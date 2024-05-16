@@ -14,10 +14,6 @@ function deleteById(array, idsToRemove) {
     return array.filter(item => !idsToRemove.includes(item._id));
 }
 
-function filterById(array, ids) {
-    return array.filter(item => ids.includes(item._id));
-}
-
 export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
     const {
         incomeList,
