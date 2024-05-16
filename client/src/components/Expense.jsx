@@ -26,7 +26,9 @@ export default function Expense() {
         expenseYearList,
         setExpenseYearList,
         expenseMonthlyList,
-        setExpenseMonthlyList
+        setExpenseMonthlyList,
+        expenseTotal,
+        setExpense
     };
 
     const [loading, setLoading] = useState(true);

@@ -21,7 +21,9 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
         incomeMonthlyList,
         setIncomeMonthlyList,
         incomeYearList,
-        setIncomeYearList
+        setIncomeYearList,
+        incomeTotal,
+        setIncome
     } = useContext(IncomeListContext);
 
     const handleSubmit = (event) => {
@@ -35,12 +37,14 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
         console.log(body)
         postApi('income/', body)
             .then((data) => {
+                console.log(data)
                 incomeList.push(data);
                 incomeMonthlyList.push(data);
                 incomeYearList.push(data);
                 setIncomeList(incomeList);
                 setIncomeMonthlyList(incomeMonthlyList);
                 setIncomeYearList(incomeYearList);
+                setIncome(incomeTotal+data.positiveAmount)
                 handleClose();
             })
             .catch((e) => {

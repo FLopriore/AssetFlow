@@ -98,6 +98,9 @@ export default function Savings() {
                             alignSelf: 'center', 
                             textAlign: 'center',
                             p: 2
+
+
+                            
                         }}>  
                             <h2>{savings} €</h2>
                         </Box>

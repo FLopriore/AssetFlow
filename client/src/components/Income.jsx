@@ -27,7 +27,9 @@ export default function Income() {
         incomeMonthlyList,
         setIncomeMonthlyList,
         incomeYearList,
-        setIncomeYearList
+        setIncomeYearList,
+        incomeTotal,
+        setIncome
     }
 
     const [loading, setLoading] = useState(true);
