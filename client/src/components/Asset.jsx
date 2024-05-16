@@ -1,9 +1,7 @@
 import * as React from 'react';
 import Sidebar from './Sidebar';
 import { Box, Fab, Grid, List, ListItem, ListItemButton } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
-import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
@@ -14,8 +12,6 @@ import {Buffer} from "buffer/"
 import AddAssetDialog from './AddAssetDialog';
 import DeleteAssetDialog from './DeleteAssetDialog';
 
-const BASE_URL = 'http://localhost:3000/';
-
 function getTicker(AssetList){
   const data = []
   AssetList.forEach((el, index) => {
@@ -23,22 +19,6 @@ function getTicker(AssetList){
     data.push(dataElement)
   });
   return data;
-}
-
-async function deleteAsset(assetId){
-    try {
-        let response = await fetch(`${BASE_URL}api/asset/${assetId}?id`, {
-            method: 'delete',
-            headers: {
-                'Content-Type': 'application/json',
-                'token': localStorage.getItem('token')
-            },
-        });
-        response = await response.json();
-        return response;
-    } catch (e) {
-        console.log(e);
-    }
 }
 
 //Prende i dati facendo la chiamata all'API
@@ -54,7 +34,8 @@ async function getHistData(symbol){
 export default function Asset() {
 
     const [assetList, setAssetList] = useState([])
-    const [priceList,setPriceList] = useState([])
+    const [update,setUpdate] = useState(0)
+    const [priceList,setPriceList] = useState(null)
     const [graphData,setGraphData] = useState([])
     const [openAdd, setOpenAdd] = useState(false);
     const [openDelete,setOpenDelete] = useState(false);
@@ -83,37 +64,37 @@ export default function Asset() {
                 else return 0
         }
         if(symbol===priceList.id){
+
             localStorage.setItem(str,(priceList.price).toFixed(2))
             return (priceList.price).toFixed(2)
         }
     }
 
+    let ws = new WebSocket('wss://streamer.finance.yahoo.com');
 
     useEffect(()=>{
-      getApi('asset/').then((data) => {
-        setAssetList(getTicker(data));
+      getApi("asset/").then((data) => {
+        if(!data.message) setAssetList(getTicker(data));
+        else setAssetList([])
     });
-
-      //WebSocket yahoo finance
+      //WebSocket yahoo finance, protobuf serve per decodificare i messaggi provenienti dal socket
       protobuf.load("Data.proto",(error,root)=>{
         if (error){console.log(error)}
         const Ticker = root.lookupType("ticker");
-        let ws = new WebSocket('wss://streamer.finance.yahoo.com');
         ws.onopen = function open() {
           ws.send(
           JSON.stringify({
             subscribe: assetList.map(asset => asset.label),
           })
           );
-          };
-          
+          };    
         ws.onmessage = function incoming(message) {
           const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON(); //
+          console.log(ticker)
           setPriceList(ticker)
           };
-        ws.onclose = function close() {console.log("Socket closed");};
         });
-    },[assetList,priceList]);
+    },[assetList]);
     
     return (
         <Box className='window'>

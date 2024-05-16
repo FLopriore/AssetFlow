@@ -8,7 +8,7 @@ import {postApi} from "../utils/api.utils.js";
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 
-export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList}) {
+export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList,}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();

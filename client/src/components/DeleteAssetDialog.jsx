@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 
 const BASE_URL = 'http://localhost:3000/';
 
-export default function DeleteAssetDialog({isOpen,setOpen,assetId,setAssetId}) {
+export default function DeleteAssetDialog({isOpen,setOpen,assetId,setAssetId,setUpdate}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -20,7 +20,7 @@ export default function DeleteAssetDialog({isOpen,setOpen,assetId,setAssetId}) {
                 'token': localStorage.getItem('token')
             },
         }).then(res => {
-            if(res.status == 200) setAssetId="";
+            if(res.status == 200) {setAssetId("")}
         }).catch((e) =>{console.log(e)})
         handleClose()
 }
@@ -40,7 +40,7 @@ export default function DeleteAssetDialog({isOpen,setOpen,assetId,setAssetId}) {
         >
             <DialogTitle>Aggiungi asset</DialogTitle>
             <DialogContent>
-                Sei Sicuro di voler eliminare l'Asset?
+                Sei sicuro di voler eliminare l'Asset?
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Annulla</Button>
