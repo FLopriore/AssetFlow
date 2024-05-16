@@ -1,169 +1,174 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
-import { Box, Fab, Grid, List, ListItem, ListItemButton, Typography } from '@mui/material';
+import {Box, Fab, List, ListItem, ListItemButton, Typography} from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
-import { useState, useEffect } from "react";
 import {getApi, postApi} from '../utils/api.utils';
 import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
 import AddAssetDialog from './AddAssetDialog';
 import DeleteAssetDialog from './DeleteAssetDialog';
 
-function getTicker(AssetList){
-  const data = []
-  AssetList.forEach((el, index) => {
-    const dataElement = {idx: index, label: (el.tracker).toUpperCase(), id: el._id};
-    data.push(dataElement)
-  });
-  return data;
+function getTicker(AssetList) {
+    const data = []
+    AssetList.forEach((el, index) => {
+        const dataElement = {idx: index, label: (el.tracker).toUpperCase(), id: el._id};
+        data.push(dataElement)
+    });
+    return data;
 }
 
 //Prende i dati facendo la chiamata all'API
-async function getHistData(symbol){
+async function getHistData(symbol) {
     // fai la fetch all'url
     const startDate = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().split('T')[0];
     symbol = symbol.toLowerCase()
-    const data = await postApi("price/",{"symbol":symbol ,"startDate":startDate})
+    const data = await postApi("price/", {"symbol": symbol, "startDate": startDate})
     console.log(data)
     return data
 }
 
 export default function Asset() {
 
-    const [assetList, setAssetList] = useState([])
-    const [update,setUpdate] = useState(0)
-    const [priceList,setPriceList] = useState(null)
-    const [graphData,setGraphData] = useState([])
+    const [assetList, setAssetList] = useState([]);
+    const [priceList, setPriceList] = useState(null);
+    const [graphData, setGraphData] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
-    const [openDelete,setOpenDelete] = useState(false);
-    const [assetDelete,setAssetDelete] = useState("");
+    const [openDelete, setOpenDelete] = useState(false);
+    const [assetDelete, setAssetDelete] = useState("");
 
     const handleDeleteAssetDialog = () => setOpenDelete(true);
     const handleOpenAssetDialog = () => setOpenAdd(true);
 
 
     async function getGraphData(symbol) {
-        if((!localStorage.getItem(symbol)) || ((new Date).getDate >= JSON.parse(localStorage.getItem(symbol)).expDate)){
+        if ((!localStorage.getItem(symbol)) || ((new Date).getDate >= JSON.parse(localStorage.getItem(symbol)).expDate)) {
             const date = new Date(new Date().setDate(new Date().getDate() + 1));
             const data = await getHistData(symbol)
             setGraphData(data)
-            localStorage.setItem(symbol,JSON.stringify({
+            localStorage.setItem(symbol, JSON.stringify({
                 "data": data,
                 "expDate": date
             }))
-        }else setGraphData(JSON.parse(localStorage.getItem(symbol)).data)
+        } else setGraphData(JSON.parse(localStorage.getItem(symbol)).data)
     }
 
     const getActualPrice = (symbol) => {
-        const str = symbol+"_price"
-        if (!priceList || symbol!==priceList.id) {
-            if(localStorage.getItem(str)) return localStorage.getItem(str) 
-                else return 0
+        const str = symbol + "_price"
+        if (!priceList || symbol !== priceList.id) {
+            if (localStorage.getItem(str)) return localStorage.getItem(str)
+            else return 0
         }
-        if(symbol===priceList.id){
+        if (symbol === priceList.id) {
 
-            localStorage.setItem(str,(priceList.price).toFixed(2))
+            localStorage.setItem(str, (priceList.price).toFixed(2))
             return (priceList.price).toFixed(2)
         }
     }
 
     let ws = new WebSocket('wss://streamer.finance.yahoo.com');
 
-    useEffect(()=>{
-      getApi("asset/").then((data) => {
-        if(!data.message) setAssetList(getTicker(data));
-        else setAssetList([])
-    });
-      //WebSocket yahoo finance, protobuf serve per decodificare i messaggi provenienti dal socket
-      protobuf.load("Data.proto",(error,root)=>{
-        if (error){console.log(error)}
-        const Ticker = root.lookupType("ticker");
-        ws.onopen = function open() {
-          ws.send(
-          JSON.stringify({
-            subscribe: assetList.map(asset => asset.label),
-          })
-          );
-          };    
-        ws.onmessage = function incoming(message) {
-          const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON(); 
-          setPriceList(ticker)
-          };
+    useEffect(() => {
+        getApi("asset/").then((data) => {
+            if (!data.message) setAssetList(getTicker(data));
+            else setAssetList([])
         });
-    },[assetList]);
-    
+    }, []);
+
+    useEffect(() => {
+        //WebSocket yahoo finance, protobuf serve per decodificare i messaggi provenienti dal socket
+        protobuf.load("Data.proto", (error, root) => {
+            if (error) {
+                console.log(error)
+            }
+            const Ticker = root.lookupType("ticker");
+            ws.onopen = function open() {
+                ws.send(
+                    JSON.stringify({
+                        subscribe: assetList.map(asset => asset.label),
+                    })
+                );
+            };
+            ws.onmessage = function incoming(message) {
+                const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON();
+                setPriceList(ticker)
+            };
+        });
+    }, [assetList]);
+
     return (
         <Box className='window'>
             <AddAssetDialog setOpen={setOpenAdd} isOpen={openAdd} assetList={assetList}
-                                  setAssetList={setAssetList}/>
-            <DeleteAssetDialog setOpen={setOpenDelete} isOpen={openDelete} assetId={assetDelete} setAssetId={setAssetDelete}/>
-            <Sidebar />
+                            setAssetList={setAssetList}/>
+            <DeleteAssetDialog setOpen={setOpenDelete} isOpen={openDelete} assetId={assetDelete}
+                               setAssetId={setAssetDelete}/>
+            <Sidebar/>
             <Box className='main-content' sx={{
                 display: 'flex',
                 flexDirection: 'row',
                 width: '100%',
                 flexWrap: 'wrap'
             }}>
-                <Box sx={{ 
-                        width: '100%',
-                        textAlign: 'center',
-                        mt: 3,
-                        height: '10%'
-                    }}>
+                <Box sx={{
+                    width: '100%',
+                    textAlign: 'center',
+                    mt: 3,
+                    height: '10%'
+                }}>
                     <Typography variant='h4'>La tua watchlist</Typography>
                 </Box>
                 <Box sx={{width: '50%', height: '100%'}}>
-                    <BasicLineChart histData={graphData}/> 
+                    <BasicLineChart histData={graphData}/>
                 </Box>
-                        <Box sx={{
-                            width: '50%',
-                            height: '100%',
-                        }}>
-                            <Box sx={{
-                                 bgcolor: '#eaeaea',
-                                 borderRadius: '20px',
-                                 textAlign: 'center',
-                                 padding: '0.5rem',
-                                 ml: '10%',
-                                 mr: '10%',
-                                 height: '70%',
-                                 overflowY: 'auto'
-                                 
-                            }}>
-                            <Typography variant='h5' sx={{mt: 2}}>I tuoi Ticker</Typography>
-                            <List>
+                <Box sx={{
+                    width: '50%',
+                    height: '100%',
+                }}>
+                    <Box sx={{
+                        bgcolor: '#eaeaea',
+                        borderRadius: '20px',
+                        textAlign: 'center',
+                        padding: '0.5rem',
+                        ml: '10%',
+                        mr: '10%',
+                        height: '70%',
+                        overflowY: 'auto'
+
+                    }}>
+                        <Typography variant='h5' sx={{mt: 2}}>I tuoi Ticker</Typography>
+                        <List>
                             {
                                 assetList.map((el) => (
-                            <ListItem key={el.idx}>
-                                <ListItemButton onClick={() => {
-                                    setAssetDelete(el.id)
-                                    console.log(assetDelete)
-                                    handleDeleteAssetDialog()
-                                    }}>
-                                    <DeleteIcon/>    
-                                </ListItemButton> 
-                                <ListItemButton onClick={()=> getGraphData(el.label)}>
-                                    <ListItemText primary={el.label} ></ListItemText>
-                                </ListItemButton>
-                                <ListItemText primary={getActualPrice(el.label)} ></ListItemText>           
-                            </ListItem>
-                        
-                    ))
-                }
-                            </List>
+                                    <ListItem key={el.idx}>
+                                        <ListItemButton onClick={() => {
+                                            setAssetDelete(el.id)
+                                            console.log(assetDelete)
+                                            handleDeleteAssetDialog()
+                                        }}>
+                                            <DeleteIcon/>
+                                        </ListItemButton>
+                                        <ListItemButton onClick={() => getGraphData(el.label)}>
+                                            <ListItemText primary={el.label}></ListItemText>
+                                        </ListItemButton>
+                                        <ListItemText primary={getActualPrice(el.label)}></ListItemText>
+                                    </ListItem>
 
-                            <Fab onClick={handleOpenAssetDialog} color='primary' sx={{
-                                position: 'absolute',
-                                top: '71%',
-                                left: '91%'
-                            }}>
-                            <AddIcon />
-                            </Fab>
-                            </Box>
-                        </Box>
+                                ))
+                            }
+                        </List>
+
+                        <Fab onClick={handleOpenAssetDialog} color='primary' sx={{
+                            position: 'absolute',
+                            top: '71%',
+                            left: '91%'
+                        }}>
+                            <AddIcon/>
+                        </Fab>
+                    </Box>
+                </Box>
             </Box>
         </Box>
     );

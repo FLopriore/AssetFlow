@@ -5,7 +5,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {postApi} from "../utils/api.utils.js";
-import { useState } from 'react';
 import Button from '@mui/material/Button';
 
 export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList,}) {
@@ -19,14 +18,19 @@ export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList
         };
         postApi('asset/', body)
             .then((data) => {
-                // TODO: add element to list
-                assetList.push(data)
-                setAssetList(assetList);
+                const assetElement = {
+                    idx: assetList,
+                    label: (data.tracker).toUpperCase(),
+                    id: data._id
+                };
+                const updatedList = [...assetList, assetElement];
+                setAssetList(updatedList);
                 handleClose();
             }).then((response) => response.json()).then((data) => {
-                if(!data.success) {
-                    alert("Impossibile aggiungere asset")
-                }})
+            if (!data.success) {
+                alert("Impossibile aggiungere asset")
+            }
+        })
             .catch((e) => {
                 console.log(e)
                 handleClose();

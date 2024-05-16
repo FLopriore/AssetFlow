@@ -65,4 +65,25 @@ async function putApi(endpoint, body) {
     }
 }
 
-export {getApi, postApi, putApi};
+async function deleteApi(endpoint, id) {
+    try {
+        const response = await fetch(`${BASE_URL}api/${endpoint}/${id}`, {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+        });
+        const content = await response.json();
+
+        if (!response.ok) {
+            throw new Error(`Errore ${response.status}: ${content.message}`);
+        }
+
+        return content;
+    } catch (e) {
+        throw new Error(`${e.message}`);
+    }
+}
+
+export {getApi, postApi, putApi, deleteApi};

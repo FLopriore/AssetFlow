@@ -26,8 +26,7 @@ function getCategory(budgetEntriesList, category, isPositive) {
 
 export function IncomeAccordion({isMonthly}) {
     const { incomeMonthlyList, incomeYearList } = useContext(IncomeListContext);
-    let list;
-    isMonthly? list = incomeMonthlyList : list = incomeYearList
+    const list = (isMonthly) ? incomeMonthlyList : incomeYearList;
 
     const stipendioArr = getCategory(list, 'stipendio', true);
     const assetArr = getCategory(list, 'sell_asset', true);
@@ -106,8 +105,7 @@ export function IncomeAccordion({isMonthly}) {
 
 export function ExpenseAccordion({isMonthly}) {
     const { expenseMonthlyList, expenseYearList } = useContext(ExpenseListContext);
-    let list;
-    isMonthly? list = expenseMonthlyList : list = expenseYearList
+    const list = (isMonthly) ? expenseMonthlyList : expenseYearList;
 
     const shoppingArr = getCategory(list, 'shopping', false);
     const bolletteArr = getCategory(list, 'bollette', false);
