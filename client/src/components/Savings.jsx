@@ -108,7 +108,7 @@ export default function Savings() {
                     {
                         isPositive && <Box sx={{
                             textAlign: 'center',
-                            bgcolor: '#c4ffc4',
+                            bgcolor: '#ddffd0',
                             mt: 4,
                             borderRadius: '10px',
                             p: 3
