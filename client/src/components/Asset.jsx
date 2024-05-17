@@ -3,7 +3,6 @@ import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
 import {Box, Fab, List, ListItem, ListItemButton, Typography} from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
-import DeleteIcon from '@mui/icons-material/Delete';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
 import {getApi, postApi} from '../utils/api.utils';
@@ -11,6 +10,8 @@ import protobuf from 'protobufjs'
 import {Buffer} from "buffer/"
 import AddAssetDialog from './AddAssetDialog';
 import DeleteAssetDialog from './DeleteAssetDialog';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import IconButton from '@mui/material/IconButton';
 
 function getTicker(AssetList) {
     const data = []
@@ -124,12 +125,12 @@ export default function Asset() {
                 }}>
                     <Typography variant='h4'>La tua watchlist</Typography>
                 </Box>
-                <Box sx={{width: '50%', height: '100%'}}>
+                <Box sx={{width: '60%', height: '80%'}}>
                     <BasicLineChart histData={graphData}/>
                 </Box>
                 <Box sx={{
-                    width: '50%',
-                    height: '100%',
+                    width: '40%',
+                    height: '80%',
                 }}>
                     <Box sx={{
                         bgcolor: '#eaeaea',
@@ -138,7 +139,7 @@ export default function Asset() {
                         padding: '0.5rem',
                         ml: '10%',
                         mr: '10%',
-                        height: '70%',
+                        height: '100%',
                         overflowY: 'auto'
 
                     }}>
@@ -147,13 +148,17 @@ export default function Asset() {
                             {
                                 assetList.map((el) => (
                                     <ListItem key={el.idx}>
-                                        <ListItemButton onClick={() => {
-                                            setAssetDelete(el.id)
-                                            console.log(assetDelete)
-                                            handleDeleteAssetDialog()
-                                        }}>
-                                            <DeleteIcon/>
-                                        </ListItemButton>
+                                        <IconButton
+                                            aria-label="Delete"
+                                            color="inherit"
+                                            size="small"
+                                            onClick={() => {
+                                                setAssetDelete(el.id)
+                                                handleDeleteAssetDialog()
+                                            }}
+                                        >
+                                            <DeleteForeverRoundedIcon/>
+                                        </IconButton>
                                         <ListItemButton onClick={() => getGraphData(el.label)}>
                                             <ListItemText primary={el.label}></ListItemText>
                                         </ListItemButton>
@@ -166,7 +171,7 @@ export default function Asset() {
 
                         <Fab onClick={handleOpenAssetDialog} color='primary' sx={{
                             position: 'absolute',
-                            top: '71%',
+                            top: '86%',
                             left: '91%'
                         }}>
                             <AddIcon/>

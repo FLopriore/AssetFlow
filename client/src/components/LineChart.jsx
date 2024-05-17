@@ -39,8 +39,6 @@ export default function BasicLineChart({histData}) {
           data: yData,
         },
       ]}
-      width={600}
-      height={500}
     />
   );
 }
