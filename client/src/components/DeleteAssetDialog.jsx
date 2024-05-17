@@ -10,11 +10,14 @@ export default function DeleteAssetDialog({isOpen, setOpen, assetId, setAssetId,
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        deleteApi('asset', assetId)
+        deleteApi('asset', assetId[0])
             .then(() => {
-                const newAssetList = assetList.filter((el) => el.id !== assetId);
+                const newAssetList = assetList.filter((el) => el.id !== assetId[0]);
                 setAssetList(newAssetList);
                 setAssetId(null);
+                localStorage.removeItem(assetId[1])
+                localStorage.removeItem(assetId[1]+"_price")
+                localStorage.removeItem(assetId[1]+"_dir")
             })
             .catch((e) => {
                 console.log(e)

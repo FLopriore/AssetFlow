@@ -2,6 +2,8 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
 import {Box, Fab, List, ListItem, ListItemButton, Typography} from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ListItemText from '@mui/material/ListItemText';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
@@ -39,7 +41,8 @@ export default function Asset() {
     const [graphData, setGraphData] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
-    const [assetDelete, setAssetDelete] = useState("");
+    const [assetDelete, setAssetDelete] = useState([]);
+    const [isSelected,setIsSelected] = useState("")
 
     const handleDeleteAssetDialog = () => setOpenDelete(true);
     const handleOpenAssetDialog = () => setOpenAdd(true);
@@ -69,6 +72,17 @@ export default function Asset() {
             return (priceList.price).toFixed(2)
         }
     }
+    const getActualDir = (symbol) => {
+        const str = symbol + "_dir"
+        if (!priceList) {
+            return null
+        }
+        if(symbol !== priceList.id) return localStorage.getItem(str)
+        if (symbol === priceList.id) {
+            localStorage.setItem(str, (priceList.changePercent).toFixed(2))
+            return (priceList.changePercent).toFixed(2)
+        }
+    }
 
     useEffect(() => {
         getApi("asset/")
@@ -95,6 +109,7 @@ export default function Asset() {
             };
             ws.onmessage = function incoming(message) {
                 const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON();
+                console.log(ticker)
                 setPriceList(ticker)
             };
 
@@ -123,7 +138,7 @@ export default function Asset() {
                     mt: 3,
                     height: '10%'
                 }}>
-                    <Typography variant='h4'>La tua watchlist</Typography>
+                    <Typography variant='h4'>La tua Watchlist</Typography>
                 </Box>
                 <Box sx={{width: '60%', height: '80%'}}>
                     <BasicLineChart histData={graphData}/>
@@ -147,22 +162,29 @@ export default function Asset() {
                         <List>
                             {
                                 assetList.map((el) => (
-                                    <ListItem key={el.idx}>
+                                    <ListItem key={el.idx}
+                                    sx={{background: isSelected === el.label ? '#cfcccc' : '#eaeaea'}}>
                                         <IconButton
                                             aria-label="Delete"
                                             color="inherit"
                                             size="small"
                                             onClick={() => {
-                                                setAssetDelete(el.id)
+                                                setAssetDelete([el.id,el.label])
                                                 handleDeleteAssetDialog()
                                             }}
                                         >
                                             <DeleteForeverRoundedIcon/>
                                         </IconButton>
-                                        <ListItemButton onClick={() => getGraphData(el.label)}>
+                                        <ListItemButton onClick={() => {
+                                            getGraphData(el.label)
+                                            setIsSelected(el.label)
+                                            }}>
                                             <ListItemText primary={el.label}></ListItemText>
+                                            <ListItemText primary={getActualPrice(el.label)}
+                                        sx={{color: getActualDir(el.label) > 0 ? '#009b7e' : '#CE310E'}}></ListItemText>
+                                        <ListItemText primary={getActualDir(el.label) > 0 ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/> }
+                                        sx={{color: getActualDir(el.label) > 0 ? '#009b7e' : '#CE310E'}}></ListItemText>
                                         </ListItemButton>
-                                        <ListItemText primary={getActualPrice(el.label)}></ListItemText>
                                     </ListItem>
 
                                 ))
