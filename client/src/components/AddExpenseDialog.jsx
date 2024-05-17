@@ -34,13 +34,12 @@ export default function AddExpenseDialog({isOpen, setOpen}) {
         };
         postApi('expense/', body)
             .then((data) => {
-                expenseList.push(data);
+                const newExpenseList = [...expenseList, data];
                 expenseMonthlyList.push(data);
                 expenseYearList.push(data);
-                setExpenseList(expenseList);
+                setExpenseList(newExpenseList);
                 setExpenseMonthlyList(expenseMonthlyList);
                 setExpenseYearList(expenseYearList);
-                //setExpense(expenseTotal+data.negativeAmount)
                 handleClose();
             })
             .catch((e) => {

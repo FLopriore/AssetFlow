@@ -32,14 +32,12 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
             category: data.get('category'),
             description: data.get('description')
         };
-        console.log(body)
         postApi('income/', body)
             .then((data) => {
-                console.log(data)
-                incomeList.push(data);
+                const newIncomeList = [...incomeList, data];
                 incomeMonthlyList.push(data);
                 incomeYearList.push(data);
-                setIncomeList(incomeList);
+                setIncomeList(newIncomeList);
                 setIncomeMonthlyList(incomeMonthlyList);
                 setIncomeYearList(incomeYearList);
                 handleClose();
