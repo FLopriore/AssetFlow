@@ -29,3 +29,5 @@ Cose da sistemare:
 [X] fixare il tasto di logout
 
 [] migliorare prestazioni selezione liste in fase di delete
+
+[] aggiungere ref degli utenti al DB, senza cambiare JSON di output
