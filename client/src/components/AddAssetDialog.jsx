@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {postApi} from "../utils/api.utils.js";
 import Button from '@mui/material/Button';
 
-export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList, ws}) {
+export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();

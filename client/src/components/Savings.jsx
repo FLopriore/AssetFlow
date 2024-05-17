@@ -12,6 +12,7 @@ import AddObjectiveDialog from "./AddObjectiveDialog.jsx";
 import Loading from "./Loading.jsx";
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
+import SaveMoney from "./SaveMoney.jsx";
 
 export default function Savings() {
     const [objectivesList, setObjectivesList] = useState([]);
@@ -33,11 +34,11 @@ export default function Savings() {
                 console.log(e);
                 setLoading(false);
             });
-        
+
         //retrieve savings
         getApi('budget/total').then((data) => {
             setSavings(data.total);
-            if(data.total>0) {
+            if (data.total > 0) {
                 setIsPositive(true)
             } else (setIsPositive(false));
             setLoading(false);
@@ -76,47 +77,49 @@ export default function Savings() {
                 padding: '1rem',
                 overflowY: 'auto',
             }}>
-                <Box sx={{width: '50%', height: '100%', m: 3, display: 'flex', flexDirection:'column'}}>
-                    <Typography variant='h4' sx={{mb: 3, width:'100%'}}>I tuoi risparmi</Typography>
+                <Box sx={{width: '50%', height: '100%', m: 3, display: 'flex', flexDirection: 'column'}}>
+                    <Typography variant='h4' sx={{mb: 3, width: '100%'}}>I tuoi risparmi</Typography>
                     <Typography sx={{textAlign: 'center'}} variant='h5'>Nell'ultimo mese hai risparmiato</Typography>
                     <Box sx={{
                         display: 'flex',
-                        alignSelf:'center',
+                        alignSelf: 'center',
                         flexDirection: 'row',
                         alignItems: 'center',
                         gap: '3vw',
                         mt: 3
                     }}>
-                        {isPositive ? <TrendingUpRoundedIcon fontSize='large' color='primary'/> 
-                        : <TrendingDownRoundedIcon fontSize='large' color='secondary'/>}   
+                        {isPositive ? <TrendingUpRoundedIcon fontSize='large' color='primary'/>
+                            : <TrendingDownRoundedIcon fontSize='large' color='secondary'/>}
                         <Box sx={{
                             maxWidth: '50%',
                             minWidth: '15vw',
                             height: '10vh',
                             borderRadius: '10px',
                             bgcolor: '#fff0bd',
-                            alignSelf: 'center', 
+                            alignSelf: 'center',
                             textAlign: 'center',
                             p: 2
 
 
-                            
-                        }}>  
+                        }}>
                             <h2>{savings} €</h2>
                         </Box>
                     </Box>
                     {
-                        isPositive && <Box sx={{
+                        <Box sx={{
                             textAlign: 'center',
-                            bgcolor: '#ddffd0',
+                            bgcolor: (isPositive) ? '#ddffd0' : '#ffedf0',
                             mt: 4,
                             borderRadius: '10px',
                             p: 3
-                        }}> 
-                            <Typography variant='body1'>Continua così! 
-                            A fine mese i tuoi risparmi verranno assegnati agli obiettivi secondo le tue preferenze.</Typography>
+                        }}>
+                            <Typography variant='body1'>
+                                {(isPositive) ? "Continua così!\nPuoi assegnare i risparmi ai tuoi obiettivi secondo le tue preferenze." : "Sei in rosso!\nNon puoi risparmiare nulla."}
+                            </Typography>
                         </Box>
                     }
+                    <SaveMoney objectivesList={objectivesList} setObjectivesList={setObjectivesList} enable={isPositive}
+                               setEnable={setIsPositive} total={savings} setTotal={setSavings}/>
                 </Box>
                 <Divider orientation="vertical" flexItem/>
                 <Box sx={{width: '50%', height: '100%', m: 3, overflowY: 'auto'}}>

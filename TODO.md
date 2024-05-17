@@ -28,6 +28,10 @@ Cose da sistemare:
 
 [X] fixare il tasto di logout
 
-[] migliorare prestazioni selezione liste in fase di delete
+[X] migliorare prestazioni selezione liste in fase di delete
 
-[] aggiungere ref degli utenti al DB, senza cambiare JSON di output
+[X] aggiungere ref degli utenti al DB, senza cambiare JSON di output
+
+[] rimuovere dal DB investedCapital
+
+[] sistemare logica risparmio

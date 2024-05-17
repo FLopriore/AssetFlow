@@ -6,7 +6,8 @@ const {
     addObjective,
     deleteObjective,
     getAllObjectives,
-    modifyObjectivePercentages
+    modifyObjectivePercentages,
+    saveMoney
 } = require("../controllers/objective.controller.js")
 
 router.use(verifyToken);
@@ -17,6 +18,7 @@ router.get("/:id", getObjectiveById);
 router.post("/", addObjective);
 
 router.put("/percent", modifyObjectivePercentages);
+router.put("/save", saveMoney)
 
 router.delete("/:id", deleteObjective);
 
