@@ -158,7 +158,7 @@ export default function Asset() {
                         overflowY: 'auto'
 
                     }}>
-                        <Typography variant='h5' sx={{mt: 2}}>I tuoi Ticker</Typography>
+                        <Typography variant='h5' sx={{mt: 2}}>I tuoi Asset</Typography>
                         <List>
                             {
                                 assetList.map((el) => (

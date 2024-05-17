@@ -38,9 +38,9 @@ export default function DeleteAssetDialog({isOpen, setOpen, assetId, setAssetId,
                 onSubmit: handleSubmit,
             }}
         >
-            <DialogTitle>Aggiungi asset</DialogTitle>
+            <DialogTitle>Elimina asset</DialogTitle>
             <DialogContent>
-                Sei Sicuro di voler eliminare l'Asset?
+                Sei sicuro di voler eliminare l'Asset?
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Annulla</Button>
