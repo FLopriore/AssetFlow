@@ -7,7 +7,7 @@ import {Box} from '@mui/material';
 import { BudgetTable } from './Table';
 import {calculateTotalCategory} from "../utils/budgetEntries.utils.js";
 import { useContext } from 'react';
-import { IncomeListContext, ExpenseListContext } from './ListContext.jsx';
+import { IncomeListContext, ExpenseListContext } from '../contexts/ListContext.jsx';
 
 //TODO: spostare questa funzione in budget utils
 function getCategory(budgetEntriesList, category, isPositive) {

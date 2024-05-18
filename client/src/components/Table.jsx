@@ -15,7 +15,7 @@ import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutline
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import DeleteDialog from './DeleteDialog';
 import { useContext } from 'react';
-import { ExpenseListContext, IncomeListContext } from './ListContext';
+import { ExpenseListContext, IncomeListContext } from '../contexts/ListContext.jsx';
 
 export function BudgetTable({budgetEntriesList, isPositive}) {
     const rows = budgetEntriesList;

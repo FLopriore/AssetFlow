@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {putApi} from "../utils/api.utils.js";
 import {Button} from '@mui/material';
-import {ExpenseListContext, IncomeListContext} from './ListContext';
+import {ExpenseListContext, IncomeListContext} from '../contexts/ListContext.jsx';
 
 //confronto tra due array che elimina gli elemanti del primo se matchano gli id del secondo
 function deleteById(array, idsToRemove) {
@@ -83,7 +83,7 @@ export default function DeleteDialog({isOpen, setOpen, isPositive, selected}) {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Anulla</Button>
+                <Button onClick={handleClose}>Annulla</Button>
                 <Button type='submit' autoFocus>
                     Elimina
                 </Button>

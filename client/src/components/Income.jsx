@@ -11,7 +11,7 @@ import {IncomeAccordion} from './Accordion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddIncomeDialog from "./AddIncomeDialog.jsx";
 import Loading from "./Loading.jsx";
-import {IncomeListContext} from './ListContext.jsx';
+import {IncomeListContext} from '../contexts/ListContext.jsx';
 
 export default function Income() {
 

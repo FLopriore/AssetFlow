@@ -10,7 +10,7 @@ import {postApi} from "../utils/api.utils.js";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {IncomeListContext} from './ListContext.jsx';
+import {IncomeListContext} from '../contexts/ListContext.jsx';
 
 export default function AddIncomeDialog({isOpen, setOpen}) {
     const [error, setError] = useState(false);

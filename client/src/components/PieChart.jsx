@@ -2,7 +2,7 @@ import * as React from 'react';
 import {PieChart} from '@mui/x-charts/PieChart';
 import {calculateTotalCategory} from "../utils/budgetEntries.utils.js";
 import { useContext } from 'react';
-import { IncomeListContext, ExpenseListContext } from './ListContext.jsx';
+import { IncomeListContext, ExpenseListContext } from '../contexts/ListContext.jsx';
 
 export function IncomePie({isMonthly}) {
     const { incomeMonthlyList, incomeYearList } = useContext(IncomeListContext)

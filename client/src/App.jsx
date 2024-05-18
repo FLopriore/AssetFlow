@@ -9,7 +9,7 @@ import {useEffect, useState} from "react";
 import {HomeTable} from './components/Table.jsx'
 import {getLatestEntriesData} from './utils/budgetEntries.utils.js'
 import Loading from "./components/Loading.jsx";
-import { IncomeListContext, ExpenseListContext } from './components/ListContext.jsx'
+import { IncomeListContext, ExpenseListContext } from './contexts/ListContext.jsx'
 
 
 function App() {
