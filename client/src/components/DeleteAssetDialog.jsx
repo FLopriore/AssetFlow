@@ -10,14 +10,14 @@ export default function DeleteAssetDialog({isOpen, setOpen, assetId, setAssetId,
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        deleteApi('asset', assetId[0])
+        deleteApi('asset', assetId.id)
             .then(() => {
-                const newAssetList = assetList.filter((el) => el.id !== assetId[0]);
+                const newAssetList = assetList.filter((el) => el.id !== assetId.id);
                 setAssetList(newAssetList);
-                setAssetId(null);
-                localStorage.removeItem(assetId[1])
-                localStorage.removeItem(assetId[1]+"_price")
-                localStorage.removeItem(assetId[1]+"_dir")
+                setAssetId({});
+                localStorage.removeItem(assetId.label)
+                localStorage.removeItem(assetId.label+"_price")
+                localStorage.removeItem(assetId.label+"_dir")
             })
             .catch((e) => {
                 console.log(e)
@@ -44,7 +44,7 @@ export default function DeleteAssetDialog({isOpen, setOpen, assetId, setAssetId,
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Annulla</Button>
-                <Button type="submit">Si</Button>
+                <Button type="submit">Elimina</Button>
             </DialogActions>
         </Dialog>
     );

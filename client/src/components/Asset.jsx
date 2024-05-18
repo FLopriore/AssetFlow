@@ -41,7 +41,7 @@ export default function Asset() {
     const [graphData, setGraphData] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
-    const [assetDelete, setAssetDelete] = useState([]);
+    const [assetDelete, setAssetDelete] = useState({});
     const [isSelected, setIsSelected] = useState("")
 
     const handleDeleteAssetDialog = () => setOpenDelete(true);
@@ -177,7 +177,7 @@ export default function Asset() {
                                             color="inherit"
                                             size="small"
                                             onClick={() => {
-                                                setAssetDelete([el.id, el.label])
+                                                setAssetDelete({id: el.id, label: el.label})
                                                 handleDeleteAssetDialog()
                                             }}
                                         >
