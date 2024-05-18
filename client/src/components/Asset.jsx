@@ -2,8 +2,8 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
 import {Box, Fab, List, ListItem, ListItemButton, Typography} from '@mui/material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import ListItemText from '@mui/material/ListItemText';
 import BasicLineChart from './LineChart';
 import AddIcon from '@mui/icons-material/Add';
@@ -42,7 +42,7 @@ export default function Asset() {
     const [openAdd, setOpenAdd] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
     const [assetDelete, setAssetDelete] = useState([]);
-    const [isSelected,setIsSelected] = useState("")
+    const [isSelected, setIsSelected] = useState("")
 
     const handleDeleteAssetDialog = () => setOpenDelete(true);
     const handleOpenAssetDialog = () => setOpenAdd(true);
@@ -77,7 +77,7 @@ export default function Asset() {
         if (!priceList) {
             return null
         }
-        if(symbol !== priceList.id) return localStorage.getItem(str)
+        if (symbol !== priceList.id) return localStorage.getItem(str)
         if (symbol === priceList.id) {
             localStorage.setItem(str, (priceList.changePercent).toFixed(2))
             return (priceList.changePercent).toFixed(2)
@@ -87,7 +87,12 @@ export default function Asset() {
     useEffect(() => {
         getApi("asset/")
             .then((data) => {
-                setAssetList(getTicker(data));
+                const newAssetList = getTicker(data);
+                setAssetList(newAssetList);
+                if (newAssetList.length > 0) {
+                    setIsSelected(newAssetList[0].label);
+                    return getGraphData(newAssetList[0].label);
+                }
             })
             .catch((e) => console.log(e));
     }, []);
@@ -163,13 +168,16 @@ export default function Asset() {
                             {
                                 assetList.map((el) => (
                                     <ListItem key={el.idx}
-                                    sx={{background: isSelected === el.label ? '#cfcccc' : '#eaeaea'}}>
+                                              sx={{
+                                                  background: (isSelected === el.label) ? '#cfcccc' : '#eaeaea',
+                                                  borderRadius: 4
+                                              }}>
                                         <IconButton
                                             aria-label="Delete"
                                             color="inherit"
                                             size="small"
                                             onClick={() => {
-                                                setAssetDelete([el.id,el.label])
+                                                setAssetDelete([el.id, el.label])
                                                 handleDeleteAssetDialog()
                                             }}
                                         >
@@ -178,12 +186,14 @@ export default function Asset() {
                                         <ListItemButton onClick={() => {
                                             getGraphData(el.label)
                                             setIsSelected(el.label)
-                                            }}>
+                                        }}>
                                             <ListItemText primary={el.label}></ListItemText>
                                             <ListItemText primary={getActualPrice(el.label)}
-                                        sx={{color: getActualDir(el.label) > 0 ? '#009b7e' : '#CE310E'}}></ListItemText>
-                                        <ListItemText primary={getActualDir(el.label) > 0 ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/> }
-                                        sx={{color: getActualDir(el.label) > 0 ? '#009b7e' : '#CE310E'}}></ListItemText>
+                                                          sx={{color: getActualDir(el.label) > 0 ? '#009b7e' : '#CE310E'}}></ListItemText>
+                                            <ListItemText
+                                                primary={getActualDir(el.label) > 0 ? <KeyboardDoubleArrowUpIcon/> :
+                                                    <KeyboardDoubleArrowDownIcon/>}
+                                                sx={{color: getActualDir(el.label) > 0 ? '#009b7e' : '#CE310E'}}></ListItemText>
                                         </ListItemButton>
                                     </ListItem>
 
