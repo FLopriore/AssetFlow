@@ -131,8 +131,8 @@ export default function AddObjectiveDialog({isOpen, setOpen, objectivesList, set
                 </Alert>
             </Collapse>
             <DialogActions>
-                <Button color='secondary' onClick={handleClose}>Annulla</Button>
-                <Button color='secondary' type="submit" disabled={errorAmount}>Aggiungi</Button>
+                <Button color='secondary' onClick={handleClose} sx={{color: '#ff9100'}}>Annulla</Button>
+                <Button color='secondary' type="submit" disabled={errorAmount} sx={{color: '#ff9100'}}>Aggiungi</Button>
             </DialogActions>
         </Dialog>
     );

@@ -179,8 +179,7 @@ export default function Asset() {
                                             onClick={() => {
                                                 setAssetDelete({id: el.id, label: el.label})
                                                 handleDeleteAssetDialog()
-                                            }}
-                                        >
+                                            }}>
                                             <DeleteForeverRoundedIcon/>
                                         </IconButton>
                                         <ListItemButton onClick={() => {

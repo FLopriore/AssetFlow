@@ -138,8 +138,8 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
                 </Collapse>
             </DialogContent>
             <DialogActions>
-                <Button color='secondary' onClick={handleClose}>Annulla</Button>
-                <Button color='secondary' type="submit" disabled={errorPercentage}>Salva</Button>
+                <Button color='secondary' onClick={handleClose} sx={{color: '#ff9100'}}>Annulla</Button>
+                <Button color='secondary' type="submit" disabled={errorPercentage} sx={{color: '#ff9100'}}>Salva</Button>
             </DialogActions>
         </Dialog>
     );

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
-import {Box, Fab, Typography} from '@mui/material';
+import {Box, Fab, List, ListItem, Typography} from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import Divider from '@mui/material/Divider';
 import PercentRoundedIcon from '@mui/icons-material/PercentRounded';
@@ -13,13 +13,18 @@ import Loading from "./Loading.jsx";
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
 import SaveMoney from "./SaveMoney.jsx";
+import DeleteObjectivesDialog from "./DeleteObjectivesDialog.jsx";
+import IconButton from '@mui/material/IconButton';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 export default function Savings() {
     const [objectivesList, setObjectivesList] = useState([]);
     const [openAlloc, setOpenAlloc] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
+    const [openDel, setOpenDel] = useState(false);
     const [savings, setSavings] = useState(0)
     const [isPositive, setIsPositive] = useState(true)
+    const [delObjective, setDelObjective] = useState({});
 
     const [loading, setLoading] = useState(true);
 
@@ -55,6 +60,7 @@ export default function Savings() {
 
     const handleOpenAllocDialog = () => setOpenAlloc(true);
     const handleOpenAddDialog = () => setOpenAdd(true);
+    const handleOpenDelDialog = () => setOpenDel(true);
 
     const calculatePercentage = (a, b) => Math.round(a / b * 100);
 
@@ -66,6 +72,9 @@ export default function Savings() {
                               setObjectivesList={setObjectivesList}/>
             <AddObjectiveDialog isOpen={openAdd} setOpen={setOpenAdd} objectivesList={objectivesList}
                                 setObjectivesList={setObjectivesList}/>
+            <DeleteObjectivesDialog isOpen={openDel} setOpen={setOpenDel} objectivesList={objectivesList}
+                                    setObjectivesList={setObjectivesList} delObjective={delObjective}
+                                    setDeleteObjective={setDelObjective}/>
             <Sidebar/>
             <Box className='main-content' sx={{
                 display: 'flex',
@@ -124,15 +133,29 @@ export default function Savings() {
                 <Divider orientation="vertical" flexItem/>
                 <Box sx={{width: '50%', height: '100%', m: 3, overflowY: 'auto'}}>
                     <Typography variant='h4' sx={{mb: 3}}>I tuoi obiettivi</Typography>
-                    {objectivesList && objectivesList.map((objective, index) => (
-                        <Box key={index}>
-                            <Typography variant='h6'>{objective.name}</Typography>
-                            <SavingsProgress
-                                value={calculatePercentage(objective.savedMoney, objective.objectiveMoney)}/>
-                            <Typography
-                                variant='body1'>€{objective.savedMoney} / {objective.objectiveMoney}</Typography>
-                        </Box>
-                    ))}
+                    <List>
+                        {objectivesList && objectivesList.map((objective, index) => (
+                            <ListItem key={index}>
+                                <Box sx={{width: '100%'}}>
+                                    <Typography variant='h6'>{objective.name}</Typography>
+                                    <SavingsProgress
+                                        value={calculatePercentage(objective.savedMoney, objective.objectiveMoney)}/>
+                                    <Typography
+                                        variant='body1'>€{objective.savedMoney} / {objective.objectiveMoney}</Typography>
+                                </Box>
+                                <IconButton
+                                    aria-label="Delete"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setDelObjective(objective);
+                                        handleOpenDelDialog();
+                                    }}>
+                                    <DeleteForeverRoundedIcon/>
+                                </IconButton>
+                            </ListItem>
+                        ))}
+                    </List>
                     <Fab onClick={handleOpenAllocDialog} color='savings' sx={{
                         position: 'absolute',
                         top: '77vh',
