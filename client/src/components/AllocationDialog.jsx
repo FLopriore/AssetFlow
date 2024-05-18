@@ -87,6 +87,7 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
                                         color='secondary'
                                         error={errorPercentage}
                                         sx={{width: "40%"}}
+                                        defaultValue={el.percentage}
                                         onChange={handleChangeAmount}
                                     />
                                 </ListItem>
