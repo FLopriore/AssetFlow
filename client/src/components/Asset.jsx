@@ -37,7 +37,7 @@ async function getHistData(symbol) {
 export default function Asset() {
 
     const [assetList, setAssetList] = useState([]);
-    const [priceList, setPriceList] = useState(null);
+    const [price, setPrice] = useState(null);
     const [graphData, setGraphData] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
@@ -62,25 +62,25 @@ export default function Asset() {
 
     const getActualPrice = (symbol) => {
         const str = symbol + "_price"
-        if (!priceList || symbol !== priceList.id) {
+        if (!price || symbol !== price.id) {
             if (localStorage.getItem(str)) return localStorage.getItem(str)
             else return 0
         }
-        if (symbol === priceList.id) {
+        if (symbol === price.id) {
 
-            localStorage.setItem(str, (priceList.price).toFixed(2))
-            return (priceList.price).toFixed(2)
+            localStorage.setItem(str, (price.price).toFixed(2))
+            return (price.price).toFixed(2)
         }
     }
     const getActualDir = (symbol) => {
         const str = symbol + "_dir"
-        if (!priceList) {
+        if (!price) {
             return null
         }
-        if (symbol !== priceList.id) return localStorage.getItem(str)
-        if (symbol === priceList.id) {
-            localStorage.setItem(str, (priceList.changePercent).toFixed(2))
-            return (priceList.changePercent).toFixed(2)
+        if (symbol !== price.id) return localStorage.getItem(str)
+        if (symbol === price.id) {
+            localStorage.setItem(str, (price.changePercent).toFixed(2))
+            return (price.changePercent).toFixed(2)
         }
     }
 
@@ -115,7 +115,7 @@ export default function Asset() {
             ws.onmessage = function incoming(message) {
                 const ticker = Ticker.decode(Buffer.from(message.data, "base64")).toJSON();
                 console.log(ticker)
-                setPriceList(ticker)
+                setPrice(ticker)
             };
 
             return () => {

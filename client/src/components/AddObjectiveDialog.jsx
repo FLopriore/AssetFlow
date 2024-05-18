@@ -20,8 +20,8 @@ export default function AddObjectiveDialog({isOpen, setOpen, objectivesList, set
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const objectiveMoney = data.get('objectiveMoney');
-        const savedMoney = data.get('savedMoney');
+        const objectiveMoney = Number(data.get('objectiveMoney'));
+        const savedMoney = Number(data.get('savedMoney'));
         setSavedLessThanObjective(savedMoney <= objectiveMoney);
         if (savedMoney <= objectiveMoney) {
             const body = {

@@ -12,9 +12,19 @@ export default function SaveMoney({enable, setEnable, objectivesList, setObjecti
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const savedTotalAmount = Number(data.get('save-money-input'));  //denaro che si vuole risparmiare in totale
 
-        const savedTotalAmount = data.get('save-money-input');
-        let remaining = 0;
+        // Contatore del denaro effettivamente risparmiato.
+        // Potrebbe accadere, infatti, che un obiettivo è stato già raggiunto oppure la percentuale di savedTotalAmount
+        // allocabile in teoria ad un obiettivo è superiore al denaro necessario per raggiungere l'obiettivo.
+        //
+        // Esempio:
+        // Obiettivo ABC: objectiveMoney = 2000, savedMoney = 1800, percentage = 25%
+        // savedTotalAmount = 1000
+        // Per l'obiettivo ABC, la percentuale che dovremmo allocare sarebbe 0.25*1000 = €250, ma per raggiungere
+        // l'obiettivo bastano €200. Pertanto, il valore effettivamente risparmiato per questo obiettivo è proprio €200
+        // e savedCount viene incrementato solo di €200.
+        let savedCount = 0;
 
         objectivesList.forEach((el) => {
             const percentSaved = el.percentage * savedTotalAmount / 100;  // denaro da allocare per questo obiettivo
@@ -23,24 +33,21 @@ export default function SaveMoney({enable, setEnable, objectivesList, setObjecti
                 // Se la percentuale sul totale (percentSaved) è al più pari al denaro rimanente, incrementa el.savedMoney.
                 if (percentSaved <= moneyToSave) {
                     el.savedMoney += percentSaved;
+                    savedCount += percentSaved;
                 } else {
-                    // Se percentSaved è maggiore del denaro rimanente, completa l'obiettivo.
-                    // Il denaro rimanente viene inserito nel contatore "remaining", che alla fine dovrà essere
-                    // sottratto a savedTotalAmount per decrementare il valore di total.
-                    remaining += percentSaved - moneyToSave;
+                    // Se percentSaved è maggiore del denaro rimanente, completa l'obiettivo e incrementa savedCount
+                    // del denaro effettivamente risparmiato.
                     el.savedMoney = moneyToSave;
+                    savedCount += moneyToSave;
                 }
-            } else {
-                // Se l'obiettivo è già stato raggiunto, non si allocano questi soldi.
-                remaining += percentSaved;
             }
         });
 
         putApi('objective/save', objectivesList)
             .then(() => {
-                const newTotal = total - remaining;
+                const newTotal = total - savedCount;
                 setObjectivesList(objectivesList);
-                setTotal(remaining);
+                setTotal(newTotal);
                 if (newTotal === 0) {
                     setEnable(false);
                 }
@@ -48,7 +55,7 @@ export default function SaveMoney({enable, setEnable, objectivesList, setObjecti
                 const today = new Date();
                 const saveExpense = {
                     category: "others",
-                    negativeAmount: (-1) * newTotal,
+                    negativeAmount: (-1) * savedCount,
                     description: `Risparmi ${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
                 }
                 return postApi('expense', saveExpense);

@@ -12,19 +12,17 @@ Cose da sistemare:
 
 [X] separare le logiche di liste mensili e liste annuali
 
-[] sistemare la grafica di trading
+[X] sistemare la grafica di trading
 
 [X] fixare selected in Table
 
-[] finire la sezione Savings
+[X] finire la sezione Savings
 
 [X] sistemare il titolo delle entrate e uscite sopra il PieChart
 
 [X] separare i context e aggiungere ad ognuno lista totale, mensile, annuali e rispettivi setter
 
 [] vedere che hanno in capa le pie della home
-
-[] vedere se usare solo amount invece di positiveAmount e negativeAmount
 
 [X] fixare il tasto di logout
 
@@ -34,4 +32,4 @@ Cose da sistemare:
 
 [] rimuovere dal DB investedCapital
 
-[] sistemare logica risparmio
+[X] sistemare logica risparmio
