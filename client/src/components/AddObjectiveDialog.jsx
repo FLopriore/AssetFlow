@@ -66,7 +66,7 @@ export default function AddObjectiveDialog({isOpen, setOpen, objectivesList, set
                 onSubmit: handleSubmit,
             }}
         >
-            <DialogTitle>Aggiungi spesa</DialogTitle>
+            <DialogTitle>Aggiungi obiettivo di risparmio</DialogTitle>
             <DialogContent>
                 <FormControl fullWidth>
                     <TextField

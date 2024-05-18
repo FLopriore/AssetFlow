@@ -124,14 +124,14 @@ export default function Savings() {
                 <Divider orientation="vertical" flexItem/>
                 <Box sx={{width: '50%', height: '100%', m: 3, overflowY: 'auto'}}>
                     <Typography variant='h4' sx={{mb: 3}}>I tuoi obiettivi</Typography>
-                    {objectivesList && objectivesList.map((objective) => (
-                        <>
+                    {objectivesList && objectivesList.map((objective, index) => (
+                        <Box key={index}>
                             <Typography variant='h6'>{objective.name}</Typography>
                             <SavingsProgress
                                 value={calculatePercentage(objective.savedMoney, objective.objectiveMoney)}/>
                             <Typography
                                 variant='body1'>€{objective.savedMoney} / {objective.objectiveMoney}</Typography>
-                        </>
+                        </Box>
                     ))}
                     <Fab onClick={handleOpenAllocDialog} color='savings' sx={{
                         position: 'absolute',
