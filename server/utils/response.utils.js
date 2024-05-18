@@ -9,7 +9,6 @@
 // {
 //    "_id": "abcdefg1234",
 //    "tracker": "AAPL",
-//    "investedCapital": 2300,
 //    "userId": "12345678",
 //    "createdAt": "2024-05-06T15:08:38.378Z",
 //    "updatedAt": "2024-05-06T15:08:38.378Z",
@@ -19,7 +18,6 @@
 // {
 //    "_id": "abcdefg1234",
 //    "tracker": "AAPL",
-//    "investedCapital": 2300,
 // }
 
 function filterResponse(responseArray, fieldsArray) {

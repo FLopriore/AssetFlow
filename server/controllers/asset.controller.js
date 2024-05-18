@@ -10,7 +10,7 @@ const getAllAssets = async (req, res) => {
         if (!allAssets.length) {
             return res.status(404).json({message: 'Assets not found!'});
         }
-        allAssets = filterResponse(allAssets, ['_id', 'tracker', 'investedCapital','createdAt']);
+        allAssets = filterResponse(allAssets, ['_id', 'tracker','createdAt']);
         res.status(200).json(allAssets);
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -32,7 +32,6 @@ const getAssetById = async (req, res) => {
         asset = {
             _id: asset._id,
             tracker: asset.tracker,
-            investedCapital: asset.investedCapital,
         };
         res.status(200).json(asset);
     } catch (e) {
@@ -45,14 +44,12 @@ const addAsset = async (req, res) => {
     try {
         const assetContent = {
             tracker: req.body.tracker,
-            investedCapital: req.body.investedCapital,
             userId: req.userId,
         };
         let newAssetAdded = await Asset.create(assetContent);
         newAssetAdded = {
             _id: newAssetAdded._id,
             tracker: newAssetAdded.tracker,
-            investedCapital: newAssetAdded.investedCapital
         };
         res.status(200).json(newAssetAdded);
     } catch (e) {

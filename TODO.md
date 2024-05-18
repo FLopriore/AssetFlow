@@ -30,6 +30,6 @@ Cose da sistemare:
 
 [X] aggiungere ref degli utenti al DB, senza cambiare JSON di output
 
-[] rimuovere dal DB investedCapital
+[X] rimuovere dal DB investedCapital
 
 [X] sistemare logica risparmio

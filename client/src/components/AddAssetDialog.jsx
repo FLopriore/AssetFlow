@@ -14,7 +14,6 @@ export default function AddAssetDialog({isOpen, setOpen, assetList, setAssetList
         const data = new FormData(event.currentTarget);
         const body = {
             'tracker': data.get('asset'),
-            'investedCapital': '0', //Perchè non usiamo il capitale investito
         };
         postApi('asset/', body)
             .then((data) => {

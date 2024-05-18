@@ -7,10 +7,6 @@ const assetSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        investedCapital: {
-            type: Number,
-            required: true,
-        },
         userId: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
