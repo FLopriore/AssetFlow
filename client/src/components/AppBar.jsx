@@ -27,7 +27,7 @@ export default function MenuAppBar() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Welcome to AssetFlow!
+                        Benvenuto su AssetFlow!
                     </Typography>
                     <div>
                         <IconButton

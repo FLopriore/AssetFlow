@@ -39,7 +39,7 @@ export default function DeleteObjectivesDialog({isOpen, setOpen, delObjective, s
                 Sei sicuro di voler eliminare l'obiettivo?
             </DialogContent>
             <DialogContentText sx={{mr: 4, ml: 4}}>
-                Dovrai riallocare le percentuali agli altri obiettivi.
+                Dovrai riallocare le percentuali degli obiettivi rimanenti.
             </DialogContentText>
             <DialogActions sx={{mt: 2}}>
                 <Button onClick={handleClose} sx={{color: '#ff9100'}}>Annulla</Button>

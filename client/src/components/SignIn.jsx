@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, NavLink} from 'react-router-dom';
 
 const baseURL = 'http://localhost:3000'
 
@@ -70,7 +70,7 @@ export default function SignIn({verify}) {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Login
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                     <TextField
@@ -78,7 +78,7 @@ export default function SignIn({verify}) {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Email"
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -99,13 +99,14 @@ export default function SignIn({verify}) {
                         variant="contained"
                         sx={{mt: 3, mb: 2, bgcolor: '#009b7e'}}
                     >
-                        Sign In
+                        Accedi
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <Link href="/signup" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
+                            <NavLink to='/signup' style={{color: '#009b7e'}}
+                            variant="body2">
+                                {"Non hai un account? Registrati"}
+                            </NavLink>
                         </Grid>
                     </Grid>
                 </Box>

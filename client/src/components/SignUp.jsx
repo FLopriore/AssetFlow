@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 const baseURL = 'http://localhost:3000'
 
@@ -54,7 +54,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Crea un account
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -63,7 +63,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                 />
@@ -86,13 +86,14 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: '#009b7e' }}
             >
-              Sign Up
+              Registrati
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
+              <NavLink to='/login' style={{color: '#009b7e'}}
+                variant="body2">
+                {"Hai già un account? Accedi"}
+              </NavLink>
               </Grid>
             </Grid>
           </Box>

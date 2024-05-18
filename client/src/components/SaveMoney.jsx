@@ -84,7 +84,7 @@ export default function SaveMoney({enable, setEnable, objectivesList, setObjecti
                     margin="dense"
                     id="save-money-input"
                     name="save-money-input"
-                    label="Importo da risparmiare"
+                    label="Importo da assegnare"
                     type="number"
                     inputProps={{min: 0, max: total}}
                     variant="outlined"
