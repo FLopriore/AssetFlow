@@ -19,6 +19,15 @@ export const theme = createTheme({
             main: '#FFC300'
         }
     },
+    components: {
+        MuiCssBaseline: {
+          styleOverrides: () => ({
+            '&::-webkit-scrollbar': {
+                display: 'none'
+              },
+          }),
+        },
+      },
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
