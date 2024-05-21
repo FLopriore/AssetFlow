@@ -58,8 +58,7 @@ const addAsset = async (req, res) => {
 };
 
 // Deletes an asset
-// This happens when the user decides to sell it.
-const sellAsset = async (req, res) => {
+const deleteAsset = async (req, res) => {
     try {
         const {id} = req.params;
         const soldAsset = await Asset.findOneAndDelete({
@@ -76,4 +75,4 @@ const sellAsset = async (req, res) => {
     }
 };
 
-module.exports = {getAssetById, addAsset, sellAsset, getAllAssets};
+module.exports = {getAssetById, addAsset, deleteAsset, getAllAssets};
