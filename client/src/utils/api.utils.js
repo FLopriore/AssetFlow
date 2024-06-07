@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'https://assetflow-backend.onrender.com/';
 
 async function getApi(endpoint) {
     try {
