@@ -18,12 +18,6 @@ const createUser = (req, res) => {
 const authUser = (req, res) => {
     passport.authenticate(
         "local",
-        {
-            failureRedirect: "/login-failure",
-            failureFlash: "Login non riuscito",
-            successRedirect: "/",
-            successFlash: "Login riuscito"
-        },
         (error, user) => {
             if (error) {
                 return res.status(500).json({message: error});

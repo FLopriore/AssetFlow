@@ -27,7 +27,8 @@ export default function SaveMoney({enable, setEnable, objectivesList, setObjecti
         let savedCount = 0;
 
         objectivesList.forEach((el) => {
-            const percentSaved = el.percentage * savedTotalAmount / 100;  // denaro da allocare per questo obiettivo
+            let percentSaved = el.percentage * savedTotalAmount / 100;  // denaro da allocare per questo obiettivo
+            percentSaved = Math.floor(percentSaved * 100) / 100;  // troncamento a due cifre decimali
             const moneyToSave = el.objectiveMoney - el.savedMoney;  // denaro che resta per raggiungere l'obiettivo
             if (moneyToSave > 0) {
                 // Se la percentuale sul totale (percentSaved) è al più pari al denaro rimanente, incrementa el.savedMoney.
