@@ -5,19 +5,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate, NavLink } from 'react-router-dom';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const baseURL = 'https://assetflow-backend.onrender.com'
 
 export default function SignUp() {
 
-  const navigate = useNavigate()  
+  const navigate = useNavigate() 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true)
     const data = new FormData(event.currentTarget);
     fetch(`${baseURL}/api/user/signup`, {
         method: 'post',
@@ -80,14 +85,15 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
+              loading={loading}
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: '#009b7e' }}
             >
               Registrati
-            </Button>
+            </LoadingButton>
             <Grid container justifyContent="flex-end">
               <Grid item>
               <NavLink to='/login' style={{color: '#009b7e'}}
