@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate, NavLink } from 'react-router-dom';
 
-const baseURL = 'https://assetflow-backend.onrender.com/'
+const baseURL = 'https://assetflow-backend.onrender.com'
 
 export default function SignUp() {
 
