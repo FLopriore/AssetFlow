@@ -4,9 +4,10 @@ const User = require("../models/user.model.js");
 const SECRET_KEY = process.env.SECRET_KEY || "";
 
 function verifyToken(req, res, next) {
-    let token = req.headers.token;
+    let token = req.headers.token; //Prendo il token dall'header
     if (!token) return res.status(401).json({error: true, message: "Provide Token"});
     else {
+        //Uso il modulo jsonwebtoken che verifica il token passandogli come parametro la secret_key che uso per firmare
         jsonwebtoken.verify(token, SECRET_KEY,
             (errors, payload) => {
                 if (payload) {

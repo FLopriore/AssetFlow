@@ -9,8 +9,8 @@ const assetSchema = new mongoose.Schema(
         },
         userId: {
             type: mongoose.Schema.ObjectId,
-            ref: 'User',
-            required: true,
+            ref: 'User', //Associazione 1 a molti
+            required: true, //validatore
         },
     },
     {

@@ -5,7 +5,7 @@ const {filterResponse} = require('../utils/response.utils');
 // Gets all the invested assets
 const getAllAssets = async (req, res) => {
     try {
-        let allAssets = await Asset.find({userId: req.userId});
+        let allAssets = await Asset.find({userId: req.userId});//Find effettua la query sul documento
 
         if (!allAssets.length) {
             return res.status(404).json({message: 'Assets not found!'});
@@ -33,7 +33,7 @@ const getAssetById = async (req, res) => {
             _id: asset._id,
             tracker: asset.tracker,
         };
-        res.status(200).json(asset);
+        res.status(200).json(asset); //Il controller restituisce una risposta in json
     } catch (e) {
         res.status(500).json({message: e.message});
     }

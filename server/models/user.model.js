@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     }
 );
 //Aggiunge automaticamente il field password allo schema
-userSchema.plugin(passportLocalMongoose, {usernameField: "email"}); //Specifica che il campo username è quello dello Schema
+userSchema.plugin(passportLocalMongoose, {usernameField: "email"}); //Specifica che il campo username è quello dello Schema ed è già stato creato
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

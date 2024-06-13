@@ -1,9 +1,9 @@
-require('dotenv').config({path: './server/config.env'})
+require('dotenv').config({path: './server/config.env'}) //Utilizziamo questo file per le variabili d'ambiente
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); //Inizializzo Mongoose
 
-//Routes import
+//Routes import 
 const AssetRoute = require("./routes/asset.route.js");
 const ExpenseRoute = require("./routes/expense.route.js");
 const IncomeRoute = require("./routes/income.route.js");
@@ -18,14 +18,15 @@ const User = require("./models/user.model.js");
 const expressSession = require("express-session");
 const passport = require("passport");
 
-const PORT = process.env.PORT || 3000;
+//Chiamiamo le variabili d'ambiente
+const PORT = process.env.PORT || 3000; //Non necessaria dopo il deploy ma solo a scopo di testing
 const ATLAS_URI = process.env.ATLAS_URI || "";
 const SECRET_KEY = process.env.SECRET_KEY || "";
-const app = express();
+const app = express(); //Inizializzazione Express
 
 //middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); //Middleware che serve per parsare le richieste che arrivano al server 
 app.use(express.urlencoded({extended: true})); //Affinchè possa prendere dai form i campi
 app.use(expressSession(
     {
@@ -41,7 +42,7 @@ passport.use(User.createStrategy());  //User.createStrategy() è una funzione di
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//routes
+//Utilizzo middleware per un determinato percorso
 app.use("/api/asset", AssetRoute);
 app.use("/api/expense", ExpenseRoute);
 app.use("/api/income", IncomeRoute);
