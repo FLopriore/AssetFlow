@@ -20,7 +20,6 @@ const passport = require("passport");
 //Chiamiamo le variabili d'ambiente
 const PORT = process.env.PORT || 3000; //Non necessaria dopo il deploy ma solo a scopo di testing
 const ATLAS_URI = process.env.ATLAS_URI || "";
-const SECRET_KEY = process.env.SECRET_KEY || "";
 const app = express(); //Inizializzazione Express
 
 //middleware
