@@ -15,7 +15,6 @@ const PriceRoute = require("./routes/price.route.js");
 
 //Session Imports
 const User = require("./models/user.model.js");
-const expressSession = require("express-session");
 const passport = require("passport");
 
 //Chiamiamo le variabili d'ambiente
