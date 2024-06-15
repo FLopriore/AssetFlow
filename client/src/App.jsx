@@ -34,6 +34,7 @@ function App() {
         // retrieve list of income sources
         const incomePromise = getApi('income/');
 
+        //Riunisce sotto una sola promise
         Promise.all([budgetIncomePromise, budgetExpensesPromise, expensePromise, incomePromise])
             .then((responses) => {
                 setIncome(responses[0].totalIncome);

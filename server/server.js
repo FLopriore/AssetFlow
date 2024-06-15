@@ -27,20 +27,12 @@ const app = express(); //Inizializzazione Express
 //middleware
 app.use(cors());
 app.use(express.json()); //Middleware che serve per parsare le richieste che arrivano al server 
-app.use(express.urlencoded({extended: true})); //Affinchè possa prendere dai form i campi
-app.use(expressSession(
-    {
-        secret: SECRET_KEY,
-        resave: false,
-        saveUninitialized: true,
-    }));  //secret passcode, è usata per segnare il session cookie.
+app.use(express.urlencoded({extended: true})); //Affinchè possa prendere dai form i campi //secret passcode
 app.use(passport.initialize());
-app.use(passport.session());
 
 //passport
 passport.use(User.createStrategy());  //User.createStrategy() è una funzione di passport-local-mongoose che setta automaticamente una strategia
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
 
 //Utilizzo middleware per un determinato percorso
 app.use("/api/asset", AssetRoute);
