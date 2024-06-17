@@ -5,7 +5,7 @@ const {filterResponse} = require("../utils/response.utils");
 
 // Returns a list with all incomes and expenses
 const getBudgetEntries = (req, res) => {
-    const incomesPromise = Income.find({userId: req.userId}).exec();  // exec() necessario
+    const incomesPromise = Income.find({userId: req.userId}).exec();  // exec() necessario per avere le promises dalle query
     const expensePromise = Expense.find({userId: req.userId}).exec();
 
     Promise.all([incomesPromise, expensePromise])
