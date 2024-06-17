@@ -6,6 +6,10 @@ const incomeSchema = new mongoose.Schema(
         category: {
             type: String,
             required: true,
+            enum: {
+                values: ['stipendio', 'sell_asset', 'regali', 'dividendi', 'others'],
+                message: 'Category not supported!'
+            }
         },
         positiveAmount: {
             type: Number,

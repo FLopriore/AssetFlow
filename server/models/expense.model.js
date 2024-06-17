@@ -6,6 +6,10 @@ const expenseSchema = new mongoose.Schema(
         category: {
             type: String,
             required: true,
+            enum: {
+                values: ['shopping', 'bollette', 'affitto', 'buy_asset', 'others'],
+                message: 'Category not supported!'
+            }
         },
         negativeAmount: {
             type: Number,
