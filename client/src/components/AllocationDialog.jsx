@@ -35,22 +35,21 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
     };
 
     const handleChangeAmount = (event) => {
-        const changedList = objectivesList;
+        const changedList = [...objectivesList]; 
         const amount = event.target.value;
         const changedIndex = changedList.findIndex((el) => el._id === event.target.id);
         if (changedIndex !== -1) {
-            changedList[changedIndex].percentage = amount;  // update percentage amount for the specific ID
+            changedList[changedIndex].percentage = amount;  // update della specifica percentuale
         }
-
-        // Check if total percentage = 100
-        const totalPercentages = changedList.reduce((accum, current) => accum + current.percentage, 0);
+    
+        setObjectivesList(changedList); // aggiorno lo stato della lista in modo da effettuare il controllo sulla lista aggiornata
+    
+        // Check somma percentuali = 100
+        const totalPercentages = changedList.reduce((accum, current) => accum + Number(current.percentage), 0);
         if (totalPercentages !== 100) {
-            if (!errorPercentage) setErrorPercentage(true);  // mostra messaggio di errore della percentuale
-        } else if (errorPercentage) {
-            setObjectivesList(changedList); // aggiorna submitList
-            setErrorPercentage(false);  // nascondi il messaggio di errore
+            if (!errorPercentage) setErrorPercentage(true); 
         } else {
-            setObjectivesList(changedList); // aggiorna submitList
+            setErrorPercentage(false); 
         }
     };
 
@@ -97,7 +96,7 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
                     </List>
                 </FormControl>
                 <Collapse in={errorPercentage}>
-                    <Alert
+                  <Alert
                         severity="error"
                         action={
                             <IconButton
@@ -114,7 +113,7 @@ export default function AllocationDialog({isOpen, setOpen, objectivesList, setOb
                         sx={{mb: 2}}
                     >
                         La somma delle percentuali deve essere 100%
-                    </Alert>
+                    </Alert>      
                 </Collapse>
                 <Collapse in={errorAllocate}>
                     <Alert

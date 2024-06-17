@@ -20,7 +20,7 @@ const getAllAssets = async (req, res) => {
 // Gets an asset by its own ID
 const getAssetById = async (req, res) => {
     try {
-        const {id} = req.params;  // destructure id from params
+        const {id} = req.params;  
         let asset = await Asset.findOne({
             _id: new mongoose.mongo.ObjectId(id),
             userId: req.userId,

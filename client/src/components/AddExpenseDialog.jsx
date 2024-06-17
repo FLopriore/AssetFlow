@@ -86,6 +86,7 @@ export default function AddExpenseDialog({isOpen, setOpen}) {
                         label="Importo"
                         type="number"
                         fullWidth
+                        required
                         variant="outlined"
                         color='secondary'
                         error={error}
@@ -113,6 +114,7 @@ export default function AddExpenseDialog({isOpen, setOpen}) {
                         label="Descrizione"
                         color='secondary'
                         fullWidth
+                        required
                         variant="outlined"
                     />
                 </FormControl>

@@ -85,6 +85,7 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
                         label="Importo"
                         type="number"
                         fullWidth
+                        required
                         variant="outlined"
                         error={error}
                         helperText={(error) ? "L'importo deve essere positivo." : ""}
@@ -109,6 +110,7 @@ export default function AddIncomeDialog({isOpen, setOpen}) {
                         name="description"
                         label="Descrizione"
                         fullWidth
+                        required
                         variant="outlined"
                     />
                 </FormControl>

@@ -5,17 +5,17 @@ const {filterResponse} = require("../utils/response.utils");
 
 // Returns a list with all incomes and expenses
 const getBudgetEntries = (req, res) => {
-    const incomesPromise = Income.find({userId: req.userId}).exec();  // exec() is necessary to get promises from queries
+    const incomesPromise = Income.find({userId: req.userId}).exec();  // exec() necessario
     const expensePromise = Expense.find({userId: req.userId}).exec();
 
     Promise.all([incomesPromise, expensePromise])
         .then((responses) => {
-            // Check if both income and expense responses are empty
+            
             if (!responses[0].length && !responses[1].length) {
                 return res.status(404).json({message: "No budget entries found!"});
             }
 
-            // Remove useless fields from response arrays
+            // Filtraggio 
             if (responses[0].length !== 0) {
                 responses[0] = filterResponse(responses[0], ['_id', 'category', 'positiveAmount', 'description','createdAt'])
             }
