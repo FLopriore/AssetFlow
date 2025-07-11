@@ -2,3 +2,4 @@
 node_modules
 server/config.env
 .idea
+credenziali.txt
